@@ -5,35 +5,52 @@
   "license": "MIT",
   "type": "module",
   "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "files": [
     "dist",
-    "LICENSE"
+    "LICENSE",
+    "CHANGELOG.md"
   ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
     },
     "./districts": {
       "types": "./dist/districts.d.ts",
-      "import": "./dist/districts.js"
+      "import": "./dist/districts.js",
+      "default": "./dist/districts.js"
     },
     "./counties": {
       "types": "./dist/counties.d.ts",
-      "import": "./dist/counties.js"
+      "import": "./dist/counties.js",
+      "default": "./dist/counties.js"
     },
     "./subcounties": {
       "types": "./dist/subcounties.d.ts",
-      "import": "./dist/subcounties.js"
+      "import": "./dist/subcounties.js",
+      "default": "./dist/subcounties.js"
     },
     "./parishes": {
       "types": "./dist/parishes.d.ts",
-      "import": "./dist/parishes.js"
+      "import": "./dist/parishes.js",
+      "default": "./dist/parishes.js"
     },
     "./villages": {
       "types": "./dist/villages.d.ts",
-      "import": "./dist/villages.js"
-    }
+      "import": "./dist/villages.js",
+      "default": "./dist/villages.js"
+    },
+    "./package.json": "./package.json"
   },
   "scripts": {
     "build:data": "node scripts/build-data.mjs",

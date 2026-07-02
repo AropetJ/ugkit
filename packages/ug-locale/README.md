@@ -60,25 +60,38 @@ const [c, setC] = useState<number>();
 
 ## API
 
-Each level is its own subpath export; import only what you use.
+Each level is its own subpath export with the same uniform surface; import
+only what you use. For level *X* (district, county, subCounty, parish,
+village):
 
-| Import | Functions |
+| Function | Behavior |
 |---|---|
-| `@ugkit/locale` (barrel) | `districts()`, `districtById(id)`, `districtByName(name)`, `searchDistricts(prefix, limit?)`, `counties(districtId)`, `countyById(id)`, `countyByName(name)`, `districtCount`, `datasetVersion` |
-| `@ugkit/locale/districts` | `districts()`, `districtById`, `districtByName`, `searchDistricts`, `districtCount`, `datasetVersion` |
-| `@ugkit/locale/counties` | `counties(districtId)`, `countyById`, `countyByName` |
-| `@ugkit/locale/subcounties` | `subCounties(countyId)`, `subCountyById`, `subCountyByName` |
-| `@ugkit/locale/parishes` | `parishes(subCountyId)`, `parishById`, `parishByName` |
-| `@ugkit/locale/villages` | `villages(parishId)`, `villageById` |
+| `xs(parentId)` / `districts()` | Children of a parent (O(1) slice); districts take no argument |
+| `xById(id)` | By index id — `undefined` on miss |
+| `xByName(name)` | Normalized name lookup — `undefined` when unknown **or ambiguous** |
+| `xByCode(code)` | By official EC/UBOS code — the **persistable** identifier |
+| `searchXs(prefix, limit?)` | Prefix typeahead over cached normalized names (default limit 20) |
+| `xCount` | Units in the loaded dataset — `0` means the level isn't sourced yet |
+| `datasetVersion` | Dataset version stamped into the blob |
 
-All functions return `Unit` objects: `{ id, name, parentId?, level }`. `id` is
-the unit's index within its level for the current dataset version — stable
-within a dataset version, not across versions. (Alignment with official UBOS
-codes is planned; the EC codes for the current data are preserved in
-`scripts/ingest/ec-districts-counties.csv`.)
+The barrel (`@ugkit/locale`) re-exports the district + county surface and all
+types. `subcounties`, `parishes`, and `villages` are subpath-only so bundlers
+never drag leaf data into a district dropdown.
 
-Name lookups are normalized (case, whitespace, punctuation): `districtByName("  WAKISO ")`
-finds `Wakiso`. Unknown ids/parents return `undefined`/`[]` — never a throw.
+All functions return `Unit` objects: `{ id, name, code?, parentId?, level }`.
+
+**Persist `code`, never `id`.** `id` is the unit's index within its level and
+is only valid for the dataset version it came from — ids shift when districts
+split or units are renamed. `code` is the official EC/UBOS identifier and is
+stable across dataset versions. (`code` is present wherever the source
+provides one — all districts and counties today.)
+
+Name lookups are normalized (case, whitespace, punctuation, apostrophes,
+diacritics): `districtByName("  WAKISO ")` finds `Wakiso`, and a user typing
+`"Ngora"` matches `Ng'ora`. Ambiguous names — e.g. a county name that exists
+in two districts — return `undefined` rather than an arbitrary winner;
+disambiguate via the parent (`counties(districtId)`) or use codes. Unknown
+ids/parents return `undefined`/`[]` — never a throw.
 
 ## Data pipeline
 
@@ -86,9 +99,14 @@ finds `Wakiso`. Unknown ids/parents return `undefined`/`[]` — never a throw.
 data/uganda.csv  →  scripts/build-data.mjs  →  src/generated/*.ts  →  tsc  →  dist/
 ```
 
+- CSV format (10 columns): a `code,name` pair per level —
+  `district_code,district,county_code,county,…`. Codes are official EC/UBOS
+  identifiers; empty when the source has none.
 - Rows may be **variable depth**: a row can stop at any level (the current
-  dataset is `district,county` deep). Absent levels emit empty blobs; their
-  functions return `[]`. No interior gaps allowed.
+  dataset is district+county deep). Absent levels emit empty blobs; their
+  functions return `[]` and their `xCount` is `0`. No interior gaps allowed.
+- Builds are **deterministic**: names sort by UTF-16 code units (not locale
+  collation), so the generated files are byte-identical on every machine.
 - `data/uganda.sample.csv` (full 5-level, 15 rows) ships with the repo so the
   pipeline runs end-to-end without the real dataset; it is used automatically
   when `data/uganda.csv` is absent.

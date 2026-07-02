@@ -25,6 +25,22 @@ Code follows semver. The dataset has its own version
   content — they pass at any dataset depth and auto-exercise deeper levels
   as data lands.
 - README: data-coverage section, per-level API reference, provenance links.
+- **Design-review hardening** (post 4-lens review against industry practice):
+  - `Unit.code` — official EC/UBOS codes ship on every coded unit;
+    `xByCode()` lookups per level. Persist `code`, never `id` (index ids are
+    dataset-version-scoped). New 10-column coded CSV format.
+  - Collision-aware `byName`: ambiguous names return `undefined` instead of
+    an arbitrary unit. Apostrophes/diacritics are deleted, not split, during
+    normalization ("Ngora" matches "Ng'ora").
+  - Uniform per-level API: `byId`/`byName`/`byCode`/`search`/`count`/
+    `datasetVersion` at every level.
+  - Deterministic builds (code-unit sort, not ICU collation); generated blobs
+    typed as `LevelData`; `Level` is an erasable const object.
+  - Packaging: `main`/`types` fallbacks + `default` conditions +
+    `./package.json` export (Metro/legacy-resolver compatibility), `engines`,
+    `publishConfig` (public + provenance), CHANGELOG shipped in the tarball.
+  - tsconfig: `exactOptionalPropertyTypes`, `verbatimModuleSyntax`,
+    `declarationMap`, DOM lib removed.
 - Full-scale benchmark `scripts/bench-scale.mjs`. Results at real size
   (71k synthetic villages): build 1.3 s; blobs ≈ 1.9 MB total
   (villages 1.7 MB, districts+counties ≈ 10 KB); villages blob
