@@ -27,7 +27,7 @@ packages**.
 
 ## Development workflow
 
-Requires Node 18+ (CI runs 18/20/22).
+Requires Node 20+ (CI runs 20/22/24).
 
 ```bash
 npm install                 # repo root — npm workspaces
@@ -90,8 +90,8 @@ first so we can agree on scope and API shape.
   `.gitignore` blocks the common cases; treat it as a backstop, not permission.
 - npm publishing uses a repository-level `NPM_TOKEN` secret via the manual
   publish workflow — tokens never live in the tree.
-- Found a security issue? Open an issue marked "security" (or contact the
-  maintainer privately if it is sensitive).
+- Found a security issue? **Do not open a public issue.** Use GitHub's
+  private vulnerability reporting — see [SECURITY.md](SECURITY.md).
 
 ## License
 

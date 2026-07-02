@@ -1,5 +1,7 @@
 # ugkit
 
+[![CI](https://github.com/AropetJ/ugkit/actions/workflows/ci.yml/badge.svg)](https://github.com/AropetJ/ugkit/actions/workflows/ci.yml)
+
 Tiny, fast, well-typed libraries for building Ugandan software.
 
 Small, static, boring national reference data + validation logic that every
@@ -60,7 +62,7 @@ ugkit/
 
 ## Development
 
-Requires Node 18+ (the workspace is tested on 18/20/22).
+Requires Node 20+ (the workspace is tested on 20/22/24).
 
 ```bash
 npm install                 # from the repo root (npm workspaces)

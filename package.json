@@ -11,6 +11,6 @@
     "test": "npm run test --workspaces --if-present"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   }
 }

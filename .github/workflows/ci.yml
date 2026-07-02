@@ -5,15 +5,22 @@ on:
     branches: [main]
   pull_request:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [18, 20, 22]
+        node: [20, 22, 24]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: ${{ matrix.node }}
           cache: npm
@@ -21,3 +28,45 @@ jobs:
       - run: npm run build --workspaces --if-present
       - run: npm test --workspaces --if-present
       - run: npm run validate:data --workspace=@ugkit/locale
+
+  # Regenerate the data blobs and fail on drift: catches hand-edited
+  # src/generated/ files and non-deterministic builds.
+  data-deterministic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build:data --workspace=@ugkit/locale
+      - run: git diff --exit-code packages/ug-locale/src/generated
+
+  # Verify the artifact we would actually publish: exports map, types
+  # resolution, files whitelist, and a real install-and-import smoke test.
+  pack-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build --workspaces --if-present
+      - run: npx --yes publint@latest packages/ug-locale
+      - run: npx --yes @arethetypeswrong/cli@latest --pack packages/ug-locale --profile esm-only
+      - name: Install tarball and import every subpath
+        run: |
+          TARBALL=$(npm pack --workspace=@ugkit/locale --pack-destination /tmp | tail -1)
+          mkdir /tmp/smoke && cd /tmp/smoke && npm init -y >/dev/null
+          npm install "/tmp/$TARBALL"
+          node -e "import('@ugkit/locale').then(m => { if (m.districts().length < 100) throw new Error('barrel broken') })"
+          for sub in districts counties subcounties parishes villages; do
+            node -e "import('@ugkit/locale/$sub')" || exit 1
+          done
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: npm-pack
+          path: /tmp/*.tgz
