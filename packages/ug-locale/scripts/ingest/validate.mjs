@@ -5,15 +5,23 @@
  * Run via `npm run validate:data`. Wired into prepublishOnly so it is
  * impossible to publish a package whose dataset fails these checks.
  *
- * Two classes of checks:
+ * CSV format (10 columns): `code,name` pair per level; codes optional;
+ * rows may stop at any level (variable depth, by NAME presence).
  *
- *   STRUCTURAL (always fatal): well-formed rows, no empty cells, no
- *   duplicate (parent, name) pairs at any level.
+ * Three classes of checks:
  *
- *   REFERENCE COUNTS (fatal on full dataset, skipped on sample data):
- *   per-level totals must land within tolerance of the Electoral
- *   Commission's published statistics. Update EXPECTED when the EC or
- *   UBOS publish new figures, alongside a datasetVersion bump.
+ *   STRUCTURAL (always fatal): well-formed rows, no interior gaps, no
+ *   duplicate rows, no duplicate codes within a level.
+ *
+ *   CHARSET (always fatal): names must match the canonicalName output
+ *   alphabet — letters/digits/space/hyphen/apostrophe/period/slash.
+ *   Anything else (especially commas) would corrupt the naive CSV split.
+ *   Codes must be short alphanumerics.
+ *
+ *   REFERENCE COUNTS (fatal on full dataset, skipped on sample data and on
+ *   levels not yet sourced): per-level totals must land within tolerance of
+ *   the Electoral Commission's published statistics. Update EXPECTED when
+ *   the EC or UBOS publish new figures, alongside a datasetVersion bump.
  *
  * EC reference (as of 13 Nov 2025): 146 districts/cities, 312 counties,
  * 2,191 sub-counties/towns/municipal divisions, 10,717 parishes,
@@ -35,6 +43,13 @@ const isFull = existsSync(fullCsv);
 const csvPath = isFull ? fullCsv : sampleCsv;
 
 const LEVELS = ["districts", "counties", "subcounties", "parishes", "villages"];
+const HEADER =
+  "district_code,district,county_code,county,subcounty_code,subcounty," +
+  "parish_code,parish,village_code,village";
+
+// canonicalName's output alphabet. Comma is structurally forbidden (CSV).
+const NAME_RE = /^[\p{L}\p{N} .'’\-\/()]+$/u;
+const CODE_RE = /^[A-Za-z0-9.\-]{0,12}$/;
 
 // [expected, tolerance]. Tolerance absorbs gazetting churn (e.g. the pending
 // Tororo split) between EC statistical releases.
@@ -46,39 +61,48 @@ const EXPECTED = [
   [71214, 1500], // villages / cells
 ];
 
-const lines = readFileSync(csvPath, "utf8").trim().split("\n");
-const header = lines.shift();
+const lines = readFileSync(csvPath, "utf8").replace(/\r\n/g, "\n").trim().split("\n");
+const header = lines.shift()?.trim();
 const errors = [];
 
-if (header !== "district,county,subcounty,parish,village") {
+if (header !== HEADER) {
   errors.push(`Bad header: ${header}`);
 }
 
 const SEP = "\u0000";
 const perLevel = LEVELS.map(() => new Set());
+const codesPerLevel = LEVELS.map(() => new Map()); // code -> first pathKey
 const seenRows = new Set();
 
 lines.forEach((line, n) => {
   const cells = line.split(",").map((s) => s.trim());
-  if (cells.length < 1 || cells.length > 5) {
-    errors.push(`Row ${n + 2}: expected 1-5 cells, got ${cells.length}`);
+  if (cells.length < 2 || cells.length > 10) {
+    errors.push(`Row ${n + 2}: expected 2-10 cells, got ${cells.length}`);
     return;
   }
-  // VARIABLE DEPTH: a row populates levels 0..depth-1 then stops. Require a
-  // non-empty leading run and no interior gaps.
+  const units = [];
+  for (let L = 0; L < 5; L++) {
+    units.push({ code: cells[2 * L] ?? "", name: cells[2 * L + 1] ?? "" });
+  }
+
+  // VARIABLE DEPTH: a row populates levels 0..depth-1 then stops (by name).
   let depth = 0;
-  while (depth < cells.length && cells[depth]) depth++;
+  while (depth < 5 && units[depth].name) depth++;
   if (depth === 0) {
     errors.push(`Row ${n + 2}: empty district cell`);
     return;
   }
-  for (let i = depth; i < cells.length; i++) {
-    if (cells[i]) errors.push(`Row ${n + 2}: interior gap — ${LEVELS[i]} set but a shallower level is empty`);
+  for (let i = depth; i < 5; i++) {
+    if (units[i].name || units[i].code)
+      errors.push(`Row ${n + 2}: interior gap — ${LEVELS[i]} set but a shallower level is empty`);
   }
   for (let i = 0; i < depth; i++) {
-    const c = cells[i];
-    if (/\s{2,}/.test(c)) errors.push(`Row ${n + 2}: doubled whitespace in "${c}"`);
-    if (c !== c.trim()) errors.push(`Row ${n + 2}: unstripped whitespace in "${c}"`);
+    const { name, code } = units[i];
+    if (!NAME_RE.test(name))
+      errors.push(`Row ${n + 2}: illegal character in ${LEVELS[i]} name "${name}"`);
+    if (/\s{2,}/.test(name)) errors.push(`Row ${n + 2}: doubled whitespace in "${name}"`);
+    if (!CODE_RE.test(code))
+      errors.push(`Row ${n + 2}: bad ${LEVELS[i]} code "${code}"`);
   }
 
   if (seenRows.has(line)) errors.push(`Row ${n + 2}: exact duplicate row`);
@@ -86,8 +110,18 @@ lines.forEach((line, n) => {
 
   let key = "";
   for (let L = 0; L < depth; L++) {
-    key += SEP + cells[L];
+    key += SEP + units[L].name;
+    const isNew = !perLevel[L].has(key);
     perLevel[L].add(key);
+    const code = units[L].code;
+    if (code) {
+      const prior = codesPerLevel[L].get(code);
+      if (prior !== undefined && prior !== key) {
+        errors.push(`Row ${n + 2}: ${LEVELS[L]} code ${code} reused by a different unit`);
+      } else if (isNew || prior === undefined) {
+        codesPerLevel[L].set(code, key);
+      }
+    }
   }
 });
 

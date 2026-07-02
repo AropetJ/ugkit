@@ -7,12 +7,22 @@
  *
  *   src/generated/{districts,counties,subcounties,parishes,villages}.ts
  *
- * Each module is `export default JSON.parse("...")` — the string is parsed
- * by V8's JSON fast path (faster than evaluating an object literal) and the
- * pattern works in every bundler with no import-attribute support needed.
+ * Each module is `export default JSON.parse("...") as LevelData` — the string
+ * is parsed by V8's JSON fast path (faster than evaluating an object literal),
+ * the pattern works in every bundler with no import-attribute support needed,
+ * and the `as LevelData` keeps the data boundary typed.
+ *
+ * CSV format (10 columns): `code,name` pair per level —
+ *   district_code,district,county_code,county,subcounty_code,subcounty,
+ *   parish_code,parish,village_code,village
+ * Codes are official EC/UBOS identifiers; empty when the source has none.
+ * Rows may be VARIABLE DEPTH: a row populates levels 0..depth-1 (by NAME
+ * presence) and stops. Absent levels emit empty blobs. No interior name gaps.
  *
  * Invariants this script guarantees (the runtime relies on them):
- *   1. Within each level, units are sorted by (parentIndex, name).
+ *   1. Within each level, units are sorted by (parentIndex, name) — name
+ *      compared by UTF-16 code units, NOT locale collation, so the build is
+ *      byte-identical on every machine (localeCompare varies with ICU).
  *   2. Therefore all children of a parent are CONTIGUOUS.
  *   3. spans[parentId] = [firstChildIndex, childCount] into the child level.
  */
@@ -39,34 +49,40 @@ const pkg = JSON.parse(readFileSync(join(pkgRoot, "package.json"), "utf8"));
 const VERSION = pkg.ugkit?.datasetVersion ?? "0.0.0";
 
 const LEVELS = ["districts", "counties", "subcounties", "parishes", "villages"];
+const HEADER =
+  "district_code,district,county_code,county,subcounty_code,subcounty," +
+  "parish_code,parish,village_code,village";
 
 // ---------------------------------------------------------------- parse CSV
-// Minimal CSV parsing: our pipeline controls the file, names contain no
-// commas/quotes. If the sourced dataset ever does, upgrade this first.
-const lines = readFileSync(csvPath, "utf8").trim().split("\n");
-const header = lines.shift();
-if (header !== "district,county,subcounty,parish,village") {
+// Minimal CSV parsing: our pipeline controls the file, and validate.mjs
+// enforces that names contain no commas/quotes. Tolerate CRLF line endings.
+const lines = readFileSync(csvPath, "utf8").replace(/\r\n/g, "\n").trim().split("\n");
+const header = lines.shift()?.trim();
+if (header !== HEADER) {
   throw new Error(`Unexpected CSV header: ${header}`);
 }
 
-// Rows may be VARIABLE DEPTH: a row populates levels 0..depth-1 and stops.
-// This lets us ship a shallow dataset (e.g. district+county) and back-fill
-// deeper levels later, without a schema change. Absent levels emit empty blobs.
-// A row must have a non-empty leading run and NO interior gaps.
+// Each row → array of {code, name} for levels 0..depth-1 (depth by NAME
+// presence; codes optional). Interior name gaps are an error.
 const rows = lines.map((l) => {
   const cells = l.split(",").map((s) => s.trim());
-  let depth = 0;
-  while (depth < cells.length && cells[depth]) depth++;
-  if (depth === 0) throw new Error(`Bad row (empty district): ${JSON.stringify(l)}`);
-  for (let i = depth; i < cells.length; i++) {
-    if (cells[i]) throw new Error(`Bad row (interior gap): ${JSON.stringify(l)}`);
+  const units = [];
+  for (let L = 0; L < 5; L++) {
+    units.push({ code: cells[2 * L] ?? "", name: cells[2 * L + 1] ?? "" });
   }
-  return cells.slice(0, depth); // keep only the populated prefix
+  let depth = 0;
+  while (depth < 5 && units[depth].name) depth++;
+  if (depth === 0) throw new Error(`Bad row (empty district): ${JSON.stringify(l)}`);
+  for (let i = depth; i < 5; i++) {
+    if (units[i].name || units[i].code)
+      throw new Error(`Bad row (interior gap): ${JSON.stringify(l)}`);
+  }
+  return units.slice(0, depth);
 });
 
 // ------------------------------------------------- build the tree, level 0→4
-// nodesPerLevel[L] = Map<pathKey, { name, parentKey }>
-// pathKey uniquely identifies a unit by its full ancestry, because names
+// nodesPerLevel[L] = Map<pathKey, { name, code, parentKey }>
+// pathKey uniquely identifies a unit by its full name ancestry, because names
 // repeat across parents (many districts have a "Central" division).
 const SEP = "\u0000";
 const nodesPerLevel = LEVELS.map(() => new Map());
@@ -74,9 +90,13 @@ const nodesPerLevel = LEVELS.map(() => new Map());
 for (const row of rows) {
   let parentKey = "";
   for (let L = 0; L < row.length; L++) {
-    const key = parentKey + SEP + row[L];
-    if (!nodesPerLevel[L].has(key)) {
-      nodesPerLevel[L].set(key, { name: row[L], parentKey });
+    const { name, code } = row[L];
+    const key = parentKey + SEP + name;
+    const existing = nodesPerLevel[L].get(key);
+    if (!existing) {
+      nodesPerLevel[L].set(key, { name, code, parentKey });
+    } else if (code && !existing.code) {
+      existing.code = code; // later row may supply the code an earlier one lacked
     }
     parentKey = key;
   }
@@ -84,6 +104,8 @@ for (const row of rows) {
 
 // -------------------------------------- assign indices: sort, then span-index
 // prevIndexByKey maps a parent's pathKey → its final index in its level.
+// Deterministic name order: UTF-16 code-unit compare (see invariant 1).
+const byCodeUnit = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
 let prevIndexByKey = new Map();
 let prevCount = 0;
 
@@ -93,13 +115,15 @@ for (let L = 0; L < 5; L++) {
   const entries = [...nodesPerLevel[L].entries()].map(([key, node]) => ({
     key,
     name: node.name,
+    code: node.code,
     parent: L === 0 ? -1 : prevIndexByKey.get(node.parentKey),
   }));
 
   // Invariant 1: sort by (parent, name) → Invariant 2: children contiguous.
-  entries.sort((a, b) => a.parent - b.parent || a.name.localeCompare(b.name));
+  entries.sort((a, b) => a.parent - b.parent || byCodeUnit(a.name, b.name));
 
   const names = entries.map((e) => e.name);
+  const codes = entries.map((e) => e.code);
   const parents = entries.map((e) => e.parent);
 
   // Invariant 3: spans for THIS level, keyed by parent index in level above.
@@ -111,12 +135,21 @@ for (let L = 0; L < 5; L++) {
     spans[p][1]++;
   }
 
-  const blob = { version: VERSION, names, parents, spans };
+  // A fully-uncoded level ships codes: [] — codes[id] is undefined either
+  // way at runtime, and this keeps ~200 KB of '"",' out of the villages blob.
+  const blob = {
+    version: VERSION,
+    names,
+    codes: codes.some((c) => c) ? codes : [],
+    parents,
+    spans,
+  };
   const json = JSON.stringify(blob);
   const out =
     `// GENERATED by scripts/build-data.mjs from ${csvPath.endsWith("sample.csv") ? "SAMPLE data" : "uganda.csv"} — do not edit.\n` +
     `// dataset ${VERSION} · ${names.length} units\n` +
-    `export default JSON.parse(${JSON.stringify(json)});\n`;
+    `import type { LevelData } from "../types.js";\n` +
+    `export default JSON.parse(${JSON.stringify(json)}) as LevelData;\n`;
 
   writeFileSync(join(outDir, `${LEVELS[L]}.ts`), out);
   console.log(`${LEVELS[L].padEnd(12)} ${String(names.length).padStart(6)} units`);

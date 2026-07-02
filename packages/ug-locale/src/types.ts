@@ -8,17 +8,18 @@
  * Every administrative unit is a "node". Nodes of one level are sorted so
  * that all children of a given parent are adjacent. That means:
  *
- *   childrenOf(parent) === one slice — O(1), zero allocation, no filter().
+ *   childrenOf(parent) === one slice — O(1) to locate, no filter().
  */
 
 /** Administrative levels, root → leaf. */
-export enum Level {
-  District = 0,
-  County = 1,
-  SubCounty = 2,
-  Parish = 3,
-  Village = 4,
-}
+export const Level = {
+  District: 0,
+  County: 1,
+  SubCounty: 2,
+  Parish: 3,
+  Village: 4,
+} as const;
+export type Level = (typeof Level)[keyof typeof Level];
 
 /**
  * The packed wire format for one level, as emitted by scripts/build-data.mjs.
@@ -29,6 +30,11 @@ export interface LevelData {
   version: string;
   /** Unit names, in (parent, name) sorted order. */
   names: string[];
+  /**
+   * Official codes (Electoral Commission / UBOS), parallel to `names`.
+   * Empty string when the source did not provide a code for the unit.
+   */
+  codes: string[];
   /**
    * Index of each unit's parent in the *previous* level's arrays.
    * Districts (root level) have parent -1.
@@ -44,9 +50,19 @@ export interface LevelData {
 
 /** Public, ergonomic shape returned by query functions. */
 export interface Unit {
-  /** Stable index within its level for this dataset version. */
+  /**
+   * Index of the unit within its level — valid ONLY for the dataset version
+   * it came from. Ids shift when the dataset changes (districts split,
+   * units are renamed). NEVER persist `id` in a database; persist `code`
+   * (and fall back to `name`) instead, and resolve at read time.
+   */
   id: number;
   name: string;
+  /**
+   * Official code (EC/UBOS) when the source provides one, e.g. "006" for
+   * Hoima. Stable across dataset versions — this is the value to persist.
+   */
+  code?: string;
   /** id of the parent unit in the level above (undefined for districts). */
   parentId?: number;
   level: Level;
