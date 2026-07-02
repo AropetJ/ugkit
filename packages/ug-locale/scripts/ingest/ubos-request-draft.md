@@ -48,7 +48,7 @@ Kind regards,
 Joel Aropet
 Kampala, Uganda
 [phone / email to be filled in before sending]
-Project repository: [ugkit repo URL once public]
+Project repository: https://github.com/AropetJ/ugkit
 
 ---
 

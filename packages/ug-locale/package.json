@@ -64,11 +64,11 @@
   "author": "Joel Aropet",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aropetjoel/ugkit.git",
+    "url": "git+https://github.com/AropetJ/ugkit.git",
     "directory": "packages/ug-locale"
   },
-  "homepage": "https://github.com/aropetjoel/ugkit/tree/main/packages/ug-locale#readme",
+  "homepage": "https://github.com/AropetJ/ugkit/tree/main/packages/ug-locale#readme",
   "bugs": {
-    "url": "https://github.com/aropetjoel/ugkit/issues"
+    "url": "https://github.com/AropetJ/ugkit/issues"
   }
 }

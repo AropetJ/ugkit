@@ -42,7 +42,7 @@ const API = (district) =>
   )}/`;
 
 const USER_AGENT =
-  "ugkit-locale-ingest/0.1 (+https://github.com/aropetjoel/ugkit; open-source, MIT)";
+  "ugkit-locale-ingest/0.1 (+https://github.com/AropetJ/ugkit; open-source, MIT)";
 
 // ---------------------------------------------------------------------------
 // TODO(API up): map ONE district's JSON response to full-hierarchy rows
