@@ -72,7 +72,7 @@
     "locale"
   ],
   "devDependencies": {
-    "typescript": "5.5"
+    "typescript": "6.0"
   },
   "ugkit": {
     "datasetVersion": "2026.1",
