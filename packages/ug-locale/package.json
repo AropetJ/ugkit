@@ -1,0 +1,74 @@
+{
+  "name": "@ugkit/locale",
+  "version": "0.1.0",
+  "description": "Uganda administrative divisions (districts, counties, sub-counties, parishes, villages) as a fast, typed, versioned dataset.",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./districts": {
+      "types": "./dist/districts.d.ts",
+      "import": "./dist/districts.js"
+    },
+    "./counties": {
+      "types": "./dist/counties.d.ts",
+      "import": "./dist/counties.js"
+    },
+    "./subcounties": {
+      "types": "./dist/subcounties.d.ts",
+      "import": "./dist/subcounties.js"
+    },
+    "./parishes": {
+      "types": "./dist/parishes.d.ts",
+      "import": "./dist/parishes.js"
+    },
+    "./villages": {
+      "types": "./dist/villages.d.ts",
+      "import": "./dist/villages.js"
+    }
+  },
+  "scripts": {
+    "build:data": "node scripts/build-data.mjs",
+    "build:ts": "tsc -p tsconfig.json",
+    "build": "npm run build:data && npm run build:ts",
+    "test": "node --test \"test/*.test.mjs\"",
+    "validate:data": "node scripts/ingest/validate.mjs",
+    "bench": "node scripts/bench-scale.mjs",
+    "prepublishOnly": "npm run build && npm test && npm run validate:data"
+  },
+  "keywords": [
+    "uganda",
+    "districts",
+    "counties",
+    "subcounties",
+    "parishes",
+    "villages",
+    "administrative-divisions",
+    "locale"
+  ],
+  "devDependencies": {
+    "typescript": "5.5"
+  },
+  "ugkit": {
+    "datasetVersion": "2026.1",
+    "datasetSource": "Uganda Electoral Commission — Demarcated Electoral Areas 2025 (districts + counties; sub-counties→villages pending UBOS). See data/PROVENANCE.md."
+  },
+  "author": "Joel Aropet",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aropetjoel/ugkit.git",
+    "directory": "packages/ug-locale"
+  },
+  "homepage": "https://github.com/aropetjoel/ugkit/tree/main/packages/ug-locale#readme",
+  "bugs": {
+    "url": "https://github.com/aropetjoel/ugkit/issues"
+  }
+}

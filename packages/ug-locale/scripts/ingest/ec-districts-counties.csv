@@ -1,0 +1,354 @@
+district_code,district,constituency_code,constituency
+070,Abim,095,Labwor County
+040,Adjumani,239,Adjumani East
+040,Adjumani,151,Adjumani West
+111,Agago,089,Agago County
+111,Agago,240,Agago North County
+111,Agago,303,Agago West County
+088,Alebtong,216,Ajuri County
+088,Alebtong,103,Moroto County
+057,Amolatar,102,Kioga County
+057,Amolatar,319,Kioga North County
+081,Amudat,149,Upe County
+058,Amuria,199,Amuria County
+058,Amuria,276,Orungo County
+071,Amuru,265,Kilak North County
+071,Amuru,024,Kilak South County
+001,Apac,291,Apac Municipality
+001,Apac,003,Maruzi County
+001,Apac,340,Maruzi North County
+002,Arua,012,Vurra County
+136,Arua City,013,Arua Central
+136,Arua City,007,Ayivu Division East
+136,Arua City,352,Ayivu Division West
+072,Budaka,187,Budaka County
+072,Budaka,238,Iki-Iki County
+078,Bududa,336,Bushigai County
+078,Bududa,270,Lutseshe County
+078,Bududa,133,Manjiya County
+041,Bugiri,295,Bugiri Municipality
+041,Bugiri,031,Bukooli County
+041,Bugiri,032,Bukooli County
+123,Bugweri,030,Bugweri County
+109,Buhweju,016,Buhweju County
+109,Buhweju,304,Buhweju West
+082,Buikwe,174,Buikwe County
+082,Buikwe,173,Lugazi Municipality
+082,Buikwe,172,Njeru Municipality
+079,Bukedea,096,Bukedea County
+079,Bukedea,257,Kachumbala County
+098,Bukomansimbi,111,Bukomansimbi North
+098,Bukomansimbi,244,Bukomansimbi South
+059,Bukwo,074,Kongasis County
+059,Bukwo,326,T'oo County
+089,Bulambuli,130,Bulambuli County
+089,Bulambuli,253,Elgon County
+089,Bulambuli,346,Elgon North County
+073,Buliisa,123,Buliisa County
+003,Bundibugyo,215,Bughendera County
+003,Bundibugyo,014,Bwamba County
+117,Bunyangabu,051,Bunyangabu County
+004,Bushenyi,225,Bushenyi -Ishaka
+004,Bushenyi,018,Igara County East
+004,Bushenyi,019,Igara County West
+042,Busia,226,Busia Municipality
+042,Busia,348,Samia Bugwe
+042,Busia,211,Samia Bugwe County
+042,Busia,212,Samia Bugwe County
+060,Butaleja,208,Bunyole East
+060,Butaleja,236,Bunyole West
+099,Butambala,157,Butambala County
+118,Butebo,188,Butebo County
+090,Buvuma,175,Buvuma Islands
+083,Buyende,217,Budiope East County
+083,Buyende,069,Budiope West
+074,Dokolo,099,Dokolo North
+074,Dokolo,252,Dokolo South
+139,Fort Portal,058,Fort Portal
+139,Fort Portal,297,Fort Portal North
+091,Gomba,158,Gomba East County
+091,Gomba,254,Gomba West County
+005,Gulu,023,Aswa County
+137,Gulu City,027,Bardege-Layibi
+137,Gulu City,298,Laroo-Pece Division
+006,Hoima,028,Bugahya County
+006,Hoima,264,Kigorobya County
+145,Hoima City,227,Hoima East Division
+145,Hoima City,350,Hoima West Division
+061,Ibanda,136,Ibanda County North
+061,Ibanda,137,Ibanda County South
+061,Ibanda,293,Ibanda Municipality
+007,Iganga,228,Iganga Municipality
+007,Iganga,038,Kigulu County North
+007,Iganga,039,Kigulu County South
+062,Isingiro,135,Bukanga County
+062,Isingiro,305,Bukanga North
+062,Isingiro,138,Isingiro County
+062,Isingiro,139,Isingiro County
+062,Isingiro,325,Isingiro West
+008,Jinja,041,Butembe County
+008,Jinja,042,Kagoma County
+008,Jinja,306,Kagoma North
+138,Jinja City,299,Jinja North Division
+138,Jinja City,043,Jinja South Division
+138,Jinja City,044,Jinja South Division
+063,Kaabong,093,Dodoth East County
+063,Kaabong,341,Dodoth North
+063,Kaabong,255,Ik County
+009,Kabale,050,Kabale Municipality
+009,Kabale,046,Ndorwa County
+009,Kabale,045,Ndorwa County East
+010,Kabarole,052,Burahya County
+054,Kaberamaido,200,Kaberamaido County
+054,Kaberamaido,327,Ochero County
+113,Kagadi,082,Buyaga East County
+113,Kagadi,220,Buyaga West County
+114,Kakumiro,219,Bugangaizi East
+114,Kakumiro,307,Bugangaizi South
+114,Kakumiro,081,Bugangaizi West
+129,Kalaki,201,Kalaki County
+011,Kalangala,059,Bujumba County
+011,Kalangala,060,Kyamuswa County
+064,Kaliro,072,Bulamogi County
+064,Kaliro,247,Bulamogi North
+100,Kalungu,117,Kalungu East
+100,Kalungu,118,Kalungu West
+012,Kampala,061,Kampala Central
+012,Kampala,062,Kawempe Division
+012,Kampala,063,Kawempe Division
+012,Kampala,064,Makindye Division
+012,Kampala,065,Makindye Division
+012,Kampala,353,Nakawa Division
+012,Kampala,068,Nakawa Division East
+012,Kampala,066,Rubaga Division
+012,Kampala,067,Rubaga Division
+013,Kamuli,070,Bugabula County
+013,Kamuli,071,Bugabula County
+013,Kamuli,073,Buzaaya County
+013,Kamuli,282,Kamuli Municipality
+046,Kamwenge,053,Kibale County
+046,Kamwenge,262,Kibale East County
+055,Kanungu,195,Kinkizi County East
+055,Kanungu,196,Kinkizi County West
+014,Kapchorwa,283,Kapchorwa
+014,Kapchorwa,076,Tingey County
+124,Kapelebyong,202,Kapelebyong County
+130,Karenga,237,Dodoth West County
+130,Karenga,320,Napore West County
+015,Kasese,078,Bukonjo County
+015,Kasese,077,Bukonzo County
+015,Kasese,079,Busongora County
+015,Kasese,080,Busongora County
+015,Kasese,229,Kasese Municipality
+125,Kassanda,246,Bukuya County
+125,Kassanda,167,Kassanda County
+125,Kassanda,168,Kassanda County
+043,Katakwi,317,Ngariam County
+043,Katakwi,224,Toroma County
+043,Katakwi,206,Usuk County
+047,Kayunga,171,Bbale County
+047,Kayunga,179,Ntenjeru County
+047,Kayunga,180,Ntenjeru County
+131,Kazo,141,Kazo County
+016,Kibaale,083,Buyanja County
+016,Kibaale,308,Buyanja East County
+017,Kiboga,084,Kiboga East County
+017,Kiboga,309,Kiboga West County
+102,Kibuku,256,Kabweri County
+102,Kibuku,189,Kibuku County
+126,Kikuube,029,Buhaguzi County
+126,Kikuube,344,Buhaguzi East
+065,Kiruhura,260,Kashongi County
+065,Kiruhura,142,Nyabushozi County
+092,Kiryandongo,263,Kibanda North
+092,Kiryandongo,125,Kibanda South
+018,Kisoro,086,Bufumbira County
+018,Kisoro,087,Bufumbira County
+018,Kisoro,088,Bufumbira County
+018,Kisoro,310,Bukimbiri County
+018,Kisoro,285,Kisoro Municipality
+132,Kitagwenda,054,Kitagwenda County
+019,Kitgum,250,Chua East County
+019,Kitgum,091,Chua West County
+019,Kitgum,286,Kitgum Municipality
+066,Koboko,008,Koboko County
+066,Koboko,287,Koboko Municipality
+066,Koboko,266,Koboko North
+103,Kole,267,Kole North County
+103,Kole,001,Kole South County
+020,Kotido,094,Jie County
+020,Kotido,296,Kotido Municipality
+021,Kumi,258,Kanyum County
+021,Kumi,097,Kumi County
+021,Kumi,288,Kumi Municipality
+127,Kwania,002,Kwania County
+127,Kwania,311,Kwania North
+104,Kween,075,Kween County
+104,Kween,328,Soi County
+093,Kyankwanzi,248,Butemba County
+093,Kyankwanzi,085,Ntwetwe County
+084,Kyegegwa,334,Kyaka Central
+084,Kyegegwa,055,Kyaka North County
+084,Kyegegwa,268,Kyaka South County
+048,Kyenjojo,274,Mwenge Central
+048,Kyenjojo,056,Mwenge County
+048,Kyenjojo,057,Mwenge County
+119,Kyotera,192,Kakuuto County
+119,Kyotera,194,Kyotera County
+085,Lamwo,092,Lamwo County
+085,Lamwo,312,Palabek County
+022,Lira,100,Erute County North
+022,Lira,101,Erute County South
+144,Lira City,105,Lira East Division
+144,Lira City,349,Lira West Division
+094,Luuka,040,Luuka North County
+094,Luuka,271,Luuka South County
+023,Luweero,110,Bamunanika County
+023,Luweero,107,Katikamu County
+023,Luweero,108,Katikamu County
+105,Lwengo,115,Bukoto
+105,Lwengo,112,Bukoto County Mid-
+105,Lwengo,113,Bukoto County West
+080,Lyantonde,191,Kabula County
+133,Madi-Okollo,269,Lower Madi County
+133,Madi-Okollo,009,Upper Madi County
+067,Manafwa,126,Bubulo County West
+067,Manafwa,339,Butiru County
+077,Maracha,010,Maracha County
+077,Maracha,272,Maracha East
+024,Masaka,116,Bukoto County
+024,Masaka,114,Bukoto County East
+141,Masaka City,121,Kimaanya-Kabonera
+141,Masaka City,301,Nyendo-Mukungwe
+025,Masindi,122,Bujenje County
+025,Masindi,124,Buruli County
+025,Masindi,230,Masindi Municipality
+049,Mayuge,034,Bunya County East
+049,Mayuge,035,Bunya County South
+049,Mayuge,036,Bunya County West
+026,Mbale,332,Bungokho Central
+026,Mbale,131,Bungokho County
+026,Mbale,132,Bungokho County
+142,Mbale City,134,Industrial Division
+142,Mbale City,302,Northern Division
+027,Mbarara,140,Kashari North
+027,Mbarara,259,Kashari South
+140,Mbarara City,144,Mbarara North
+140,Mbarara City,300,Mbarara South
+106,Mitooma,020,Ruhinda County
+106,Mitooma,277,Ruhinda North
+106,Mitooma,335,Ruhinda South
+068,Mityana,165,Busujju County
+068,Mityana,169,Mityana County
+068,Mityana,170,Mityana County
+068,Mityana,289,Mityana Municipality
+028,Moroto,147,Matheniko County
+028,Moroto,150,Moroto Municipality
+028,Moroto,278,Tepeth County
+029,Moyo,153,West Moyo County
+030,Mpigi,162,Mawokota County
+030,Mpigi,163,Mawokota County
+031,Mubende,166,Buwekula County
+031,Mubende,313,Buwekula South
+031,Mubende,221,Kasambya County
+031,Mubende,290,Mubende
+032,Mukono,176,Mukono County
+032,Mukono,177,Mukono County
+032,Mukono,231,Mukono Municipality
+032,Mukono,178,Nakifuma County
+128,Nabilatuk,148,Pian County
+056,Nakapiripirit,146,Chekwii County
+056,Nakapiripirit,314,Chekwii East County
+069,Nakaseke,315,Nakaseke Central
+069,Nakaseke,223,Nakaseke North
+069,Nakaseke,109,Nakaseke South
+044,Nakasongola,218,Budyebo County
+044,Nakasongola,106,Nakasongola County
+095,Namayingo,235,Bukooli Island
+095,Namayingo,033,Bukooli South
+095,Namayingo,345,Namayingo South
+120,Namisindwa,329,Bubulo East County
+120,Namisindwa,127,Namisindwa County
+075,Namutumba,245,Bukono County
+075,Namutumba,037,Busiki County
+075,Namutumba,338,Busiki North County
+107,Napak,145,Bokora County
+107,Napak,321,Bokora East County
+033,Nebbi,292,Nebbi Municipality
+033,Nebbi,183,Padyere County
+108,Ngora,318,Kapir County
+108,Ngora,098,Ngora County
+096,Ntoroko,015,Ntoroko County
+034,Ntungamo,184,Kajara County
+034,Ntungamo,232,Ntungamo
+034,Ntungamo,185,Ruhaama County
+034,Ntungamo,324,Ruhaama East
+034,Ntungamo,186,Rushenyi County
+110,Nwoya,025,Nwoya County
+110,Nwoya,347,Nwoya East County
+134,Obongi,152,Obongi County
+115,Omoro,026,Omoro County
+115,Omoro,280,Tochi County
+086,Otuke,104,Otuke County
+086,Otuke,323,Otuke East County
+076,Oyam,004,Oyam County North
+076,Oyam,005,Oyam County South
+050,Pader,090,Aruu County
+050,Pader,243,Aruu North County
+121,Pakwach,181,Jonam County
+035,Pallisa,234,Agule County
+035,Pallisa,337,Gogonyo County
+035,Pallisa,261,Kibale County
+035,Pallisa,190,Pallisa County
+036,Rakai,249,Buyamba County
+036,Rakai,193,Kooki County
+116,Rubanda,047,Rubanda County
+116,Rubanda,048,Rubanda County
+112,Rubirizi,017,Bunyaruguru
+112,Rubirizi,222,Katerera County
+122,Rukiga,049,Rukiga County
+037,Rukungiri,197,Rubabo County
+037,Rukungiri,198,Rujumbura County
+037,Rukungiri,233,Rukungiri
+135,Rwampara,143,Rwampara County
+135,Rwampara,342,Rwampara East
+097,Serere,203,Kasilo County
+097,Serere,331,Pingire County
+097,Serere,204,Serere County
+101,Sheema,021,Sheema County
+101,Sheema,022,Sheema County
+101,Sheema,294,Sheema Municipality
+051,Sironko,128,Budadiri County
+051,Sironko,129,Budadiri County
+038,Soroti,251,Dakabela County
+038,Soroti,330,Gweri County
+038,Soroti,205,Soroti County
+146,Soroti City,207,Soroti East Division
+146,Soroti City,351,Soroti West Division
+045,Ssembabule,119,Lwemiyaga County
+045,Ssembabule,120,Mawogola County
+045,Ssembabule,273,Mawogola North
+045,Ssembabule,322,Mawogola West
+143,Terego,279,Terego East County
+143,Terego,011,Terego West County
+039,Tororo,214,Tororo Municipality
+039,Tororo,281,Tororo North
+039,Tororo,213,Tororo South
+039,Tororo,209,West Budama
+039,Tororo,210,West Budama
+039,Tororo,316,West Budama
+039,Tororo,343,West Budama North
+052,Wakiso,154,Busiro County East
+052,Wakiso,155,Busiro County North
+052,Wakiso,156,Busiro County South
+052,Wakiso,164,Entebbe Municipality
+052,Wakiso,284,Kira Municipality
+052,Wakiso,159,Kyadondo County
+052,Wakiso,161,Makindye-Ssabagabo
+052,Wakiso,160,Nansana Municipality
+053,Yumbe,006,Aringa County
+053,Yumbe,333,Aringa East County
+053,Yumbe,241,Aringa North County
+053,Yumbe,242,Aringa South
+087,Zombo,182,Okoro County
+087,Zombo,275,Ora County
