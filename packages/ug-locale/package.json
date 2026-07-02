@@ -39,7 +39,7 @@
     "build:data": "node scripts/build-data.mjs",
     "build:ts": "tsc -p tsconfig.json",
     "build": "npm run build:data && npm run build:ts",
-    "test": "node --test test/",
+    "test": "node --test test/*.test.mjs",
     "validate:data": "node scripts/ingest/validate.mjs",
     "bench": "node scripts/bench-scale.mjs",
     "prepublishOnly": "npm run build && npm test && npm run validate:data"
