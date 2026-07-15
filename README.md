@@ -13,13 +13,18 @@ local product needs — done once, done properly, versioned, and shared.
 |---|---|---|
 | [`@ugkit/locale`](packages/ug-locale) | ✅ engine complete · ✅ districts + counties shipped (dataset 2026.1) · ⏳ sub-counties → villages pending | Uganda administrative divisions: districts → counties → sub-counties → parishes → villages. Flat-array tree, O(1) child lookups, lazy loading. |
 | `@ugkit/phone` | planned (next) | Parse/validate/normalize Ugandan MSISDNs, detect network (MTN, Airtel, Lyca) from prefix. |
+| `@ugkit/tax` | planned | PAYE bands, NSSF contributions, Local Service Tax, withholding tax — official rate tables as versioned data, calculators on top. |
 | `@ugkit/currency` | planned | UGX formatting + amount-in-words for receipts and invoices. |
-| `@ugkit/nin` | planned | Structural validation for Uganda NIN and URA TIN. |
-| `@ugkit/holidays` | planned | Public holidays + banking-day arithmetic. |
-| `@ugkit/plates` | planned | Vehicle registration plate parsing/validation. |
-| `@ugkit/momo-fees` | planned | MTN MoMo / Airtel Money tariff tables as versioned data. |
-| `@ugkit/health-facilities` | planned | National health-facility registry as queryable data. |
-| `@ugkit/ussd` | planned | USSD menu-flow utilities for feature-phone interfaces. |
+| `@ugkit/lang` | planned | Number-to-words and amount-in-words in Ugandan languages (Luganda first), for receipts, USSD, and IVR. |
+| `@ugkit/faker` | planned | Fake-but-format-valid Ugandan test data: names, phone numbers, NINs, plates, real district/village combinations. |
+| `@ugkit/uneb` | planned | UNEB index number validation + PLE/UCE/UACE grading and aggregation calculators. |
+| `sts-token` | planned | Parser/validator for STS prepaid electricity tokens (20-digit Yaka codes) — an international standard, born from a Ugandan pain point. |
+| `@ugkit/efris` | planned | Types, payload builders, and QR parsing for URA's EFRIS e-invoicing system. |
+
+Plus `@ugkit/nin`, `@ugkit/holidays`, `@ugkit/plates`, `@ugkit/momo-fees`,
+`@ugkit/health-facilities`, `@ugkit/ussd`, and more — the full catalog, the
+six package shapes it's organized around, and the build-order rationale live
+in [ROADMAP.md](ROADMAP.md).
 
 None of the packages are published to npm yet; publishing begins with
 `@ugkit/locale` 0.1.0 once the remaining dataset levels land.
