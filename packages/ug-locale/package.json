@@ -76,7 +76,7 @@
   },
   "ugkit": {
     "datasetVersion": "2026.1",
-    "datasetSource": "Uganda Electoral Commission — Demarcated Electoral Areas 2025 (districts + counties; sub-counties→villages pending UBOS). See data/PROVENANCE.md."
+    "datasetSource": "Uganda Bureau of Statistics — Administrative Units, Parish Level (UG), 7 July 2026. Villages are not disseminated by UBOS and ship empty. See data/PROVENANCE.md."
   },
   "author": "Joel Aropet",
   "repository": {

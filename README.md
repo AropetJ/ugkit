@@ -11,7 +11,7 @@ local product needs — done once, done properly, versioned, and shared.
 
 | Package | Status | Description |
 |---|---|---|
-| [`@ugkit/locale`](packages/ug-locale) | ✅ engine complete · ✅ districts + counties shipped (dataset 2026.1) · ⏳ sub-counties → villages pending | Uganda administrative divisions: districts → counties → sub-counties → parishes → villages. Flat-array tree, O(1) child lookups, lazy loading. |
+| [`@ugkit/locale`](packages/ug-locale) | ✅ engine complete · ✅ districts, counties, sub-counties, parishes shipped (dataset 2026.1, UBOS-sourced) · ⛔ villages not disseminated by UBOS | Uganda administrative divisions: districts → counties → sub-counties → parishes → villages. Flat-array tree, O(1) child lookups, lazy loading. |
 | `@ugkit/phone` | planned (next) | Parse/validate/normalize Ugandan MSISDNs, detect network (MTN, Airtel, Lyca) from prefix. |
 | `@ugkit/tax` | planned | PAYE bands, NSSF contributions, Local Service Tax, withholding tax — official rate tables as versioned data, calculators on top. |
 | `@ugkit/currency` | planned | UGX formatting + amount-in-words for receipts and invoices. |
@@ -81,11 +81,13 @@ Or run the same scripts from inside `packages/ug-locale/`.
 
 ## Data sourcing & provenance
 
-The `@ugkit/locale` dataset is sourced from official publications (currently
-the Uganda Electoral Commission's Demarcated Electoral Areas 2025; the
-village-level frame has been requested from the Uganda Bureau of Statistics).
-Sources, retrieval dates, extraction methods and validation output are recorded
-in [`packages/ug-locale/data/PROVENANCE.md`](packages/ug-locale/data/PROVENANCE.md);
+The `@ugkit/locale` dataset is sourced from the Uganda Bureau of Statistics
+*Administrative Units — Parish Level (UG)* spreadsheet (7 July 2026),
+supplied on request. UBOS disseminates administrative units only up to
+parish level, so the `villages` level ships empty (safely queryable, empty
+results by contract) until UBOS changes that policy. Sources, retrieval
+dates, extraction methods, errata, and validation output are recorded in
+[`packages/ug-locale/data/PROVENANCE.md`](packages/ug-locale/data/PROVENANCE.md);
 the full sourcing investigation lives in
 [`packages/ug-locale/scripts/ingest/SAMPLES.md`](packages/ug-locale/scripts/ingest/SAMPLES.md).
 

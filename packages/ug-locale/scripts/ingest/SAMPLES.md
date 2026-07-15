@@ -99,6 +99,42 @@ village frame lives at **UBOS**. Realistic paths to a COMPLETE village dataset:
 - A coded district→county→subcounty→parish frame (finish the `electoral-areas.pdf`
   parser to confirm parish coverage vs the 10,717 target).
 
+## UBOS Track 2 — RESOLVED (2026-07-08)
+
+UBOS replied to the parish-frame request. What arrived:
+
+- **File:** `sources/ubos-parishes-2026-07.xlsx`
+  (originally `Administrative Units-Parish Level_UG-7 July 2026.xlsx`), single
+  sheet `Uganda_Parishes_Ug`, 10,861 rows (header + 10,860 parish rows),
+  10 columns: `Region, RCode, County, CCode, District, DCode, Sub_County,
+  SCode, Parish, PCode`.
+- **Coverage counts:** 4 regions, 146 districts, 313 (district, county) pairs,
+  2,209 sub-counties, 10,860 parishes. Zero blank cells.
+- **Code system:** hierarchical and PER-PARENT (SCode/PCode restart from
+  `01` in each parent), so `(RCode, DCode, CCode, SCode, PCode)` is the
+  unique key. `build-ubos-frame.mjs` concatenates ancestor codes with `.` to
+  produce globally-unique per-level codes that fit ugkit's 12-char code
+  limit.
+- **Villages: not disseminated.** Bob confirmed in writing: *"the Bureau
+  disseminates information up to parish not village level."* This is
+  authoritative — the EC's per-position village PDFs are electoral subsets
+  and no other complete, coded village register is published anywhere.
+  Village-level in ugkit will therefore ship empty (safely queryable, empty
+  results by contract) until UBOS changes its dissemination policy.
+- **Data quality:** ONE typo across 10,860 rows — county code `218.2`
+  (Bududa) spelled "RLUTSESHE COUNTY" in 1 row vs "LUTSESHE COUNTY" in 76.
+  Fixed via a documented entry in `build-ubos-frame.mjs → ERRATA`.
+- **Delta vs EC:** UBOS reports **312 admin counties** (once
+  Kampala-division "counties" collapse to the divisions we already treat as
+  counties). This matches the EC's admin count exactly; the EC's 329 in the
+  prior release was an artefact of electoral-constituency dedup. UBOS is now
+  the authoritative source for `data/uganda.csv`; the EC coded sidecar stays
+  in `ec-districts-counties.csv` for future constituency-level work.
+- **Structural quirk to remember:** in UBOS, Kampala's 5 divisions appear
+  simultaneously as county AND sub-county (the division is both). This is
+  correct — Kampala Capital City Authority conflates the two administrative
+  levels — and it flows through the pipeline naturally.
+
 ## Recommendation (superseded — see EC PDF conclusion above)
 
 1. Re-hit the endpoint when up; confirm whether parish/village appear.
