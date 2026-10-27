@@ -26,8 +26,9 @@ Plus `@ugkit/nin`, `@ugkit/holidays`, `@ugkit/plates`, `@ugkit/momo-fees`,
 six package shapes it's organized around, and the build-order rationale live
 in [ROADMAP.md](ROADMAP.md).
 
-None of the packages are published to npm yet; publishing begins with
-`@ugkit/locale` 0.1.0 once the remaining dataset levels land.
+None of the packages are published to npm yet. `@ugkit/locale` 0.1.0 is
+release-ready (dataset final at parish depth) and publishes once the `@ugkit`
+npm org is set up.
 
 ## Design principles
 
@@ -60,7 +61,7 @@ ugkit/
 │       ├── scripts/        build pipeline, validation gate, benchmark
 │       │   └── ingest/     data sourcing: extractors, playbook, findings
 │       └── test/           engine-invariant tests (node --test)
-├── .github/workflows/      CI (Node 18/20/22) + manual npm publish
+├── .github/workflows/      CI (Node 20/22/24) + manual npm publish
 ├── CONTRIBUTING.md
 └── LICENSE                 MIT
 ```

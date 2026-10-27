@@ -26,9 +26,10 @@
  * EC reference (as of 13 Nov 2025): 146 districts/cities, 312 counties,
  * 2,191 sub-counties/towns/municipal divisions, 10,717 parishes,
  * 71,214 villages. Source: https://www.ec.or.ug/voter-statistics
- * NOTE: county-level total in our CSV will exceed 312 because cities and
- * municipalities contribute divisions at that level — hence the loose
- * tolerance on level 1. Tighten once the sourced hierarchy is settled.
+ * The UBOS parish frame (dataset 2026.1) lands exactly on 312 counties —
+ * city/municipal divisions sit at sub-county level, not county level — so
+ * the county tolerance is tight like the others: it only absorbs gazetting
+ * churn (e.g. the pending Tororo split adds a handful of counties).
  */
 
 import { readFileSync, existsSync } from "node:fs";
@@ -55,7 +56,7 @@ const CODE_RE = /^[A-Za-z0-9.\-]{0,12}$/;
 // Tororo split) between EC statistical releases.
 const EXPECTED = [
   [146, 5],      // districts + cities
-  [312, 400],    // counties — loose: city/municipal divisions land here too
+  [312, 15],     // counties / constituency-equivalents
   [2191, 100],   // sub-counties / town councils / divisions
   [10717, 300],  // parishes / wards
   [71214, 1500], // villages / cells

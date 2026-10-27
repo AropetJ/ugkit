@@ -53,12 +53,13 @@ valuable issues we can receive. Open an issue with:
 
 - the unit's **full chain** (district → … → the unit),
 - what is wrong (misspelling, missing unit, wrong parent, stale name), and
-- if possible, an **official source**: EC list, UBOS profile, or gazette notice.
+- if possible, an **official source**: UBOS list, gazette notice, or EC list.
 
-Note that the county tier currently reflects the EC frame after
-constituency→county reconciliation (multiple same-named electoral
-constituencies collapse into one county); see `data/PROVENANCE.md` before
-reporting an "extra" or "missing" county.
+The dataset mirrors the UBOS administrative-units frame (district → county →
+sub-county → parish). Two things that look like errors but aren't: Kampala's
+five divisions appear at both county and sub-county level (KCCA conflates the
+two tiers), and villages are empty because UBOS does not publish them. See
+`data/PROVENANCE.md` before reporting an "extra" or "missing" unit.
 
 ## Dataset sourcing
 
@@ -66,11 +67,13 @@ The sourcing playbook lives in `packages/ug-locale/scripts/ingest/README.md`,
 and the full investigation record (what each source contains, what it lacks) in
 `scripts/ingest/SAMPLES.md`. Key scripts:
 
-- `build-ec-frame.mjs` — districts + counties from the EC demarcation PDF.
-- `parse-ec-pdf.mjs` — parser for the EC village-level PDF (a partial source).
+- `build-ubos-frame.mjs` — **the live ingest**: UBOS parish-level frame →
+  `data/uganda.csv`, including the documented `ERRATA` table.
 - `normalize.mjs` — canonical naming policy. All ingested names pass through
   `canonicalName` BEFORE landing in the CSV.
-- `validate.mjs` — the quality gate (structural checks + EC reference counts).
+- `validate.mjs` — the quality gate (structural checks + reference counts).
+- `build-ec-frame.mjs`, `parse-ec-pdf.mjs` — retired EC-PDF tooling, kept for
+  reference and a future constituency-level package.
 
 Raw source artifacts (PDFs, extracted text) go in `scripts/ingest/sources/`,
 which is **gitignored** — commit the extraction script and record the source

@@ -1,4 +1,12 @@
-# Endpoint discovery — New Vision election portal (captured 2026-07-02)
+# Source investigation record (2026-07)
+
+> **Outcome:** UBOS is the source of `data/uganda.csv` — see "UBOS Track 2 —
+> RESOLVED" below and `data/PROVENANCE.md`. The New Vision and EC sections are
+> kept as the historical record of why those sources were rejected. The New
+> Vision crawler (`crawl-ec.mjs`), `DISCOVERY.md` and `newvision-districts.json`
+> were removed in the 0.1.0 close-out; they remain in git history.
+
+## Endpoint discovery — New Vision election portal (captured 2026-07-02)
 
 Session findings from driving the portal with browser DevTools. This is the
 "Target A" discovery step from DISCOVERY.md.

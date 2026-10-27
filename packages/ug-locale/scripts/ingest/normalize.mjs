@@ -11,6 +11,9 @@
  *   - Structural suffixes (County, Division, Town Council, Municipality,
  *     Ward, Zone, Cell...) are KEPT — they are semantically real.
  *   - Roman-numeral and letter suffixes (I, II, III, A, B) stay uppercase.
+ *   - Segments after "-", "/", "(" and "." are capitalized like words
+ *     ("Bussi/Kisaba", "Nakaziba (Ggavu)", "P.W.D"); apostrophes are not
+ *     segment boundaries ("T'oo").
  *   - Commas are FORBIDDEN in names (they would break the CSV): replaced
  *     with " - ".
  */
@@ -32,11 +35,11 @@ export function canonicalName(raw) {
       if (KEEP_UPPER.has(upper)) return upper;
       const lower = word.toLowerCase();
       if (i > 0 && KEEP_LOWER.has(lower)) return lower;
-      // Handle hyphenated segments: "Fort-Portal" → "Fort-Portal"
-      return lower
-        .split("-")
-        .map((seg) => (seg ? seg[0].toUpperCase() + seg.slice(1) : seg))
-        .join("-");
+      // Capitalize every segment start, not just the word start:
+      // "fort-portal" → "Fort-Portal", "bussi/kisaba" → "Bussi/Kisaba",
+      // "bweya(sseta)" → "Bweya(Sseta)", "p.w.d" → "P.W.D".
+      // Apostrophes are deliberately NOT boundaries ("T'oo", not "T'Oo").
+      return lower.replace(/(^|[-\/(.])(\p{L})/gu, (_, sep, ch) => sep + ch.toUpperCase());
     })
     .join(" ");
 }

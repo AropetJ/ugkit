@@ -15,11 +15,14 @@ Code follows semver. The dataset has its own version
   shallow dataset (e.g. district+county) ships without a schema change and
   deeper levels back-fill later; absent levels emit empty blobs.
 - Data quality gate `scripts/ingest/validate.mjs` (structural checks +
-  EC reference counts), wired into `prepublishOnly`. Variable-depth aware:
+  official reference counts, ±15 on counties), wired into `prepublishOnly`. Variable-depth aware:
   not-yet-sourced levels are reported and skipped, not failed.
-- EC-sourcing tooling under `scripts/ingest/`: `build-ec-frame.mjs`
-  (districts+counties from the EC PDF), `parse-ec-pdf.mjs` (village-level
-  parser), `DISCOVERY.md`/`SAMPLES.md` (source investigation).
+- Ingest tooling under `scripts/ingest/`: `build-ubos-frame.mjs` (the live
+  UBOS ingest, with a documented `ERRATA` table), `normalize.mjs`
+  (`canonicalName` naming policy, now unit-tested), `SAMPLES.md` (source
+  investigation record). Retired EC-PDF tooling (`build-ec-frame.mjs`,
+  `parse-ec-pdf.mjs`) kept for reference; the never-functional New Vision
+  crawler was removed.
 - Tests rewritten to assert **engine invariants** (sorted levels, contiguous
   children, parent back-references, safe empty results) instead of sample
   content — they pass at any dataset depth and auto-exercise deeper levels
@@ -41,6 +44,8 @@ Code follows semver. The dataset has its own version
     `publishConfig` (public + provenance), CHANGELOG shipped in the tarball.
   - tsconfig: `exactOptionalPropertyTypes`, `verbatimModuleSyntax`,
     `declarationMap`, DOM lib removed.
+  - Built with TypeScript 7 (native compiler); emitted `.js`/`.d.ts` are
+    byte-identical to the TypeScript 5.5 output.
 - Full-scale benchmark `scripts/bench-scale.mjs`. Results at real size
   (71k synthetic villages): build 1.3 s; blobs ≈ 1.9 MB total
   (villages 1.7 MB, districts+counties ≈ 10 KB); villages blob
@@ -48,13 +53,20 @@ Code follows semver. The dataset has its own version
   name index ≈ 10 ms.
 
 ### Dataset
-- `2026.1`: **146 districts + 329 counties**, sourced from the Uganda Electoral
-  Commission's Demarcated Electoral Areas 2025 PDF (retrieved 2026-07-02).
-  Officially coded; constituency→county reconciliation applied (353→329). See
-  `data/PROVENANCE.md`.
-- Sub-counties → parishes → villages: not yet sourced. No single public EC
-  download holds the complete 71,214-village register (the "Split by village"
-  PDF is a ~23% subset); requested from UBOS. Investigation in
-  `scripts/ingest/SAMPLES.md`. These levels back-fill in a later dataset bump.
+- `2026.1`: **146 districts/cities, 312 counties, 2,209 sub-counties/town
+  councils/divisions, 10,860 parishes/wards**, from the Uganda Bureau of
+  Statistics *Administrative Units — Parish Level (UG)* frame (7 July 2026,
+  received by request 2026-07-08). Every unit carries a UBOS code, chained per
+  level (`113` → `113.1` → `113.1.01` → `113.1.01.01`) to be globally unique.
+  See `data/PROVENANCE.md`.
+- Villages ship as an empty, safely-queryable level: UBOS disseminates
+  administrative units only to parish level, and no other authoritative coded
+  village register exists.
+- Ingest corrections: one UBOS typo fixed via `ERRATA` (county `218.2`
+  "RLUTSESHE" → "Lutseshe"); name casing now capitalizes segments after `/`,
+  `(` and `.` (33 names, e.g. "Bussi/Kisaba", "Nakaziba (Ggavu)", "P.W.D").
+- Supersedes the unreleased EC-sourced draft of `2026.1` (districts + 329
+  counties from the EC Demarcated Electoral Areas 2025 PDF), whose county
+  count was an artefact of constituency deduplication.
 - `data/uganda.sample.csv` (15-row, full-depth) remains the pipeline fixture
   and benchmark input.

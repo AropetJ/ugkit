@@ -1249,7 +1249,7 @@ district_code,district,county_code,county,subcounty_code,subcounty,parish_code,p
 117,Buikwe,117.1,Buikwe County,117.1.06,Nkokonjeru Town Council,117.1.06.01,Bukasa Ward
 117,Buikwe,117.1,Buikwe County,117.1.06,Nkokonjeru Town Council,117.1.06.02,Mulajje Ward
 117,Buikwe,117.1,Buikwe County,117.1.06,Nkokonjeru Town Council,117.1.06.03,Nkokonjeru Ward
-117,Buikwe,117.3,Njeru Municipality,117.3.02,Nyenga Division,117.3.02.01,Buziika (b)
+117,Buikwe,117.3,Njeru Municipality,117.3.02,Nyenga Division,117.3.02.01,Buziika (B)
 117,Buikwe,117.3,Njeru Municipality,117.3.02,Nyenga Division,117.3.02.02,Kabizzi
 117,Buikwe,117.3,Njeru Municipality,117.3.02,Nyenga Division,117.3.02.03,Namabu
 117,Buikwe,117.3,Njeru Municipality,117.3.02,Nyenga Division,117.3.02.04,Nyenga
@@ -2145,7 +2145,7 @@ district_code,district,county_code,county,subcounty_code,subcounty,parish_code,p
 119,Butambala,119.1,Butambala County,119.1.03,Gombe Town Council,119.1.03.01,Gombe Ward
 119,Butambala,119.1,Butambala County,119.1.03,Gombe Town Council,119.1.03.02,Kayenje Ward
 119,Butambala,119.1,Butambala County,119.1.03,Gombe Town Council,119.1.03.03,Ntolomwe Ward
-119,Butambala,119.1,Butambala County,119.1.04,Kalamba,119.1.04.01,Bweya(sseta)
+119,Butambala,119.1,Butambala County,119.1.04,Kalamba,119.1.04.01,Bweya(Sseta)
 119,Butambala,119.1,Butambala County,119.1.04,Kalamba,119.1.04.02,Kitimba
 119,Butambala,119.1,Butambala County,119.1.05,Kalamba Town Council,119.1.05.01,Kabasanda Ward
 119,Butambala,119.1,Butambala County,119.1.05,Kalamba Town Council,119.1.05.02,Kirokola Ward
@@ -2898,7 +2898,7 @@ district_code,district,county_code,county,subcounty_code,subcounty,parish_code,p
 204,Jinja,204.1,Butembe County,204.1.01,Busedde,204.1.01.04,Nabitambala
 204,Jinja,204.1,Butembe County,204.1.01,Busedde,204.1.01.05,Nalinaibi
 204,Jinja,204.2,Kagoma County,204.2.01,Butagaya,204.2.01.01,Budima
-204,Jinja,204.2,Kagoma County,204.2.01,Butagaya,204.2.01.02,Nakakulwe (kisozi)
+204,Jinja,204.2,Kagoma County,204.2.01,Butagaya,204.2.01.02,Nakakulwe (Kisozi)
 204,Jinja,204.2,Kagoma County,204.2.01,Butagaya,204.2.01.03,Nawampanda
 204,Jinja,204.2,Kagoma County,204.2.01,Butagaya,204.2.01.04,Wansiimba
 204,Jinja,204.3,Kagoma North County,204.3.01,Buwenge,204.3.01.01,Buweera
@@ -2928,7 +2928,7 @@ district_code,district,county_code,county,subcounty_code,subcounty,parish_code,p
 204,Jinja,204.2,Kagoma County,204.2.02,Namagera Town Council,204.2.02.04,Namwendwa Ward
 238,Jinja City,238.1,Jinja North Division,238.1.01,Jinja North Division,238.1.01.01,Budhumbuli East Ward
 238,Jinja City,238.1,Jinja North Division,238.1.01,Jinja North Division,238.1.01.02,Budhumbuli West Ward
-238,Jinja City,238.1,Jinja North Division,238.1.01,Jinja North Division,238.1.01.03,Buwagi (kakyomya) Ward
+238,Jinja City,238.1,Jinja North Division,238.1.01,Jinja North Division,238.1.01.03,Buwagi (Kakyomya) Ward
 238,Jinja City,238.1,Jinja North Division,238.1.01,Jinja North Division,238.1.01.04,Buwekula Ward
 238,Jinja City,238.1,Jinja North Division,238.1.01,Jinja North Division,238.1.01.05,Buwenda Tc Ward
 238,Jinja City,238.1,Jinja North Division,238.1.01,Jinja North Division,238.1.01.06,Ivunamba Ward
@@ -2973,7 +2973,7 @@ district_code,district,county_code,county,subcounty_code,subcounty,parish_code,p
 318,Kaabong,318.1,Dodoth East County,318.1.03,Kakamar,318.1.03.01,Kakamar
 318,Kaabong,318.1,Dodoth East County,318.1.03,Kakamar,318.1.03.02,Kite-Lore
 318,Kaabong,318.1,Dodoth East County,318.1.03,Kakamar,318.1.03.03,Kotirae
-318,Kaabong,318.1,Dodoth East County,318.1.03,Kakamar,318.1.03.04,Lomilimil(natingorok)
+318,Kaabong,318.1,Dodoth East County,318.1.03,Kakamar,318.1.03.04,Lomilimil(Natingorok)
 318,Kaabong,318.1,Dodoth East County,318.1.03,Kakamar,318.1.03.05,Morunyang
 318,Kaabong,318.2,Dodoth North County,318.2.02,Kalapata,318.2.02.01,Kurao
 318,Kaabong,318.2,Dodoth North County,318.2.02,Kalapata,318.2.02.02,Meus
@@ -3007,7 +3007,7 @@ district_code,district,county_code,county,subcounty_code,subcounty,parish_code,p
 318,Kaabong,318.1,Dodoth East County,318.1.05,Lodiko,318.1.05.01,Kajiir
 318,Kaabong,318.1,Dodoth East County,318.1.05,Lodiko,318.1.05.02,Kangios
 318,Kaabong,318.1,Dodoth East County,318.1.05,Lodiko,318.1.05.03,Kotome
-318,Kaabong,318.1,Dodoth East County,318.1.05,Lodiko,318.1.05.04,Lopedo/teuso
+318,Kaabong,318.1,Dodoth East County,318.1.05,Lodiko,318.1.05.04,Lopedo/Teuso
 318,Kaabong,318.1,Dodoth East County,318.1.05,Lodiko,318.1.05.05,Sakatan
 318,Kaabong,318.1,Dodoth East County,318.1.06,Lolelia,318.1.06.01,Kaimese
 318,Kaabong,318.1,Dodoth East County,318.1.06,Lolelia,318.1.06.02,Lochokei
@@ -3031,15 +3031,15 @@ district_code,district,county_code,county,subcounty_code,subcounty,parish_code,p
 318,Kaabong,318.3,Ik County,318.3.02,Morungole,318.3.02.01,Lokwakaramoe
 318,Kaabong,318.3,Ik County,318.3.02,Morungole,318.3.02.02,Morungole
 318,Kaabong,318.3,Ik County,318.3.02,Morungole,318.3.02.03,Usake
-318,Kaabong,318.1,Dodoth East County,318.1.09,Sidok (kopoth),318.1.09.01,Kasimeri
-318,Kaabong,318.1,Dodoth East County,318.1.09,Sidok (kopoth),318.1.09.02,Locherep
-318,Kaabong,318.1,Dodoth East County,318.1.09,Sidok (kopoth),318.1.09.03,Longaro
+318,Kaabong,318.1,Dodoth East County,318.1.09,Sidok (Kopoth),318.1.09.01,Kasimeri
+318,Kaabong,318.1,Dodoth East County,318.1.09,Sidok (Kopoth),318.1.09.02,Locherep
+318,Kaabong,318.1,Dodoth East County,318.1.09,Sidok (Kopoth),318.1.09.03,Longaro
 318,Kaabong,318.3,Ik County,318.3.03,Timu,318.3.03.01,Kapalu
 318,Kaabong,318.3,Ik County,318.3.03,Timu,318.3.03.02,Loitanit
 318,Kaabong,318.3,Ik County,318.3.03,Timu,318.3.03.03,Lokinene
 404,Kabale,404.2,Ndorwa County,404.2.01,Buhara,404.2.01.01,Bugarama
 404,Kabale,404.2,Ndorwa County,404.2.01,Buhara,404.2.01.02,Buhara
-404,Kabale,404.2,Ndorwa County,404.2.01,Buhara,404.2.01.03,Karweru (kafunjo)
+404,Kabale,404.2,Ndorwa County,404.2.01,Buhara,404.2.01.03,Karweru (Kafunjo)
 404,Kabale,404.2,Ndorwa County,404.2.01,Buhara,404.2.01.04,Kitanga
 404,Kabale,404.2,Ndorwa County,404.2.01,Buhara,404.2.01.05,Muyebe
 404,Kabale,404.2,Ndorwa County,404.2.01,Buhara,404.2.01.06,Ntarabana
@@ -3596,7 +3596,7 @@ district_code,district,county_code,county,subcounty_code,subcounty,parish_code,p
 122,Kalungu,122.1,Kalungu County,122.1.01,Bukulula,122.1.01.03,Kiti
 122,Kalungu,122.1,Kalungu County,122.1.01,Bukulula,122.1.01.04,Kyambala
 122,Kalungu,122.1,Kalungu County,122.1.01,Bukulula,122.1.01.05,Lusango
-122,Kalungu,122.1,Kalungu County,122.1.01,Bukulula,122.1.01.06,Lusasa/kalungi
+122,Kalungu,122.1,Kalungu County,122.1.01,Bukulula,122.1.01.06,Lusasa/Kalungi
 122,Kalungu,122.1,Kalungu County,122.1.01,Bukulula,122.1.01.07,Mabuye
 122,Kalungu,122.1,Kalungu County,122.1.01,Bukulula,122.1.01.08,Mukoko
 122,Kalungu,122.1,Kalungu County,122.1.02,Kalungu,122.1.02.01,Bulawula
@@ -4160,7 +4160,7 @@ district_code,district,county_code,county,subcounty_code,subcounty,parish_code,p
 335,Karenga,335.1,Dodoth West County,335.1.03,Kapedo Town Council,335.1.03.01,Kalimon Ward
 335,Karenga,335.1,Dodoth West County,335.1.03,Kapedo Town Council,335.1.03.02,Kapedo Ward
 335,Karenga,335.1,Dodoth West County,335.1.03,Kapedo Town Council,335.1.03.03,Nakorichokei Ward
-335,Karenga,335.2,Napore West County,335.2.01,Karenga,335.2.01.01,Loyoro/napore
+335,Karenga,335.2,Napore West County,335.2.01,Karenga,335.2.01.01,Loyoro/Napore
 335,Karenga,335.2,Napore West County,335.2.01,Karenga,335.2.01.02,Nakitoit
 335,Karenga,335.2,Napore West County,335.2.02,Karenga Town Council,335.2.02.01,Kangole Ward
 335,Karenga,335.2,Napore West County,335.2.02,Karenga Town Council,335.2.02.02,Karenga Ward
@@ -4169,7 +4169,7 @@ district_code,district,county_code,county,subcounty_code,subcounty,parish_code,p
 335,Karenga,335.1,Dodoth West County,335.1.04,Kawalakol,335.1.04.01,Kawalakol
 335,Karenga,335.1,Dodoth West County,335.1.04,Kawalakol,335.1.04.02,Kokoro
 335,Karenga,335.1,Dodoth West County,335.1.04,Kawalakol,335.1.04.03,Lomanok
-335,Karenga,335.1,Dodoth West County,335.1.04,Kawalakol,335.1.04.04,Lomej/natiira
+335,Karenga,335.1,Dodoth West County,335.1.04,Kawalakol,335.1.04.04,Lomej/Natiira
 335,Karenga,335.1,Dodoth West County,335.1.04,Kawalakol,335.1.04.05,Naoyagum
 335,Karenga,335.1,Dodoth West County,335.1.04,Kawalakol,335.1.04.06,Naseperwae
 335,Karenga,335.2,Napore West County,335.2.03,Kidepo Town Council,335.2.03.01,Kidepo Ward
@@ -4384,7 +4384,7 @@ district_code,district,county_code,county,subcounty_code,subcounty,parish_code,p
 406,Kasese,406.1,Bukonjo County,406.1.17,Nyakatonzi,406.1.17.04,Nyamugasani
 406,Kasese,406.1,Bukonjo County,406.1.18,Nyakiyumbu,406.1.18.01,Bukangara
 406,Kasese,406.1,Bukonjo County,406.1.18,Nyakiyumbu,406.1.18.02,Kaghorwe
-406,Kasese,406.1,Bukonjo County,406.1.18,Nyakiyumbu,406.1.18.03,Katholu/katojo
+406,Kasese,406.1,Bukonjo County,406.1.18,Nyakiyumbu,406.1.18.03,Katholu/Katojo
 406,Kasese,406.1,Bukonjo County,406.1.18,Nyakiyumbu,406.1.18.04,Kayanja
 406,Kasese,406.1,Bukonjo County,406.1.18,Nyakiyumbu,406.1.18.05,Lyakirema
 406,Kasese,406.1,Bukonjo County,406.1.18,Nyakiyumbu,406.1.18.06,Muhindi
@@ -4675,7 +4675,7 @@ district_code,district,county_code,county,subcounty_code,subcounty,parish_code,p
 112,Kayunga,112.2,Ntenjeru County,112.2.06,Kayunga Town Council,112.2.06.02,Kayunga Central Ward
 112,Kayunga,112.2,Ntenjeru County,112.2.06,Kayunga Town Council,112.2.06.04,Namagabi Ward
 112,Kayunga,112.2,Ntenjeru County,112.2.06,Kayunga Town Council,112.2.06.05,Ntenjeru Ward
-112,Kayunga,112.2,Ntenjeru County,112.2.06,Kayunga Town Council,112.2.06.03,West/kibira Ward
+112,Kayunga,112.2,Ntenjeru County,112.2.06,Kayunga Town Council,112.2.06.03,West/Kibira Ward
 112,Kayunga,112.1,Bbale County,112.1.04,Kitimbwa,112.1.04.01,Kitatya
 112,Kayunga,112.1,Bbale County,112.1.04,Kitimbwa,112.1.04.02,Kyerima
 112,Kayunga,112.1,Bbale County,112.1.04,Kitimbwa,112.1.04.03,Nakivubo
@@ -5734,11 +5734,11 @@ district_code,district,county_code,county,subcounty_code,subcounty,parish_code,p
 228,Kween,228.2,Soi County,228.2.01,Chepsukunya Town Council,228.2.01.03,Nasak Ward
 228,Kween,228.2,Soi County,228.2.01,Chepsukunya Town Council,228.2.01.04,Ngariamwet Ward
 228,Kween,228.2,Soi County,228.2.01,Chepsukunya Town Council,228.2.01.05,Tulwo Ward
-228,Kween,228.2,Soi County,228.2.02,Greek River (kiriki),228.2.02.01,Alalam
-228,Kween,228.2,Soi County,228.2.02,Greek River (kiriki),228.2.02.02,Kapswama
-228,Kween,228.2,Soi County,228.2.02,Greek River (kiriki),228.2.02.03,Kere
-228,Kween,228.2,Soi County,228.2.02,Greek River (kiriki),228.2.02.04,Kiriki
-228,Kween,228.2,Soi County,228.2.02,Greek River (kiriki),228.2.02.05,Korite
+228,Kween,228.2,Soi County,228.2.02,Greek River (Kiriki),228.2.02.01,Alalam
+228,Kween,228.2,Soi County,228.2.02,Greek River (Kiriki),228.2.02.02,Kapswama
+228,Kween,228.2,Soi County,228.2.02,Greek River (Kiriki),228.2.02.03,Kere
+228,Kween,228.2,Soi County,228.2.02,Greek River (Kiriki),228.2.02.04,Kiriki
+228,Kween,228.2,Soi County,228.2.02,Greek River (Kiriki),228.2.02.05,Korite
 228,Kween,228.1,Kween County,228.1.04,Kapkwata,228.1.04.01,Cherakan
 228,Kween,228.1,Kween County,228.1.04,Kapkwata,228.1.04.02,Kaperotwo
 228,Kween,228.1,Kween County,228.1.04,Kapkwata,228.1.04.03,Kapkwata
@@ -6538,7 +6538,7 @@ district_code,district,county_code,county,subcounty_code,subcounty,parish_code,p
 104,Luweero,104.1,Bamunanika County,104.1.01,Bamunanika,104.1.01.01,Kibanyi
 104,Luweero,104.1,Bamunanika County,104.1.01,Bamunanika,104.1.01.02,Kibirizi
 104,Luweero,104.1,Bamunanika County,104.1.01,Bamunanika,104.1.01.03,Kiteme
-104,Luweero,104.1,Bamunanika County,104.1.01,Bamunanika,104.1.01.04,Kyampisi (bamunanika)
+104,Luweero,104.1,Bamunanika County,104.1.01,Bamunanika,104.1.01.04,Kyampisi (Bamunanika)
 104,Luweero,104.1,Bamunanika County,104.1.01,Bamunanika,104.1.01.05,Mpologoma
 104,Luweero,104.1,Bamunanika County,104.1.01,Bamunanika,104.1.01.06,Sekamuli
 104,Luweero,104.2,Katikamu County,104.2.01,Bombo Town Council,104.2.01.01,Bombo Central Ward
@@ -6586,7 +6586,7 @@ district_code,district,county_code,county,subcounty_code,subcounty,parish_code,p
 104,Luweero,104.1,Bamunanika County,104.1.07,Kikyusa Town Council,104.1.07.02,Kimazi Ward
 104,Luweero,104.1,Bamunanika County,104.1.07,Kikyusa Town Council,104.1.07.03,Kiziba Ward
 104,Luweero,104.1,Bamunanika County,104.1.07,Kikyusa Town Council,104.1.07.04,Wankanya Ward
-104,Luweero,104.2,Katikamu County,104.2.05,Luweero Town Council,104.2.05.01,Kasana P.w.d Ward
+104,Luweero,104.2,Katikamu County,104.2.05,Luweero Town Council,104.2.05.01,Kasana P.W.D Ward
 104,Luweero,104.2,Katikamu County,104.2.05,Luweero Town Council,104.2.05.02,Kavule Ward
 104,Luweero,104.2,Katikamu County,104.2.05,Luweero Town Council,104.2.05.03,Kiwogozi Ward
 104,Luweero,104.2,Katikamu County,104.2.05,Luweero Town Council,104.2.05.04,Luwero Central Ward
@@ -7070,7 +7070,7 @@ district_code,district,county_code,county,subcounty_code,subcounty,parish_code,p
 409,Masindi,409.3,Masindi Municipality,409.3.01,Central Division,409.3.01.03,Western Ward
 409,Masindi,409.1,Bujenje County,409.1.05,Kabango Town Council,409.1.05.01,Kabango Ward
 409,Masindi,409.1,Bujenje County,409.1.05,Kabango Town Council,409.1.05.02,Kapeeka Ward
-409,Masindi,409.1,Bujenje County,409.1.05,Kabango Town Council,409.1.05.03,Kinyara Sugar L.t.d. Ward
+409,Masindi,409.1,Bujenje County,409.1.05,Kabango Town Council,409.1.05.03,Kinyara Sugar L.T.D. Ward
 409,Masindi,409.3,Masindi Municipality,409.3.02,Karujubu Division,409.3.02.01,Kibwona Ward
 409,Masindi,409.3,Masindi Municipality,409.3.02,Karujubu Division,409.3.02.02,Kihuuba Ward
 409,Masindi,409.3,Masindi Municipality,409.3.02,Karujubu Division,409.3.02.03,Kisiita Ward
@@ -7332,7 +7332,7 @@ district_code,district,county_code,county,subcounty_code,subcounty,parish_code,p
 239,Mbale City,239.2,Northern Division,239.2.02,Northern Division,239.2.02.22,Namabasa Ward
 239,Mbale City,239.2,Northern Division,239.2.02,Northern Division,239.2.02.23,Namagumba Ward
 239,Mbale City,239.2,Northern Division,239.2.02,Northern Division,239.2.02.24,Namakwekwe Ward
-239,Mbale City,239.2,Northern Division,239.2.02,Northern Division,239.2.02.25,Nambulu/kasanja Ward
+239,Mbale City,239.2,Northern Division,239.2.02,Northern Division,239.2.02.25,Nambulu/Kasanja Ward
 239,Mbale City,239.2,Northern Division,239.2.02,Northern Division,239.2.02.26,Namunsi Ward
 239,Mbale City,239.2,Northern Division,239.2.02,Northern Division,239.2.02.27,Nanyunza
 239,Mbale City,239.2,Northern Division,239.2.02,Northern Division,239.2.02.28,Nkoma-Namanyonyi Ward
@@ -7380,7 +7380,7 @@ district_code,district,county_code,county,subcounty_code,subcounty,parish_code,p
 410,Mbarara,410.1,Kashari North,410.1.10,Rubindi-Ruhumba Town Council,410.1.10.01,Bisya
 410,Mbarara,410.1,Kashari North,410.1.10,Rubindi-Ruhumba Town Council,410.1.10.02,Kabare Ward
 410,Mbarara,410.1,Kashari North,410.1.10,Rubindi-Ruhumba Town Council,410.1.10.03,Karuhama Ward
-410,Mbarara,410.1,Kashari North,410.1.10,Rubindi-Ruhumba Town Council,410.1.10.04,Karwesanga(rugaaga)
+410,Mbarara,410.1,Kashari North,410.1.10,Rubindi-Ruhumba Town Council,410.1.10.04,Karwesanga(Rugaaga)
 410,Mbarara,410.1,Kashari North,410.1.10,Rubindi-Ruhumba Town Council,410.1.10.05,Rubindi Central Ward
 410,Mbarara,410.2,Kashari South,410.2.06,Rwanyamahembe Town Council,410.2.06.01,Bwizibwera Lower Ward
 410,Mbarara,410.2,Kashari South,410.2.06,Rwanyamahembe Town Council,410.2.06.02,Kakyerere Ward
@@ -7516,7 +7516,7 @@ district_code,district,county_code,county,subcounty_code,subcounty,parish_code,p
 115,Mityana,115.2,Mityana County,115.2.02,Busunju Town Council,115.2.02.03,West Ward
 115,Mityana,115.1,Busujju County,115.1.03,Butayunja,115.1.03.01,Kitebere
 115,Mityana,115.1,Busujju County,115.1.03,Butayunja,115.1.03.02,Kitongo
-115,Mityana,115.1,Busujju County,115.1.03,Butayunja,115.1.03.03,Nakaziba (ggavu)
+115,Mityana,115.1,Busujju County,115.1.03,Butayunja,115.1.03.03,Nakaziba (Ggavu)
 115,Mityana,115.1,Busujju County,115.1.03,Butayunja,115.1.03.04,Ngandwe
 115,Mityana,115.3,Mityana Municipality,115.3.02,Central Division,115.3.02.01,Central Ward
 115,Mityana,115.3,Mityana Municipality,115.3.02,Central Division,115.3.02.02,Katakala Ward
@@ -7627,7 +7627,7 @@ district_code,district,county_code,county,subcounty_code,subcounty,parish_code,p
 309,Moyo,309.1,West Moyo,309.1.02,Dufile,309.1.02.02,Amuri
 309,Moyo,309.1,West Moyo,309.1.02,Dufile,309.1.02.03,Arra
 309,Moyo,309.1,West Moyo,309.1.02,Dufile,309.1.02.04,Chinyi
-309,Moyo,309.1,West Moyo,309.1.02,Dufile,309.1.02.05,Dufile (indridri)
+309,Moyo,309.1,West Moyo,309.1.02,Dufile,309.1.02.05,Dufile (Indridri)
 309,Moyo,309.1,West Moyo,309.1.02,Dufile,309.1.02.06,Lebubu
 309,Moyo,309.1,West Moyo,309.1.02,Dufile,309.1.02.07,Nzerea
 309,Moyo,309.1,West Moyo,309.1.03,Laropi,309.1.03.01,Gbalala
@@ -7679,7 +7679,7 @@ district_code,district,county_code,county,subcounty_code,subcounty,parish_code,p
 106,Mpigi,106.1,Mawokota County,106.1.03,Kammengo,106.1.03.03,Kanyike
 106,Mpigi,106.1,Mawokota County,106.1.03,Kammengo,106.1.03.04,Kyanja
 106,Mpigi,106.1,Mawokota County,106.1.03,Kammengo,106.1.03.05,Luwala
-106,Mpigi,106.1,Mawokota County,106.1.03,Kammengo,106.1.03.06,Lwaggwa/kibaanga
+106,Mpigi,106.1,Mawokota County,106.1.03,Kammengo,106.1.03.06,Lwaggwa/Kibaanga
 106,Mpigi,106.1,Mawokota County,106.1.03,Kammengo,106.1.03.07,Musa
 106,Mpigi,106.1,Mawokota County,106.1.03,Kammengo,106.1.03.08,Muyira
 106,Mpigi,106.1,Mawokota County,106.1.04,Kayabwe Town Council,106.1.04.01,Busese Ward
@@ -7811,7 +7811,7 @@ district_code,district,county_code,county,subcounty_code,subcounty,parish_code,p
 107,Mubende,107.4,Mubende Municipality,107.4.02,South Division,107.4.02.05,Kisekende Ward
 107,Mubende,107.4,Mubende Municipality,107.4.02,South Division,107.4.02.06,Lwabagabo Ward
 107,Mubende,107.4,Mubende Municipality,107.4.03,West Division,107.4.03.01,Biwanga Ward
-107,Mubende,107.4,Mubende Municipality,107.4.03,West Division,107.4.03.02,Kasenyi/caltex Ward
+107,Mubende,107.4,Mubende Municipality,107.4.03,West Division,107.4.03.02,Kasenyi/Caltex Ward
 107,Mubende,107.4,Mubende Municipality,107.4.03,West Division,107.4.03.03,Katogo Ward
 107,Mubende,107.4,Mubende Municipality,107.4.03,West Division,107.4.03.04,Kayinja Ward
 107,Mubende,107.4,Mubende Municipality,107.4.03,West Division,107.4.03.05,Mijunwa Ward
@@ -7862,8 +7862,8 @@ district_code,district,county_code,county,subcounty_code,subcounty,parish_code,p
 108,Mukono,108.1,Mukono County,108.1.05,Mpunge,108.1.05.03,Mpunge
 108,Mukono,108.1,Mukono County,108.1.05,Mpunge,108.1.05.04,Ngombere
 108,Mukono,108.2,Mukono Municipality,108.2.02,Mukono Central Division,108.2.02.01,Ggulu Ward
-108,Mukono,108.2,Mukono Municipality,108.2.02,Mukono Central Division,108.2.02.02,Namumira/anthony Ward
-108,Mukono,108.2,Mukono Municipality,108.2.02,Mukono Central Division,108.2.02.03,Nsuube/kauga Ward
+108,Mukono,108.2,Mukono Municipality,108.2.02,Mukono Central Division,108.2.02.02,Namumira/Anthony Ward
+108,Mukono,108.2,Mukono Municipality,108.2.02,Mukono Central Division,108.2.02.03,Nsuube/Kauga Ward
 108,Mukono,108.2,Mukono Municipality,108.2.02,Mukono Central Division,108.2.02.04,Ntawo Ward
 108,Mukono,108.3,Nakifuma County,108.3.04,Nagojje,108.3.04.01,Kyajja
 108,Mukono,108.3,Nakifuma County,108.3.04,Nagojje,108.3.04.02,Nagojje
@@ -7965,9 +7965,9 @@ district_code,district,county_code,county,subcounty_code,subcounty,parish_code,p
 311,Nakapiripirit,311.2,Chekwii East County,311.2.02,Moruita,311.2.02.01,Karinga
 311,Nakapiripirit,311.2,Chekwii East County,311.2.02,Moruita,311.2.02.02,Komoret
 311,Nakapiripirit,311.2,Chekwii East County,311.2.02,Moruita,311.2.02.03,Moruita
-311,Nakapiripirit,311.2,Chekwii East County,311.2.03,Nakapiripirit Town Council,311.2.03.01,Katanga/township Ward
-311,Nakapiripirit,311.2,Chekwii East County,311.2.03,Nakapiripirit Town Council,311.2.03.02,Lobulio/lomuu Ward
-311,Nakapiripirit,311.2,Chekwii East County,311.2.03,Nakapiripirit Town Council,311.2.03.03,Lobuneit/lokoona Ward
+311,Nakapiripirit,311.2,Chekwii East County,311.2.03,Nakapiripirit Town Council,311.2.03.01,Katanga/Township Ward
+311,Nakapiripirit,311.2,Chekwii East County,311.2.03,Nakapiripirit Town Council,311.2.03.02,Lobulio/Lomuu Ward
+311,Nakapiripirit,311.2,Chekwii East County,311.2.03,Nakapiripirit Town Council,311.2.03.03,Lobuneit/Lokoona Ward
 311,Nakapiripirit,311.1,Chekwi County,311.1.05,Namalu,311.1.05.01,Kokuwuam
 311,Nakapiripirit,311.1,Chekwi County,311.1.05,Namalu,311.1.05.02,Lokatapan
 311,Nakapiripirit,311.1,Chekwi County,311.1.05,Namalu,311.1.05.03,Namatata
@@ -8824,9 +8824,9 @@ district_code,district,county_code,county,subcounty_code,subcounty,parish_code,p
 328,Nwoya,328.2,Nwoya East County,328.2.01,Alero,328.2.01.02,Kal
 328,Nwoya,328.2,Nwoya East County,328.2.01,Alero,328.2.01.03,Okura
 328,Nwoya,328.2,Nwoya East County,328.2.01,Alero,328.2.01.04,Panyabono
-328,Nwoya,328.1,Nwoya County,328.1.01,Anaka (payira),328.1.01.01,Pabali
-328,Nwoya,328.1,Nwoya County,328.1.01,Anaka (payira),328.1.01.02,Todora
-328,Nwoya,328.1,Nwoya County,328.1.01,Anaka (payira),328.1.01.03,Ywaya
+328,Nwoya,328.1,Nwoya County,328.1.01,Anaka (Payira),328.1.01.01,Pabali
+328,Nwoya,328.1,Nwoya County,328.1.01,Anaka (Payira),328.1.01.02,Todora
+328,Nwoya,328.1,Nwoya County,328.1.01,Anaka (Payira),328.1.01.03,Ywaya
 328,Nwoya,328.1,Nwoya County,328.1.04,Anaka Town Council,328.1.04.01,Akago Ward
 328,Nwoya,328.1,Nwoya County,328.1.04,Anaka Town Council,328.1.04.02,Ceke Ward
 328,Nwoya,328.1,Nwoya County,328.1.04,Anaka Town Council,328.1.04.03,Labyei Ward
@@ -9992,7 +9992,7 @@ district_code,district,county_code,county,subcounty_code,subcounty,parish_code,p
 215,Sironko,215.1,Budadiri County,215.1.32,Kikobero,215.1.32.02,Kikobero
 215,Sironko,215.1,Budadiri County,215.1.32,Kikobero,215.1.32.03,Namwenje
 215,Sironko,215.1,Budadiri County,215.1.32,Kikobero,215.1.32.04,Ngwele
-215,Sironko,215.1,Budadiri County,215.1.32,Kikobero,215.1.32.05,Simu/pondo
+215,Sironko,215.1,Budadiri County,215.1.32,Kikobero,215.1.32.05,Simu/Pondo
 215,Sironko,215.1,Budadiri County,215.1.33,Legenya,215.1.33.01,Bumaguze
 215,Sironko,215.1,Budadiri County,215.1.33,Legenya,215.1.33.02,Bumasifwa
 215,Sironko,215.1,Budadiri County,215.1.33,Legenya,215.1.33.03,Bumasobo
@@ -10129,7 +10129,7 @@ district_code,district,county_code,county,subcounty_code,subcounty,parish_code,p
 240,Soroti City,240.2,Soroti West Division,240.2.01,Soroti West Division,240.2.01.06,Arapai Ward
 240,Soroti City,240.2,Soroti West Division,240.2.01,Soroti West Division,240.2.01.07,Nakatunya Ward
 240,Soroti City,240.2,Soroti West Division,240.2.01,Soroti West Division,240.2.01.08,Oderai Ward
-240,Soroti City,240.2,Soroti West Division,240.2.01,Soroti West Division,240.2.01.09,Oderai/majengo Ward
+240,Soroti City,240.2,Soroti West Division,240.2.01,Soroti West Division,240.2.01.09,Oderai/Majengo Ward
 240,Soroti City,240.2,Soroti West Division,240.2.01,Soroti West Division,240.2.01.10,Orwadai Ward
 240,Soroti City,240.2,Soroti West Division,240.2.01,Soroti West Division,240.2.01.11,Pamba Ward
 240,Soroti City,240.2,Soroti West Division,240.2.01,Soroti West Division,240.2.01.12,Senior Quarters Ward
@@ -10427,12 +10427,12 @@ district_code,district,county_code,county,subcounty_code,subcounty,parish_code,p
 212,Tororo,212.1,Tororo Municipality,212.1.01,Tororo Eastern,212.1.01.05,Nyangole
 212,Tororo,212.1,Tororo Municipality,212.1.02,Tororo Western,212.1.02.01,Agururu A
 212,Tororo,212.1,Tororo Municipality,212.1.02,Tororo Western,212.1.02.02,Agururu B
-212,Tororo,212.1,Tororo Municipality,212.1.02,Tororo Western,212.1.02.03,Bison/magoria
+212,Tororo,212.1,Tororo Municipality,212.1.02,Tororo Western,212.1.02.03,Bison/Magoria
 212,Tororo,212.1,Tororo Municipality,212.1.02,Tororo Western,212.1.02.04,Central
 113,Wakiso,113.5,Makindye-Ssabagabo Municipality,113.5.01,Bunamwaya Division,113.5.01.01,Bunamwaya Ward
 113,Wakiso,113.5,Makindye-Ssabagabo Municipality,113.5.01,Bunamwaya Division,113.5.01.02,Mutundwe Ward
 113,Wakiso,113.1,Busiro County,113.1.01,Bussi,113.1.01.01,Balabala
-113,Wakiso,113.1,Busiro County,113.1.01,Bussi,113.1.01.02,Bussi/kisaba
+113,Wakiso,113.1,Busiro County,113.1.01,Bussi,113.1.01.02,Bussi/Kisaba
 113,Wakiso,113.1,Busiro County,113.1.01,Bussi,113.1.01.03,Gulwe
 113,Wakiso,113.1,Busiro County,113.1.01,Bussi,113.1.01.04,Tebankiza
 113,Wakiso,113.1,Busiro County,113.1.01,Bussi,113.1.01.05,Zzinga

@@ -16,12 +16,24 @@ A ground-up rebuild of the `ug-locale` idea with three fixes:
 
 ## Data coverage
 
-Dataset `2026.1` ships **146 districts + 329 counties**, sourced from the Uganda
-Electoral Commission's Demarcated Electoral Areas 2025 and officially coded. The
-sub-county, parish and village levels are **not yet populated** — those functions
-return `[]` until the data is sourced (village-complete frame pending from UBOS;
-see [`data/PROVENANCE.md`](data/PROVENANCE.md)). The full five-level API below is
-stable regardless; deeper levels simply fill in via a future dataset bump.
+Dataset `2026.1` ships the official **Uganda Bureau of Statistics** frame
+(Administrative Units — Parish Level, 7 July 2026), every unit coded:
+
+| Level | Units | Blob (raw / gzip) |
+|---|---|---|
+| Districts + cities | 146 | 3.6 KB / 1.3 KB |
+| Counties | 312 | 12 KB / 3.4 KB |
+| Sub-counties / town councils / divisions | 2,209 | 76 KB / 19 KB |
+| Parishes / wards | 10,860 | 395 KB / 84 KB |
+| Villages / cells | **0** | empty placeholder |
+
+**Villages are empty by design, not by omission.** UBOS confirmed in writing
+that it disseminates administrative units only up to parish level, and no
+other authoritative, coded national village register exists. The `villages`
+level stays in the API and is safe to query — it returns `[]`/`undefined` and
+`villageCount === 0` — so if UBOS ever publishes villages they arrive as a
+dataset bump with no code change. Details in
+[`data/PROVENANCE.md`](data/PROVENANCE.md).
 
 ## Usage
 
@@ -33,18 +45,19 @@ import { parishes } from "@ugkit/locale/parishes";
 
 const wakiso = districtByName("Wakiso")!;
 const busiro = counties(wakiso.id).find(c => c.name === "Busiro County")!;
-const nansana = subCounties(busiro.id)[0];
+const bussi = subCounties(busiro.id)[0];   // { name: "Bussi", code: "113.1.01", … }
+const parish = parishes(bussi.id)[0];      // { name: "Balabala", code: "113.1.01.01", … }
 
-// Heavy leaf level — load only when the form reaches it:
+// Leaf level — load only when the form reaches it (empty in dataset 2026.1):
 const { villages } = await import("@ugkit/locale/villages");
-villages(parishes(nansana.id)[0].id);
+villages(parish.id); // → []
 ```
 
 Typeahead:
 
 ```ts
 import { searchDistricts } from "@ugkit/locale";
-searchDistricts("mb"); // → Mbarara, Mbale, ...
+searchDistricts("mb"); // → Mbale, Mbale City, Mbarara, Mbarara City
 ```
 
 ## Cascading selects (React sketch)
@@ -69,7 +82,7 @@ village):
 | `xs(parentId)` / `districts()` | Children of a parent (O(1) slice); districts take no argument |
 | `xById(id)` | By index id — `undefined` on miss |
 | `xByName(name)` | Normalized name lookup — `undefined` when unknown **or ambiguous** |
-| `xByCode(code)` | By official EC/UBOS code — the **persistable** identifier |
+| `xByCode(code)` | By official UBOS code — the **persistable** identifier |
 | `searchXs(prefix, limit?)` | Prefix typeahead over cached normalized names (default limit 20) |
 | `xCount` | Units in the loaded dataset — `0` means the level isn't sourced yet |
 | `datasetVersion` | Dataset version stamped into the blob |
@@ -82,9 +95,11 @@ All functions return `Unit` objects: `{ id, name, code?, parentId?, level }`.
 
 **Persist `code`, never `id`.** `id` is the unit's index within its level and
 is only valid for the dataset version it came from — ids shift when districts
-split or units are renamed. `code` is the official EC/UBOS identifier and is
-stable across dataset versions. (`code` is present wherever the source
-provides one — all districts and counties today.)
+split or units are renamed. `code` is the official UBOS identifier and is
+stable across dataset versions. UBOS codes restart under each parent, so each
+level's code is the ancestor chain joined with `.` — district `113`, county
+`113.1`, sub-county `113.1.01`, parish `113.1.01.01` — which makes it globally
+unique within its level. Every sourced unit carries one.
 
 Name lookups are normalized (case, whitespace, punctuation, apostrophes,
 diacritics): `districtByName("  WAKISO ")` finds `Wakiso`, and a user typing
@@ -100,10 +115,10 @@ data/uganda.csv  →  scripts/build-data.mjs  →  src/generated/*.ts  →  tsc 
 ```
 
 - CSV format (10 columns): a `code,name` pair per level —
-  `district_code,district,county_code,county,…`. Codes are official EC/UBOS
+  `district_code,district,county_code,county,…`. Codes are official UBOS
   identifiers; empty when the source has none.
 - Rows may be **variable depth**: a row can stop at any level (the current
-  dataset is district+county deep). Absent levels emit empty blobs; their
+  dataset stops at parish). Absent levels emit empty blobs; their
   functions return `[]` and their `xCount` is `0`. No interior gaps allowed.
 - Builds are **deterministic**: names sort by UTF-16 code units (not locale
   collation), so the generated files are byte-identical on every machine.
@@ -114,8 +129,8 @@ data/uganda.csv  →  scripts/build-data.mjs  →  src/generated/*.ts  →  tsc 
   into every generated blob, independent of the npm package version.
 - Every dataset release records sources, retrieval dates, extraction method and
   validation output in [`data/PROVENANCE.md`](data/PROVENANCE.md).
-- `npm run validate:data` is the quality gate (structural checks + EC reference
-  counts) and runs in `prepublishOnly` — an invalid dataset cannot be published.
+- `npm run validate:data` is the quality gate (structural checks + official
+  reference counts) and runs in `prepublishOnly` — an invalid dataset cannot be published.
 
 ## Build & test
 
@@ -153,13 +168,12 @@ JavaScript object literals on `require()`, regardless of what you use.
 
 ## Roadmap
 
-- [x] Source districts + counties from an official, coded source (EC
-      Demarcated Electoral Areas 2025 — dataset `2026.1`).
-- [ ] Source sub-counties → parishes → villages (village-complete frame
-      requested from UBOS; see `scripts/ingest/SAMPLES.md` for why no public
-      EC download suffices).
-- [ ] Align `Unit.id` with official UBOS codes (EC codes already preserved in
-      `scripts/ingest/ec-districts-counties.csv`).
+- [x] Source districts → counties → sub-counties → parishes from an official,
+      coded source (UBOS parish-level frame — dataset `2026.1`).
+- [x] Official UBOS codes on every unit (`xByCode`).
+- [ ] Villages — blocked upstream: UBOS does not disseminate below parish.
+      Slots in with a dataset bump if that changes.
+- [ ] Tororo split (3 districts + 1 city) once UBOS republishes.
 - [ ] Fuzzy search (typo-tolerant) behind a subpath export.
 - [ ] Rust reference implementation (`ugkit-locale` crate) sharing this pipeline.
 

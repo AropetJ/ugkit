@@ -11,7 +11,9 @@
   Level (UG)"* spreadsheet, provided by direct request to `ubos@ubos.org`
   (draft: `../scripts/ingest/ubos-request-draft.md`).
   - Original filename: `Administrative Units-Parish Level_UG-7 July 2026.xlsx`
-  - Repo copy: `../scripts/ingest/sources/ubos-parishes-2026-07.xlsx`
+  - Local copy: `../scripts/ingest/sources/ubos-parishes-2026-07.xlsx`
+    (the `sources/` directory is gitignored — the file is held by the
+    maintainer, not committed)
 - **Retrieved:** 2026-07-08 (email from UBOS confirming dissemination up to
   parish level only).
 - **Extraction:** the xlsx is converted once to `sources/ubos-parishes-2026-07.csv`
@@ -24,10 +26,15 @@
   - County code `218.2` (Bududa): 1 row of 77 spelled the county
     "RLUTSESHE COUNTY"; the majority (and historical) spelling is
     "LUTSESHE COUNTY". Corrected during ingest.
+- **Naming policy (`normalize.mjs → canonicalName`):** UBOS names are upper
+  case; they are title-cased, with each segment after `-`, `/`, `(` and `.`
+  capitalized ("BUSSI/KISABA" → "Bussi/Kisaba", "P.W.D" stays "P.W.D").
+  Particles `of`/`and` stay lower case; Roman numerals and single-letter
+  suffixes stay upper case. Codes are never altered.
 - **Validation (`npm run validate:data`):**
   ```
   districts       146  expected 146 ±5    ✓
-  counties        312  expected 312 ±400  ✓
+  counties        312  expected 312 ±15   ✓
   subcounties    2209  expected 2191 ±100 ✓
   parishes      10860  expected 10717 ±300 ✓
   villages          0  (not yet sourced — skipped)
