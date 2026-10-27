@@ -48,10 +48,15 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { canonicalName } from "./normalize.mjs";
 import { kindFromName, REGIONS } from "./kinds.mjs";
+import { crosswalkEcParishes, ecName, parseCsv, ubosTree } from "./ec-villages.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const pkgRoot = join(here, "..", "..");
 const SRC = join(here, "sources", "ubos-parishes-2026-07.csv");
+// Villages: the EC "Verified Administrative Units, July 2022" gazetteer,
+// parsed by parse-ec-admin-units.mjs (committed; the PDF is not). Attached
+// under UBOS parishes by the name crosswalk in ec-villages.mjs.
+const EC_VILLAGES = join(here, "sources", "ec-villages-2022.csv");
 
 // UBOS names use uppercase + a couple of punctuation characters that our
 // canonical alphabet does not admit. Rewrite them before canonicalName().
@@ -197,10 +202,15 @@ for (const r of rows) {
   ];
   if (kinds[2] === "settlement") settlementsSeen.add(scCode);
 
-  out.push(
-    `${r.region},${dCode},${r.d},${kinds[0]},${ccCode},${r.c},${kinds[1]},` +
-      `${scCode},${r.s},${kinds[2]},${pcCode},${r.p},${kinds[3]},,,`
-  );
+  out.push({
+    prefix:
+      `${r.region},${dCode},${r.d},${kinds[0]},${ccCode},${r.c},${kinds[1]},` +
+      `${scCode},${r.s},${kinds[2]},${pcCode},${r.p},${kinds[3]}`,
+    tree: {
+      district_code: dCode, district: r.d, subcounty_code: scCode,
+      subcounty: r.s, parish_code: pcCode, parish: r.p,
+    },
+  });
 }
 
 // Every curated settlement code must exist — a stale list is an error.
@@ -225,10 +235,54 @@ if (distinct(2) < 2000 || distinct(2) > 2400)
 if (distinct(3) < 10000 || distinct(3) > 11500)
   throw new Error(`Parish count ${distinct(3)} outside sane range.`);
 
+// ------------------------------------------------------------- villages
+// Crosswalk EC parishes onto the UBOS parishes just built, then hang each
+// matched EC parish's villages under its UBOS parish. Village code = the
+// EC's own code, verbatim (district-constituency-subcounty-parish-village);
+// it is the only official village identifier. Unmatched EC parishes'
+// villages are dropped (listed by crosswalk-ec-villages.mjs for review).
+const ecRows = parseCsv(readFileSync(EC_VILLAGES, "utf8"));
+const results = crosswalkEcParishes(ecRows, ubosTree(out.map((o) => o.tree)));
+const ecKeyOfParish = new Map();
+for (const r of results) {
+  if (!r.ubosParish) continue;
+  if (ecKeyOfParish.has(r.ubosParish))
+    throw new Error(`UBOS parish ${r.ubosParish} matched by two EC parishes — refusing to merge village lists.`);
+  ecKeyOfParish.set(r.ubosParish, r.key);
+}
+const villagesOf = new Map(); // EC parish key → [{ code, name }]
+const seenVillageCodes = new Set();
+let uncoded = 0;
+for (const v of ecRows) {
+  const key = [v.district_code, v.constituency_code, v.subcounty_code, v.parish_code].join("-");
+  let code = `${key}-${v.village_code}`;
+  // The EC printed one duplicate code (Manafwa / Bunamone Ward: BUWALUSATI
+  // and BUTTA both "01"). Codes must be unique, so the second keeps no code.
+  if (seenVillageCodes.has(code)) { code = ""; uncoded++; }
+  else seenVillageCodes.add(code);
+  if (!villagesOf.has(key)) villagesOf.set(key, []);
+  villagesOf.get(key).push({ code, name: ecName(v.village) });
+}
+
+const lines = [];
+let villageCount = 0;
+for (const o of out) {
+  const vs = villagesOf.get(ecKeyOfParish.get(o.tree.parish_code)) ?? [];
+  if (!vs.length) lines.push(`${o.prefix},,,`);
+  for (const v of vs) lines.push(`${o.prefix},${v.code},${v.name},${kindFromName(4, v.name)}`);
+  villageCount += vs.length;
+}
+console.log(
+  `villages: ${villageCount} of ${ecRows.length} EC villages placed ` +
+    `(${(100 * villageCount / ecRows.length).toFixed(1)}%), ${uncoded} without a code (EC duplicate)`
+);
+if (villageCount < 69000 || villageCount > 72000)
+  throw new Error(`Village count ${villageCount} outside sane range.`);
+
 const csv =
   "region,district_code,district,district_kind,county_code,county,county_kind," +
   "subcounty_code,subcounty,subcounty_kind,parish_code,parish,parish_kind," +
   "village_code,village,village_kind\n" +
-  out.join("\n") + "\n";
+  lines.join("\n") + "\n";
 writeFileSync(join(pkgRoot, "data", "uganda.csv"), csv);
-console.log(`wrote data/uganda.csv (${out.length} parish rows)`);
+console.log(`wrote data/uganda.csv (${lines.length} rows)`);

@@ -37,7 +37,9 @@ GEMINI.md
 # --- large sourced artifacts ---
 # Provenance is recorded via URLs in data/PROVENANCE.md and
 # scripts/ingest/SAMPLES.md; do not commit the raw PDFs or extracted text.
-# Exception: the UBOS frame (~1.3 MB) is committed so the live ingest
+# Exceptions: the UBOS frame (~1.3 MB) is committed so the live ingest
 # (build-ubos-frame.mjs) is reproducible from a fresh clone.
 packages/ug-locale/scripts/ingest/sources/*
 !packages/ug-locale/scripts/ingest/sources/ubos-parishes-*
+# ...and the parsed EC village list (5 MB CSV; the 10.8 MB PDF stays out).
+!packages/ug-locale/scripts/ingest/sources/ec-villages-2022.csv

@@ -30,23 +30,24 @@ code-chaining scheme, and `data/PROVENANCE.md` for the release record. To
 refresh: request the latest frame, drop it in `sources/`, re-run the script,
 review the CSV diff, bump `ugkit.datasetVersion`.
 
-UBOS disseminates **only to parish level**. Villages are not sourced and the
-level ships empty.
-
-**Village staging (not shipped): EC July 2022 gazetteer.** Download the PDF
-(URL and sha256 in `parse-ec-admin-units.mjs`) into a new directory under
+UBOS disseminates **only to parish level**. **Villages come from the EC's
+July 2022 gazetteer**, via the committed `sources/ec-villages-2022.csv`;
+`build-ubos-frame.mjs` attaches them to UBOS parishes using the name
+matching in `ec-villages.mjs`. To regenerate that CSV, download the PDF (URL
+and sha256 in `parse-ec-admin-units.mjs`) into a new directory under
 `sources/`, then:
 
 ```bash
 pdftotext -layout admin-units-july-2022.pdf admin-units-july-2022.txt
-node parse-ec-admin-units.mjs <txt> <dir>/ec-villages-2022.csv
-node crosswalk-ec-villages.mjs <dir>/ec-villages-2022.csv <dir>
+node parse-ec-admin-units.mjs <txt> sources/ec-villages-2022.csv
+node crosswalk-ec-villages.mjs sources/ec-villages-2022.csv <review-dir>
 ```
 
-The parser fails unless every printed total matches; the crosswalk writes
-`ec-parish-crosswalk.csv` and `crosswalk-report.txt` (fuzzy matches and every
-unmatched unit, for review). Nothing reaches `data/uganda.csv` until the EC
-grants redistribution (`ec-request-draft.md`).
+The parser fails unless every printed total matches. The crosswalk writes
+`ec-parish-crosswalk.csv` and `crosswalk-report.txt` — every fuzzy match and
+every unplaced EC parish — for human review; it uses the same matching code
+as the ingest, so it describes exactly what ships. Redistribution permission
+is being sought from the EC (`ec-request-draft.md`).
 
 Rejected / reference-only sources (full reasoning in `SAMPLES.md`):
 

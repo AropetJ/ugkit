@@ -5,7 +5,7 @@ import { districts, districtsInRegion, districtByName } from "../dist/districts.
 import { counties } from "../dist/counties.js";
 import { subCounties, subCountyByCode, subCountyById } from "../dist/subcounties.js";
 import { parishes } from "../dist/parishes.js";
-import { villages } from "../dist/villages.js";
+import { villages, villageByCode, villageCount } from "../dist/villages.js";
 import { KINDS_BY_LEVEL, REGIONS, kindFromName } from "../scripts/ingest/kinds.mjs";
 
 // Region, kind and settlement attributes (docs/design-unit-attributes.md).
@@ -93,4 +93,26 @@ test("kindFromName suffix rules", () => {
   assert.equal(kindFromName(4, "Nsambya Cell"), "cell");
   // Town councils are named "... Town Council", so no bare "Town" rule:
   assert.equal(kindFromName(2, "Townsend"), "sub-county");
+});
+
+test("full dataset: EC villages attached under UBOS parishes", { skip: !FULL && "sample data" }, () => {
+  const [, , ss, ps, vs] = allLevels();
+  assert.equal(vs.length, 70878);
+  assert.equal(villageCount, 70878);
+  // EC codes, verbatim: district-constituency-subcounty-parish-village.
+  const coded = vs.filter((v) => v.code);
+  assert.equal(vs.length - coded.length, 1, "only the EC's duplicate-coded village lacks a code");
+  for (const v of coded.slice(0, 2000)) {
+    assert.match(v.code, /^\d{2,3}-\d{3}-\d{2}-\d{2,3}-\d{2}$/);
+    assert.deepEqual(villageByCode(v.code), v);
+  }
+  // Refugee settlements are not in the EC gazetteer: no villages under them.
+  const settlementIds = new Set(ss.filter((s) => s.kind === "settlement").map((s) => s.id));
+  for (const p of ps.filter((p) => settlementIds.has(p.parentId))) assert.deepEqual(villages(p.id), []);
+  // All villages under one parish come from one EC parish (same code prefix).
+  for (const p of ps.slice(0, 3000)) {
+    const prefixes = new Set(villages(p.id).filter((v) => v.code).map((v) => v.code.slice(0, v.code.lastIndexOf("-"))));
+    assert.ok(prefixes.size <= 1, `parish ${p.code} mixes EC parishes: ${[...prefixes]}`);
+  }
+  assert.equal(villageByCode("06-028-01-01-01")?.name, "Kasambya I");
 });

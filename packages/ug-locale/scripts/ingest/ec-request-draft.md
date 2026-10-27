@@ -4,7 +4,7 @@ Status: **draft, not sent.** Review, fill in the contact address and sender
 details, then send from the maintainer's own email address.
 
 - **To:** [EC contact — confirm the right address on https://www.ec.or.ug before sending; not verified]
-- **Subject:** Permission to redistribute village list from "Uganda's Verified Administrative Units, July 2022" in an open-source library
+- **Subject:** Use of the village list from "Uganda's Verified Administrative Units, July 2022" in an open-source library — permission and terms
 
 ---
 
@@ -17,17 +17,20 @@ units for use in their applications — for example, address and
 service-location forms. It already ships districts, counties, sub-counties
 and parishes from the Uganda Bureau of Statistics' parish-level frame. UBOS
 has confirmed that it disseminates administrative units only up to parish
-level, so the village level is currently empty.
+level.
 
-The Commission's publication **"Uganda's Verified Administrative Units, July
-2022"** (published at ec.or.ug, 3,019 pages) is the only complete, coded
-national list of villages we have found. I would like to ask:
+For the village level, the library uses the Commission's publication
+**"Uganda's Verified Administrative Units, July 2022"** (published at
+ec.or.ug), the only complete, coded national list of villages we have found.
+The village names and EC codes are included with attribution to the
+Electoral Commission and the July 2022 date stated, in the project's
+documentation and provenance record. The publication does not state terms of
+use, so I am writing to ask:
 
-1. **Permission to redistribute** the village names and their EC codes from
-   that publication, as part of this open-source library, with clear
-   attribution to the Electoral Commission in the dataset's provenance record
-   and documentation. If specific attribution wording or conditions apply, we
-   will follow them exactly.
+1. **Whether the Commission is content with this use**, and whether any
+   specific attribution wording or conditions apply — we will follow them
+   exactly. If the Commission would prefer the data not be redistributed, we
+   will remove it in the next dataset release.
 2. Whether a **more recent edition** exists — for example the village list
    used for the July 2026 LC I and LC II elections (we understand 71,214
    villages) — and whether it can be shared, ideally in a machine-readable
@@ -35,11 +38,11 @@ national list of villages we have found. I would like to ask:
 3. If redistribution is not possible, any guidance on the correct channel or
    terms under which it could be.
 
-For transparency: we have parsed the July 2022 publication for internal
-validation only — not published — and it reconciles exactly with the
-Commission's own totals (71,230 villages, 10,717 parishes, 353
-constituencies, 146 districts). Nothing from it will be released until we
-hear from you.
+For transparency: our processing of the July 2022 publication reconciles
+exactly with the Commission's own totals (71,230 villages, 10,717 parishes,
+353 constituencies, 146 districts). We matched 70,878 of those villages
+(99.5%) to the current UBOS parishes; the remainder fall in parishes
+reorganised since 2022.
 
 Thank you for considering this request. I am happy to share more detail about
 the project, or a copy of the processed data for the Commission's own use.
@@ -57,10 +60,13 @@ Project repository: https://github.com/AropetJ/ugkit
 
 - The parse and crosswalk are in `parse-ec-admin-units.mjs` and
   `crosswalk-ec-villages.mjs`; findings in `SAMPLES.md` ("EC July 2022
-  gazetteer"). Staging outputs stay in the gitignored `sources/` directory.
+  gazetteer"). The villages SHIPPED in dataset 2026.1 (decision 2026-10-27)
+  before this was sent — the email is worded accordingly; don't promise
+  non-publication.
 - Offering the Commission the cleaned, machine-readable file is a genuine
   give-back. Two defects in their PDF are worth mentioning if they reply:
   Manafwa / Bunamone Ward has two villages coded 01 (BUWALUSATI, BUTTA), and
   several "… WARD COUNCIL" parish names.
-- If they grant permission but only for the 2022 edition, it can still ship,
-  with the 2022 reference date stated plainly in PROVENANCE and the README.
+- If they ask for removal: drop the EC attachment in `build-ubos-frame.mjs`
+  (and the committed `sources/ec-villages-2022.csv`), bump
+  `ugkit.datasetVersion`, and note it in CHANGELOG/PROVENANCE.

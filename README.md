@@ -11,7 +11,7 @@ local product needs — done once, done properly, versioned, and shared.
 
 | Package | Status | Description |
 |---|---|---|
-| [`@ugkit/locale`](packages/ug-locale) | ✅ engine complete · ✅ districts, counties, sub-counties, parishes shipped (dataset 2026.1, UBOS-sourced) · ⛔ villages not disseminated by UBOS | Uganda administrative divisions: districts → counties → sub-counties → parishes → villages. Flat-array tree, O(1) child lookups, lazy loading. |
+| [`@ugkit/locale`](packages/ug-locale) | ✅ engine complete · ✅ districts → parishes (UBOS, 2026) · ✅ 70,878 villages (EC, July 2022) | Uganda administrative divisions: districts → counties → sub-counties → parishes → villages. Flat-array tree, O(1) child lookups, lazy loading. |
 | `@ugkit/phone` | planned (next) | Parse/validate/normalize Ugandan MSISDNs, detect network (MTN, Airtel, Lyca) from prefix. |
 | `@ugkit/tax` | planned | PAYE bands, NSSF contributions, Local Service Tax, withholding tax — official rate tables as versioned data, calculators on top. |
 | `@ugkit/currency` | planned | UGX formatting + amount-in-words for receipts and invoices. |
@@ -85,8 +85,9 @@ Or run the same scripts from inside `packages/ug-locale/`.
 The `@ugkit/locale` dataset is sourced from the Uganda Bureau of Statistics
 *Administrative Units — Parish Level (UG)* spreadsheet (7 July 2026),
 supplied on request. UBOS disseminates administrative units only up to
-parish level, so the `villages` level ships empty (safely queryable, empty
-results by contract) until UBOS changes that policy. Sources, retrieval
+parish level, so villages come from the Electoral Commission's *Uganda's
+Verified Administrative Units, July 2022* (70,878 villages, EC codes, dated
+July 2022; included with attribution while the EC's permission is sought). Sources, retrieval
 dates, extraction methods, errata, and validation output are recorded in
 [`packages/ug-locale/data/PROVENANCE.md`](packages/ug-locale/data/PROVENANCE.md);
 the full sourcing investigation lives in

@@ -12,7 +12,7 @@ work list for 0.2+ dataset releases.
 
 | # | Gap | Level | Have the data? | Effort |
 |---|---|---|---|---|
-| 1 | Villages (0 of ~71,214) | village | **Staged** — 99.5% crosswalked; needs EC permission | Medium |
+| 1 | ~~Villages~~ **Shipped** — 70,878 from EC July 2022; permission pending | village | Yes | — |
 | 2 | ~~Refugee-settlement units not flagged~~ **Done** — `kind: "settlement"` | sub-county, parish | Yes | — |
 | 3 | Nine town councils created 1 Jul 2025 missing / mistyped | sub-county | Partly | Small |
 | 4 | ~~Region dropped at ingest~~ **Done** — `Unit.region`, `districtsInRegion` | district | Yes | — |
@@ -27,7 +27,12 @@ work list for 0.2+ dataset releases.
 
 ## 1. Villages — the only missing level
 
-> **Status 2026-10-27 — parsed and crosswalked, awaiting EC permission.**
+> **Status 2026-10-27 — SHIPPED in 2026.1** (maintainer's decision), with
+> attribution and the July 2022 date stated; EC permission still being
+> sought (`scripts/ingest/ec-request-draft.md`). Open: EC permission, a newer
+> edition (2026 LC I list), the 352 unplaced villages.
+>
+> Earlier status — parsed and crosswalked:
 > The EC July 2022 gazetteer is verified: EC codes down to village
 > (`district-constituency-subcounty-parish-village`, e.g. `06-028-01-01-01`).
 > `scripts/ingest/parse-ec-admin-units.mjs` extracts **71,230 villages /
@@ -207,7 +212,8 @@ alone will often miss; the README should steer users to
 1. ~~**Small, no new source:** §4 region, §5 kind, §2 settlement flag~~ —
    done in 0.1.0 (docs/design-unit-attributes.md).
 2. **§3 town councils** — confirm with MoLG/UBOS; add as documented additions.
-3. **§1 villages** — parsed and crosswalked (99.5%); send the EC request
-   (`scripts/ingest/ec-request-draft.md`). Ship only with permission.
+3. **§1 villages** — shipped from the EC July 2022 gazetteer; send the EC
+   request (`scripts/ingest/ec-request-draft.md`) for permission and a 2026
+   edition.
 4. §7 sub-regions with §4; §8 population as its own subpath.
 5. §9 and §10 belong in other packages (constituencies, `-geo`).

@@ -60,12 +60,12 @@ Code follows semver. The dataset has its own version
   - `validate.mjs` enforces per-level kind allow-lists and one region per
     district, and adds an **EC-frame check**: excluding settlements,
     sub-counties must be 2,191 ±10 and parishes 10,717 ±50.
-- Village staging tooling (not shipped): `parse-ec-admin-units.mjs` parses
+- Villages tooling: `parse-ec-admin-units.mjs` parses
   the EC *Verified Administrative Units, July 2022* PDF (71,230 villages,
   every printed subtotal and total self-checked); `crosswalk-ec-villages.mjs`
   matches EC parishes to UBOS parishes by name (exact → rough → fuzzy, kind-
-  and uniqueness-guarded), placing 99.5% of villages. Villages ship only
-  with the EC's redistribution permission (`ec-request-draft.md`).
+  and uniqueness-guarded), placing 99.5% of villages; the same matching
+  (`ec-villages.mjs`) is what `build-ubos-frame.mjs` uses to write them.
 - Full-scale benchmark `scripts/bench-scale.mjs`. Results at real size
   (71k synthetic villages): build 1.3 s; blobs ≈ 1.9 MB total
   (villages 1.7 MB, districts+counties ≈ 10 KB); villages blob
@@ -79,9 +79,15 @@ Code follows semver. The dataset has its own version
   received by request 2026-07-08). Every unit carries a UBOS code, chained per
   level (`113` → `113.1` → `113.1.01` → `113.1.01.01`) to be globally unique.
   See `data/PROVENANCE.md`.
-- Villages ship as an empty, safely-queryable level: UBOS disseminates
-  administrative units only to parish level, and no other authoritative coded
-  village register exists.
+- **70,878 villages/cells** from the Electoral Commission's *Uganda's
+  Verified Administrative Units, July 2022* (UBOS disseminates only to parish
+  level). **Reference date July 2022.** Attached to UBOS parishes by name
+  (99.5% of the EC's 71,230; the rest are in parishes reorganised since 2022
+  and are left out). Village codes are the EC's own
+  (`district-constituency-subcounty-parish-village`). The EC states no
+  licence; included with attribution pending its permission, and removable
+  on request. Attribution: *village names and codes: Electoral Commission of
+  Uganda*.
 - Ingest corrections: UBOS typos fixed via `ERRATA` — county `218.2`
   "RLUTSESHE" → "Lutseshe", and three town councils whose suffix was
   truncated or run together ("Kabatunda-Kirabaho Town Counci",

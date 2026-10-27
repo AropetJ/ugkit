@@ -1,12 +1,13 @@
 # Dataset provenance
 
-## 2026.1 — districts + counties + sub-counties + parishes (production)
+## 2026.1 — districts + counties + sub-counties + parishes (UBOS) + villages (EC)
 
 - **Content:** 146 districts/cities, 312 counties, 2,209 sub-counties/town
   councils/divisions, and 10,860 parishes/wards. Every level carries a
   hierarchical UBOS code (`DCode`, `DCode.CCode`, `DCode.CCode.SCode`,
   `DCode.CCode.SCode.PCode`) so codes are globally unique per level. Villages
-  are NOT sourced — see "Village-level policy" below.
+  are not disseminated by UBOS; they come from the EC (July 2022) — see
+  "Villages — Electoral Commission, July 2022" below.
 - **Source:** Uganda Bureau of Statistics, *"Administrative Units — Parish
   Level (UG)"* spreadsheet, provided by direct request to `ubos@ubos.org`
   (draft: `../scripts/ingest/ubos-request-draft.md`).
@@ -58,7 +59,7 @@
   counties        312  expected 312 ±15   ✓
   subcounties    2209  expected 2191 ±100 ✓
   parishes      10860  expected 10717 ±300 ✓
-  villages          0  (not yet sourced — skipped)
+  villages      70878  expected 71214 ±1500 ✓
 
   EC frame (excluding 19 refugee settlements):
   subcounties    2190  expected 2191 ±10  ✓
@@ -72,10 +73,42 @@
   counties.ts       13   KB  raw    3.6 KB  gz
   subcounties.ts    80   KB  raw   19   KB  gz
   parishes.ts      416   KB  raw   85   KB  gz
-  villages.ts       65   KB  raw  <1     KB  gz  (empty placeholder)
+  villages.ts     3.0   MB  raw  548    KB  gz
   ```
 
-### Village-level policy
+### Villages — Electoral Commission, July 2022
+
+- **Content:** 70,878 villages/cells (70,699 village, 179 cell) under 10,662
+  UBOS parishes, each with its EC code verbatim
+  (`district-constituency-subcounty-parish-village`, e.g. `06-028-01-01-01`).
+- **Source:** Electoral Commission of Uganda, *"Uganda's Verified
+  Administrative Units, July 2022"* —
+  https://www.ec.or.ug/sites/default/files/statistics/ADMINISTRATIVE%20UNITS%20IN%20UGANDA_JULY%202022.pdf
+  (3,019 pages, generated 19 Jul 2022; sha256
+  `fa70833b077402f69cdba96075d13a032fe76ff045d4ee929bee491848cb683d`).
+  Retrieved 2026-10-27. **Reference date: July 2022.**
+- **Licence / terms:** none stated in the publication or on the EC site.
+  Included with attribution at the maintainer's decision (2026-10-27) while
+  permission is sought (`scripts/ingest/ec-request-draft.md`). Will be
+  removed in a dataset release if the EC requests it.
+- **Extraction:** `pdftotext -layout`, then
+  `scripts/ingest/parse-ec-admin-units.mjs` → `scripts/ingest/sources/ec-villages-2022.csv`
+  (committed; the PDF is not). The parser fails unless all 2,198 sub-county
+  subtotals, 146 district totals and the national total (71,230) match.
+- **Attachment:** `build-ubos-frame.mjs` matches each EC parish to a UBOS
+  parish by name (`ec-villages.mjs`: exact → rough → fuzzy, unique and
+  kind-guarded; no UBOS parish may receive two EC parishes) and writes its
+  villages beneath it. 70,878 of 71,230 placed (99.5%): 95.9% exact, 1.7%
+  rough, 1.9% fuzzy. 352 villages in 55 EC parishes that no longer
+  correspond to a 2026 UBOS parish are left out; `crosswalk-ec-villages.mjs`
+  lists them and every fuzzy match.
+- **Known defects:** the EC printed code `67-126-31-146-01` for two villages
+  (Manafwa / Bunamone Ward: Buwalusati, Butta); the second ships without a
+  code. 198 UBOS parishes have no villages — 148 under refugee settlements,
+  ~50 created or reorganised since 2022, whose villages the EC may list under
+  a parent parish.
+
+### Village-level policy (superseded 2026-10-27)
 
 UBOS confirmed in writing (2026-07-08) that the Bureau disseminates
 administrative units only **up to parish, not village level**. No coded

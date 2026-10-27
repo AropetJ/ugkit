@@ -57,7 +57,9 @@ const HEADER =
 
 // canonicalName's output alphabet. Comma is structurally forbidden (CSV).
 const NAME_RE = /^[\p{L}\p{N} .'’\-\/()]+$/u;
-const CODE_RE = /^[A-Za-z0-9.\-]{0,12}$/;
+// UBOS codes are dotted (113.1.01.01, ≤12 chars); EC village codes are
+// dashed (100-118-01-13-05, ≤17).
+const CODE_RE = /^[A-Za-z0-9.\-]{0,20}$/;
 
 // [expected, tolerance]. Tolerance absorbs gazetting churn (e.g. the pending
 // Tororo split) between EC statistical releases.

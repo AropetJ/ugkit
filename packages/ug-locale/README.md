@@ -16,8 +16,14 @@ A ground-up rebuild of the `ug-locale` idea with three fixes:
 
 ## Data coverage
 
-Dataset `2026.1` ships the official **Uganda Bureau of Statistics** frame
-(Administrative Units — Parish Level, 7 July 2026), every unit coded:
+Dataset `2026.1` combines two official sources:
+
+- **Districts → parishes:** Uganda Bureau of Statistics, *Administrative
+  Units — Parish Level*, 7 July 2026, with UBOS codes.
+- **Villages:** Electoral Commission of Uganda, *Uganda's Verified
+  Administrative Units, July 2022*, with EC codes. **This village list dates
+  from July 2022** — villages created, renamed or merged since then are not
+  reflected.
 
 | Level | Units | Blob (raw / gzip) |
 |---|---|---|
@@ -25,16 +31,29 @@ Dataset `2026.1` ships the official **Uganda Bureau of Statistics** frame
 | Counties | 312 | 13 KB / 3.6 KB |
 | Sub-counties / town councils / divisions / settlements | 2,209 | 80 KB / 19 KB |
 | Parishes / wards | 10,860 | 416 KB / 85 KB |
-| Villages / cells | **0** | empty placeholder |
+| Villages / cells | 70,878 | 3.0 MB / 548 KB (lazy-loaded) |
 
-**Villages are empty by design, not by omission.** UBOS confirmed in writing
-that it disseminates administrative units only up to parish level, and no
-other authoritative, coded national village register exists. The `villages`
-level stays in the API and is safe to query — it returns `[]`/`undefined` and
-`villageCount === 0` — so if UBOS ever publishes villages they arrive as a
-dataset bump with no code change. Details in
-[`data/PROVENANCE.md`](data/PROVENANCE.md); known gaps (2025 town councils,
-sub-regions, population, villages) are tracked in
+**About the villages.** UBOS disseminates administrative units only up to
+parish level, so villages come from the EC's 2022 gazetteer (71,230
+villages), attached to UBOS parishes by matching parish names. 99.5% of them
+(70,878) are placed; the rest sit in parishes that have changed since 2022
+and are left out rather than guessed. Things to know:
+
+- **Village codes are EC codes**, verbatim, shaped
+  `district-constituency-subcounty-parish-village` (e.g. `06-028-01-01-01`) —
+  a different scheme from the dotted UBOS codes above. One village
+  (Manafwa / Bunamone Ward, "Butta") has no code because the EC printed its
+  code twice.
+- **198 parishes have no villages**: 148 under refugee settlements (not in
+  the EC list) and about 50 created or reorganised since 2022.
+- **Licence:** the EC publication states no terms of use. The villages are
+  included with attribution while permission is sought from the EC; if the
+  EC asks, they will be removed in a dataset release.
+
+Attribution: *village names and codes: Electoral Commission of Uganda,
+"Uganda's Verified Administrative Units, July 2022"; districts to parishes
+from the Uganda Bureau of Statistics.* Details in
+[`data/PROVENANCE.md`](data/PROVENANCE.md); known gaps are tracked in
 [`data/GAPS.md`](data/GAPS.md).
 
 ## Usage
@@ -50,9 +69,9 @@ const busiro = counties(wakiso.id).find(c => c.name === "Busiro County")!;
 const bussi = subCounties(busiro.id)[0];   // { name: "Bussi", code: "113.1.01", … }
 const parish = parishes(bussi.id)[0];      // { name: "Balabala", code: "113.1.01.01", … }
 
-// Leaf level — load only when the form reaches it (empty in dataset 2026.1):
+// Leaf level (~550 KB gzipped) — load only when the form reaches it:
 const { villages } = await import("@ugkit/locale/villages");
-villages(parish.id); // → []
+villages(parish.id); // → Balabala, Kaapa, Kojja, … — EC codes "52-156-04-26-01", …
 ```
 
 Typeahead:
@@ -107,7 +126,7 @@ All functions return `Unit` objects:
   | county | `county` 256 · `municipality` 31 · `division` 25 |
   | sub-county | `sub-county` 1,503 · `town-council` 580 · `division` 107 · `settlement` 19 |
   | parish | `parish` 7,762 · `ward` 3,098 |
-  | village | `village` · `cell` |
+  | village | `village` 70,699 · `cell` 179 |
 
 - `region` is set on districts only (`"Central"` 27 · `"Eastern"` 40 ·
   `"Northern"` 41 · `"Western"` 38). For a lower unit, walk up:
@@ -194,6 +213,11 @@ build container:
 | `childrenOf` lookup | ~116 ns |
 | One-time village name index build | ~10 ms |
 
+Measured on the real dataset (Node 24, Apple Silicon): villages blob 3.0 MB
+raw / 548 KB gzipped (the EC codes are ~1.4 MB of that); `JSON.parse` ≈ 13 ms;
+cold `import("@ugkit/locale/villages")` ≈ 40 ms; first `villageByName` (builds
+the 70,878-name index) ≈ 40 ms.
+
 For comparison, the original `ug-locale` eagerly parses the entire country as
 JavaScript object literals on `require()`, regardless of what you use.
 
@@ -210,8 +234,9 @@ JavaScript object literals on `require()`, regardless of what you use.
 - [x] Source districts → counties → sub-counties → parishes from an official,
       coded source (UBOS parish-level frame — dataset `2026.1`).
 - [x] Official UBOS codes on every unit (`xByCode`).
-- [ ] Villages — blocked upstream: UBOS does not disseminate below parish.
-      Slots in with a dataset bump if that changes.
+- [x] Villages from the EC's July 2022 gazetteer (99.5% placed, EC codes).
+- [ ] EC permission to redistribute; a newer EC village list (2026 LC I
+      elections) if the EC will share it.
 - [ ] Tororo split (3 districts + 1 city) once UBOS republishes.
 - [ ] Fuzzy search (typo-tolerant) behind a subpath export.
 - [ ] Rust reference implementation (`ugkit-locale` crate) sharing this pipeline.

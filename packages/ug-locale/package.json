@@ -76,7 +76,7 @@
   },
   "ugkit": {
     "datasetVersion": "2026.1",
-    "datasetSource": "Uganda Bureau of Statistics — Administrative Units, Parish Level (UG), 7 July 2026. Villages are not disseminated by UBOS and ship empty. See data/PROVENANCE.md."
+    "datasetSource": "Districts to parishes: Uganda Bureau of Statistics — Administrative Units, Parish Level (UG), 7 July 2026. Villages: Electoral Commission of Uganda — Uganda's Verified Administrative Units, July 2022 (EC codes; licence not stated, included with attribution pending EC permission). See data/PROVENANCE.md."
   },
   "author": "Joel Aropet",
   "repository": {
