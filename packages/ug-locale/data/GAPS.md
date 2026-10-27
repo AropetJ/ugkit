@@ -30,7 +30,8 @@ work list for 0.2+ dataset releases.
 > **Status 2026-10-27 — SHIPPED in 2026.1** (maintainer's decision), with
 > attribution and the July 2022 date stated; EC permission still being
 > sought (`scripts/ingest/ec-request-draft.md`). Open: EC permission, a newer
-> edition (2026 LC I list), the 352 unplaced villages.
+> edition (2026 LC I list), the 352 unplaced villages. All 195 fuzzy-matched
+> parishes were reviewed by hand and accepted (`ec-fuzzy-review.csv`).
 >
 > Earlier status — parsed and crosswalked:
 > The EC July 2022 gazetteer is verified: EC codes down to village

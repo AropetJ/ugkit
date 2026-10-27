@@ -1,0 +1,129 @@
+# Human review of every FUZZY (spelling-variant) EC→UBOS match; see ec-villages.mjs.
+# Reviewed 2026-10-27: 124 decisions (195 EC parishes, 1,335 villages), all accepted.
+# verdict: accept | reject. A fuzzy match absent from this file stops the ingest.
+# For parish rows, ec_subcounty is the UBOS sub-county the parish was matched within.
+level,ec_district,ec_subcounty,ec_parish,ubos_code,ubos_name,verdict,evidence
+parish,Abim,Abuk Town Council,Arengekithoe Ward,314.1.03.02,Arengetithoe Ward,accept,one-letter edit; sole leftover pair in sub-county
+parish,Alebtong,Apala,Abiting,323.2.06.01,Abiiting,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county
+parish,Amudat,Karita Town Council,Senior Quaters Ward,324.1.06.05,Senior Quarters Ward,accept,one-letter edit; sole leftover pair in sub-county; village echo: Senior Quarters
+parish,Budaka,Iki-Iki,Kadenge,217.2.01.01,Kadenghe,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county
+parish,Bududa,Bukalasi,Summee,218.2.03.09,Summe,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county; village echo: Suume
+parish,Bugiri,Mayuge Town Council,Budde Ward,201.2.10.01,Bude Ward,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county; village echo: Budde
+parish,Bugweri,Idudi Town Council,Mifumi Ward,235.1.05.06,Mufumi Ward,accept,one-letter edit; sole leftover pair in sub-county
+parish,Bukedea,Kabarwa,Takaramiam,219.1.04.11,Takaramian,accept,one-letter edit; sole leftover pair in sub-county
+parish,Bukedea,Kamutur,Akou-Etome,219.1.05.05,Akou- Etom,accept,one-letter edit; sole leftover pair in sub-county
+parish,Bukedea,Kidongole,Kotolut,219.1.07.10,Kotolutu,accept,one-letter edit; sole leftover pair in sub-county
+parish,Bukedea,Kolir,Komidil,219.1.10.13,Omidil,accept,one-letter edit; sole leftover pair in sub-county
+parish,Bukomansimbi,Butenga Town Council,Mukunyu Ward,118.2.02.05,Mununyu Ward,accept,one-letter edit; sole leftover pair in sub-county
+parish,Bukwo,Chepkwasta,Chekwasta,220.1.04.04,Chepkwasta,accept,one-letter edit; sole leftover pair in sub-county
+parish,Bukwo,Kaptererwo,Kaptererwa,220.1.08.04,Kaptererwo,accept,one-letter edit; sole leftover pair in sub-county
+parish,Buliisa,Kigwera,Kisanya,416.1.07.03,Kisansya,accept,one-letter edit; sole leftover pair in sub-county
+parish,Busia,Buteba,Amonikakinei,202.3.04.02,Amonekakinei,accept,one-letter edit; sole leftover pair in sub-county
+parish,Buvuma,Bugaya,Zzinga,120.1.01.04,Zinga,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county; village echo: Zinga
+parish,Hoima,Buhanika,Kitoonya,403.1.01.04,Kitonya,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county
+parish,Hoima,Kisukuma,Ndaragi,403.2.07.05,Ngaragi,accept,one-letter edit; sole leftover pair in sub-county
+parish,Ibanda,Bufunda Division,Rwobuziizi Ward,417.2.02.08,Rwobuzizi Ward,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county; village echo: Rwobuziizi I
+parish,Kaabong,Kaabong Town Council,Kapilani Bar East Ward,318.1.01.04,Kapilan Bar East Ward,accept,"one-letter edit; leftovers EC 2 / UBOS 2, pairs map 1:1"
+parish,Kaabong,Kaabong Town Council,Kapilani Bar West Ward,318.1.01.05,Kapilan Bar West Ward,accept,"one-letter edit; leftovers EC 2 / UBOS 2, pairs map 1:1; village echo: Kapilan Bar West"
+parish,Kabale,Ryakarimira Town Council,Ahamuhambo Ward,404.2.12.01,Hamuhambo Ward,accept,one-letter edit; sole leftover pair in sub-county
+parish,Kabarole,Mugusu Town Council,Kiseeru Ward,405.1.14.05,Kiseru Ward,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county; village echo: Kiseeru
+parish,Kagadi,Kiryanga,Kihigana,427.1.08.02,Kihingana,accept,one-letter edit; sole leftover pair in sub-county
+parish,Kagadi,Nyabutanzi,Kihuura,427.1.14.01,Kihura,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county
+parish,Kalaki,Ogwolo,Angoltok,237.1.08.01,Angolitok,accept,one-letter edit; sole leftover pair in sub-county
+parish,Kalaki,Otuboi Town Council,Abermunyo Ward,237.1.10.01,Abermunyu Ward,accept,one-letter edit; sole leftover pair in sub-county
+parish,Kampala,Kawempe Division,Kikaaya,102.2.01.08,Kikaya,accept,"same skeleton (doubled letters / h); leftovers EC 1 / UBOS 5, pairs map 1:1; village echo: Kikaaya A"
+parish,Kamwenge,Kahunge,Kiyagara,413.1.05.01,Kiyagaara,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county; village echo: Kiyagara
+parish,Kamwenge,Nkoma-Katalyeba Town Council,Buregeya Ward,413.2.08.01,Buregyeya Ward,accept,"one-letter edit; leftovers EC 2 / UBOS 2, pairs map 1:1"
+parish,Kamwenge,Nkoma-Katalyeba Town Council,Mahani Ward,413.2.08.03,Mahane Ward,accept,"one-letter edit; leftovers EC 2 / UBOS 2, pairs map 1:1"
+parish,Kamwenge,Ntonwa,Buhumuliro,413.2.09.01,Buhumuriro,accept,one-letter edit; sole leftover pair in sub-county; village echo: Buhumuriro
+parish,Kanungu,Rutenga Town Council,Northen Ward,414.1.27.02,Northern Ward,accept,one-letter edit; sole leftover pair in sub-county
+parish,Kapelebyong,Kapelebyong Town Council,Odukul Ward,236.1.08.02,Odukulu Ward,accept,one-letter edit; sole leftover pair in sub-county
+parish,Karenga,Lobalangit,Longoletyanga,335.1.05.03,Longoletyaanga,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county
+parish,Kasese,Kitholu,Kitholhu,406.1.09.04,Kitholu,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county; village echo: Kitholhu
+parish,Katakwi,Katakwi Town Council,Nothern Ward,207.1.04.02,Northern Ward,accept,one-letter edit; sole leftover pair in sub-county
+parish,Katakwi,Okore,Adungulu,207.1.06.01,Adugulu,accept,"EC Okore has 8 parishes, UBOS 7; the extra EC parish (Orimon) resembles nothing"
+parish,Katakwi,Toroma,Angiriny,207.2.07.04,Angirinyi,accept,one-letter edit; sole leftover pair in sub-county
+parish,Kiboga,Kyekumbya,Kisweeka,103.2.05.02,Kisweka,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county; village echo: Kisweeka
+parish,Kiboga,Nkandwa,Ddegeya,103.2.06.01,Degeya,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county; village echo: Ddegeya
+parish,Kibuku,Kibuku,Bumiza,227.2.04.01,Buminza,accept,one-letter edit; sole leftover pair in sub-county
+parish,Kitagwenda,Mahyoro Town Council,Kyendangara Ward,434.1.09.02,Kyendagara Ward,accept,one-letter edit; sole leftover pair in sub-county
+parish,Kotido,West Division,Nangayum Ward,306.2.04.02,Nangayom Ward,accept,one-letter edit; sole leftover pair in sub-county
+parish,Kumi,South Division,Aburbur Ward,208.3.02.01,Abubur Ward,accept,one-letter edit; sole leftover pair in sub-county
+parish,Kween,Kapkwata,Sisimach,228.1.04.07,Sismach,accept,one-letter edit; sole leftover pair in sub-county
+parish,Kween,Kapnarkut Town Council,Kapkuineroi Ward,228.1.05.03,Kapkuneroi Ward,accept,one-letter edit; sole leftover pair in sub-county; village echo: Kapkuneroi
+parish,Kween,Ngenge,Kabachirya,228.2.03.01,Kabachiria,accept,one-letter edit; sole leftover pair in sub-county
+parish,Kyankwanzi,Kyankwanzi,Kasejjere,123.1.07.01,Kasejere,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county; village echo: Kasejjere
+parish,Kyankwanzi,Wattuba,Kisoloza,123.2.10.03,Kisolooza,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county; village echo: Kisoloza
+parish,Kyenjojo,Kisojo,Rwaitengya,415.1.12.03,Rweitengya,accept,one-letter edit; sole leftover pair in sub-county
+parish,Kyotera,Kasaali Town Council,Kyakkonda Ward,125.2.04.04,Kyakonda Ward,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county; village echo: Kyakkonda
+parish,Kyotera,Mutukula Town Council,Koza Ward,125.1.05.04,Kozza Ward,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county; village echo: Koza
+parish,Lira,Agweng,Barroganda,307.1.02.04,Baroganda,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county; village echo: Barroganda 'a'
+parish,Lira,Amach Town Council,Ayach Ward,307.1.05.01,Ayac Ward,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county; village echo: Ayach
+parish,Luuka,Bukooma,Namansenda,229.1.01.04,Namasenda,accept,one-letter edit; sole leftover pair in sub-county
+parish,Manafwa,Bunabutsale,Bumukhama,223.1.04.01,Bamukhama,accept,one-letter edit; sole leftover pair in sub-county
+parish,Manafwa,Bunabwana,Bunambwila,223.2.05.02,Bunabwila,accept,"one-letter edit; leftovers EC 2 / UBOS 2, pairs map 1:1"
+parish,Manafwa,Bunabwana,Nandelema,223.2.05.04,Nanderema,accept,"one-letter edit; leftovers EC 2 / UBOS 2, pairs map 1:1"
+parish,Manafwa,Butiru Town Council,Buwamalelo Ward,223.2.07.04,Buwamalero,accept,one-letter edit; sole leftover pair in sub-county
+parish,Manafwa,Butooto,Bunamakanda,223.1.06.03,Bunamukanda,accept,one-letter edit; sole leftover pair in sub-county
+parish,Manafwa,Khabutoola,Bumufuni,223.1.11.01,Bumufuni I,accept,Khabutoola's 4 parishes correspond 1:1; UBOS added the numeral
+parish,Manafwa,Makenya,Bumilumi,223.2.11.03,Bumirumi,accept,one-letter edit; sole leftover pair in sub-county
+parish,Masindi,Bwijanga,Ntoma,409.1.04.03,Ntooma,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county
+parish,Mbarara City,Mbarara South Division,Kicwamba Ward,437.2.02.06,Kichwamba Ward,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county; village echo: Kicwamba
+parish,Mbarara,Bubaare,Mugarutsya,410.2.01.04,Mugarusya,accept,one-letter edit; sole leftover pair in sub-county
+parish,Mitooma,Kabira,Nyakateete,423.3.01.03,Nyakatete,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county
+parish,Mitooma,Kashenshero,Kyanzaire,423.1.01.04,Kyanzire,accept,one-letter edit; sole leftover pair in sub-county
+parish,Mpigi,Buwama Town Council,Nabiteete Ward,106.1.02.06,Nabitete Ward,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county; village echo: Nabiteete
+parish,Mukono,Nama,Bulika,108.1.07.01,Buliika,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county; village echo: Bulika
+parish,Nakaseke,Kitto,Kito,116.1.02.03,Kitto,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county; village echo: Kito
+parish,Nakaseke,Nakaseke,Kigegge,116.3.03.04,Kigege,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county; village echo: Kigegge
+parish,Nakasongola,Lwabiyata,Kansiira,109.1.01.01,Kansira,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county; village echo: Kansiira
+parish,Nakasongola,Mayirikiti Town Council,Kiswerwa Ward,109.2.07.04,Kiswera Ward,accept,one-letter edit; sole leftover pair in sub-county
+parish,Nakasongola,Nabiswera,Kalengedde,109.1.05.01,Kalengede,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county; village echo: Kalengedde
+parish,Namisindwa,Bungati,Bukulyungu,234.2.05.02,Bukhulyungu,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county; village echo: Bukulyungu
+parish,Namisindwa,Buwambwa,Buwambwa B,234.1.09.04,Buwambwa,accept,EC Buwambwa sub-county has no plain Buwambwa parish; sole leftover pair
+parish,Namisindwa,Namboko,Buwasiba A,234.1.15.05,Buwasiba,accept,rest of Namboko's parishes match exactly; sole leftover pair
+parish,Namisindwa,Namitsa,Buwambwa A,234.1.16.04,Buwambwa,accept,rest of Namitsa's parishes match exactly; sole leftover pair
+parish,Napak,Poron,Kaeselem,327.1.07.01,Kaethelem,accept,one-letter edit; sole leftover pair in sub-county
+parish,Nebbi,Central Division,Jukia Hill Ward,310.1.02.02,Jukiya Hill Ward,accept,one-letter edit; sole leftover pair in sub-county
+parish,Pallisa,Chelekura,Akwamor,210.1.04.02,Akwamoru,accept,one-letter edit; sole leftover pair in sub-county
+parish,Rakai,Kibaale Town Council,Kabingo Ward,110.2.03.01,Kabigo Ward,accept,one-letter edit; sole leftover pair in sub-county
+parish,Rakai,Kibanda,Bbaale,110.2.04.01,Bbale,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county; village echo: Bbaale
+parish,Rakai,Kiziba Town Council,Rweibare,110.2.07.03,Rweibara,accept,one-letter edit; sole leftover pair in sub-county
+parish,Rakai,Mweruka Town Council,Kalwai Ward,110.2.10.01,Kalwayi Ward,accept,"one-letter edit; leftovers EC 2 / UBOS 2, pairs map 1:1"
+parish,Rakai,Mweruka Town Council,Magabirano Ward,110.2.10.02,Magabirana Ward,accept,"one-letter edit; leftovers EC 2 / UBOS 2, pairs map 1:1"
+parish,Rakai,Ntantamuki Town Council,Magabi Ward,110.2.11.03,Mugabi Ward,accept,one-letter edit; sole leftover pair in sub-county
+parish,Sheema,Bugongi Town Council,Kyarikunda Ward,426.1.01.04,Kyarukunda Ward,accept,one-letter edit; sole leftover pair in sub-county
+parish,Sheema,Kitagata Town Council,Rutooma Ward,426.1.06.06,Rutoma Ward,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county; village echo: Rutooma
+parish,Sheema,Masheruka Town Council,Mabaare Ward,426.1.09.04,Mabare Ward,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county
+parish,Sironko,Bukiiti Town Council,Bukiti A Ward,215.1.09.01,Bukiiti A Ward,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county; village echo: Bukiiti A
+parish,Sironko,Buteza,Bukwaga,215.1.22.02,Bukwanga,accept,one-letter edit; sole leftover pair in sub-county
+parish,Sironko,Dahami,Bumiriyu,215.1.28.04,Bumiliyu,accept,one-letter edit; sole leftover pair in sub-county
+parish,Soroti,Awaliwal,Takaramiam,211.2.02.04,Takariamiam,accept,one-letter edit; sole leftover pair in sub-county
+parish,Tororo,Mella,Kinyil,212.3.07.02,Kinyili,accept,one-letter edit; sole leftover pair in sub-county
+parish,Tororo,Soni,Mifumi,212.6.05.02,Mufumi,accept,one-letter edit; sole leftover pair in sub-county
+parish,Wakiso,Gombe Division,Ttikalu Ward,113.6.02.10,Tikalu Ward,accept,"same skeleton (doubled letters / h); leftovers EC 2 / UBOS 2, pairs map 1:1"
+parish,Wakiso,Gombe Division,Wambaale Ward,113.6.02.11,Wambale Ward,accept,"same skeleton (doubled letters / h); leftovers EC 2 / UBOS 2, pairs map 1:1; village echo: Wambaale"
+parish,Wakiso,Wakiso,Ssumbwe,113.1.13.07,Sumbwe,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county; village echo: Ssumbwe
+parish,Yumbe,Bijo,Onjiri,313.1.01.12,Ojiri,accept,one-letter edit; sole leftover pair in sub-county
+parish,Zombo,Abanga,Ser,330.1.01.04,Serr,accept,same skeleton (doubled letters / h); sole leftover pair in sub-county; village echo: Serr
+parish,Zombo,Athuma,Olyeku,330.1.02.03,Olyeko,accept,one-letter edit; sole leftover pair in sub-county
+parish,Zombo,Zombo Town Council,Palei West Ward,330.1.08.03,Paley West Ward,accept,one-letter edit; sole leftover pair in sub-county
+sub-county,Buvuma,Lwajje,,120.1.07,Lwaje,accept,same skeleton (doubled letters / h); 4 parishes match beneath it
+sub-county,Dokolo,Agwatta Town Council,,317.1.02,Agwata Town Council,accept,same skeleton (doubled letters / h); 8 parishes match beneath it
+sub-county,Dokolo,Batta Town Council,,317.1.05,Bata Town Council,accept,same skeleton (doubled letters / h); 4 parishes match beneath it
+sub-county,Kagadi,Ruteete Town Council,,427.2.19,Rutete Town Council,accept,same skeleton (doubled letters / h); 5 parishes match beneath it
+sub-county,Kapelebyong,Kapelebyoung Town Council,,236.1.08,Kapelebyong Town Council,accept,one-letter edit; 6 parishes match beneath it
+sub-county,Kasese,Kinyamaseke Town Council,,406.1.05,Kinyameseke Town Council,accept,one-letter edit; 6 parishes match beneath it
+sub-county,Kasese,Kitholhu,,406.1.09,Kitholu,accept,same skeleton (doubled letters / h); 5 parishes match beneath it
+sub-county,Kitgum,Mucwini East,,305.1.03,Muchwini East,accept,same skeleton (doubled letters / h); 3 parishes match beneath it
+sub-county,Manafwa,Bunyinza Town Council,,223.2.09,Buyinza Town Council,accept,one-letter edit; 4 parishes match beneath it
+sub-county,Mbale,Bukiende,,209.2.04,Bukhiende,accept,same skeleton (doubled letters / h); 7 parishes match beneath it
+sub-county,Nakaseke,Kasangombe,,116.3.01,Kaasangombe,accept,same skeleton (doubled letters / h); 5 parishes match beneath it
+sub-county,Nakaseke,Kito,,116.1.02,Kitto,accept,same skeleton (doubled letters / h); 4 parishes match beneath it
+sub-county,Napak,Lopeei,,327.1.04,Lopei,accept,same skeleton (doubled letters / h); 3 parishes match beneath it
+sub-county,Ntungamo,Rwashamaire Town Council,,411.1.09,Rwashameire Town Council,accept,one-letter edit; 4 parishes match beneath it
+sub-county,Oyam,Achaba,,321.1.02,Acaba,accept,same skeleton (doubled letters / h); 6 parishes match beneath it
+sub-county,Oyam,Icheme,,321.1.04,Iceme,accept,same skeleton (doubled letters / h); 9 parishes match beneath it
+sub-county,Oyam,Icheme Town Council,,321.1.05,Iceme Town Council,accept,same skeleton (doubled letters / h); 2 parishes match beneath it
+sub-county,Pallisa,Boliso I,,210.4.01,Boliso,accept,EC sub-county's 4 parishes = UBOS Boliso's 4 parishes; UBOS dropped the numeral
+sub-county,Terego,Bileafe,,340.2.02,Beleafe,accept,one-letter edit; 4 parishes match beneath it

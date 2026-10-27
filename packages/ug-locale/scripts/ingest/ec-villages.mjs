@@ -128,12 +128,41 @@ export function ubosTree(rows) {
 }
 
 /**
+ * Load ec-fuzzy-review.csv → Map("<level>|<ubos_code>|<ec name>" → verdict).
+ * Every fuzzy match must be listed there (see crosswalkEcParishes).
+ */
+export function loadFuzzyReview(text) {
+  const body = text.split("\n").filter((l) => l && !l.startsWith("#")).join("\n");
+  const review = new Map();
+  for (const r of parseCsv(body + "\n")) {
+    const name = r.level === "sub-county" ? r.ec_subcounty : r.ec_parish;
+    if (r.verdict !== "accept" && r.verdict !== "reject")
+      throw new Error(`ec-fuzzy-review: bad verdict "${r.verdict}" for ${name}`);
+    review.set(`${r.level}|${r.ubos_code}|${name}`, r.verdict);
+  }
+  return review;
+}
+
+/**
+ * Apply the human review to a fuzzy match: accepted stays "fuzzy",
+ * rejected becomes "rejected", absent becomes "unreviewed" — the last two
+ * do NOT match, so their villages are not placed.
+ */
+function reviewed(m, level, ecNameOfUnit, review) {
+  if (m.method !== "fuzzy") return m;
+  const verdict = review?.get(`${level}|${m.code}|${ecNameOfUnit}`);
+  if (verdict === "accept") return m;
+  return { method: verdict === "reject" ? "rejected" : "unreviewed", options: [m.code] };
+}
+
+/**
  * Match every distinct EC parish (from parsed EC village rows) to a UBOS
- * parish. Returns one result per EC parish:
+ * parish. `review` (from loadFuzzyReview) gates fuzzy matches; without it
+ * every fuzzy match is "unreviewed". Returns one result per EC parish:
  *   { key, dName, cons, sName, pName, villages, status, ubosParish, ubosNames, … }
  * `ubosParish` is the UBOS parish code, or "" when unmatched.
  */
-export function crosswalkEcParishes(ec, uDistricts) {
+export function crosswalkEcParishes(ec, uDistricts, review) {
   // Distinct EC parishes, with their village counts.
   const ecParishes = new Map(); // key → { d, dName, cons, sName, pName, villages }
   for (const r of ec) {
@@ -162,9 +191,10 @@ export function crosswalkEcParishes(ec, uDistricts) {
     const res = { ...p, district: districtMatch.get(p.dName) };
     if (res.district.code) {
       const d = uDistricts.get(res.district.code);
-      res.sub = match(p.sName, asCandidates(d.subs), 2);
+      res.sub = reviewed(match(p.sName, asCandidates(d.subs), 2), "sub-county", p.sName, review);
       if (res.sub.code) {
-        res.parish = match(p.pName, asCandidates(d.subs.get(res.sub.code).parishes, (v) => v), 3);
+        const parishes = asCandidates(d.subs.get(res.sub.code).parishes, (v) => v);
+        res.parish = reviewed(match(p.pName, parishes, 3), "parish", p.pName, review);
       }
     }
     res.status =

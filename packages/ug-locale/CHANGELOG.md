@@ -66,6 +66,9 @@ Code follows semver. The dataset has its own version
   matches EC parishes to UBOS parishes by name (exact → rough → fuzzy, kind-
   and uniqueness-guarded), placing 99.5% of villages; the same matching
   (`ec-villages.mjs`) is what `build-ubos-frame.mjs` uses to write them.
+  Every fuzzy (spelling-variant) match carries a human verdict in
+  `ec-fuzzy-review.csv` — 124 decisions / 195 parishes reviewed, all
+  accepted — and the ingest stops on any fuzzy match without one.
 - Full-scale benchmark `scripts/bench-scale.mjs`. Results at real size
   (71k synthetic villages): build 1.3 s; blobs ≈ 1.9 MB total
   (villages 1.7 MB, districts+counties ≈ 10 KB); villages blob

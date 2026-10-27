@@ -99,7 +99,12 @@
   parish by name (`ec-villages.mjs`: exact → rough → fuzzy, unique and
   kind-guarded; no UBOS parish may receive two EC parishes) and writes its
   villages beneath it. 70,878 of 71,230 placed (99.5%): 95.9% exact, 1.7%
-  rough, 1.9% fuzzy. 352 villages in 55 EC parishes that no longer
+  rough, 1.9% fuzzy. **Every fuzzy match was reviewed by hand** (2026-10-27:
+  124 decisions covering 195 EC parishes / 1,335 villages, all accepted —
+  93 parish decisions are the sole leftover pair in their sub-county, 38
+  have a village named after the UBOS parish). Verdicts and evidence are in
+  `scripts/ingest/ec-fuzzy-review.csv`; the ingest refuses any fuzzy match
+  without a verdict. 352 villages in 55 EC parishes that no longer
   correspond to a 2026 UBOS parish are left out; `crosswalk-ec-villages.mjs`
   lists them and every fuzzy match.
 - **Known defects:** the EC printed code `67-126-31-146-01` for two villages

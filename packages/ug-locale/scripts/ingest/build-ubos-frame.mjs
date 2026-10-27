@@ -48,7 +48,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { canonicalName } from "./normalize.mjs";
 import { kindFromName, REGIONS } from "./kinds.mjs";
-import { crosswalkEcParishes, ecName, parseCsv, ubosTree } from "./ec-villages.mjs";
+import { crosswalkEcParishes, ecName, loadFuzzyReview, parseCsv, ubosTree } from "./ec-villages.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const pkgRoot = join(here, "..", "..");
@@ -57,6 +57,8 @@ const SRC = join(here, "sources", "ubos-parishes-2026-07.csv");
 // parsed by parse-ec-admin-units.mjs (committed; the PDF is not). Attached
 // under UBOS parishes by the name crosswalk in ec-villages.mjs.
 const EC_VILLAGES = join(here, "sources", "ec-villages-2022.csv");
+// Every fuzzy (spelling-variant) match must carry a human verdict here.
+const FUZZY_REVIEW = join(here, "ec-fuzzy-review.csv");
 
 // UBOS names use uppercase + a couple of punctuation characters that our
 // canonical alphabet does not admit. Rewrite them before canonicalName().
@@ -242,7 +244,17 @@ if (distinct(3) < 10000 || distinct(3) > 11500)
 // it is the only official village identifier. Unmatched EC parishes'
 // villages are dropped (listed by crosswalk-ec-villages.mjs for review).
 const ecRows = parseCsv(readFileSync(EC_VILLAGES, "utf8"));
-const results = crosswalkEcParishes(ecRows, ubosTree(out.map((o) => o.tree)));
+const review = loadFuzzyReview(readFileSync(FUZZY_REVIEW, "utf8"));
+const results = crosswalkEcParishes(ecRows, ubosTree(out.map((o) => o.tree)), review);
+const unreviewed = results.filter((r) => r.status.endsWith(":unreviewed"));
+if (unreviewed.length) {
+  for (const r of unreviewed.slice(0, 20))
+    console.error(`  unreviewed fuzzy match: ${r.dName} / ${r.sName} / ${r.pName} → ${(r.parish ?? r.sub).options}`);
+  throw new Error(
+    `${unreviewed.length} fuzzy EC→UBOS match(es) lack a verdict in ec-fuzzy-review.csv. ` +
+      "Run crosswalk-ec-villages.mjs, review them, and add accept/reject rows.",
+  );
+}
 const ecKeyOfParish = new Map();
 for (const r of results) {
   if (!r.ubosParish) continue;

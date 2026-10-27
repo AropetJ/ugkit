@@ -46,7 +46,10 @@ node crosswalk-ec-villages.mjs sources/ec-villages-2022.csv <review-dir>
 The parser fails unless every printed total matches. The crosswalk writes
 `ec-parish-crosswalk.csv` and `crosswalk-report.txt` — every fuzzy match and
 every unplaced EC parish — for human review; it uses the same matching code
-as the ingest, so it describes exactly what ships. Redistribution permission
+as the ingest, so it describes exactly what ships. Fuzzy matches need a
+verdict in `ec-fuzzy-review.csv` (accept / reject, with evidence) — the
+ingest stops on any without one, so a data refresh can't slip in unreviewed
+spelling guesses. Redistribution permission
 is being sought from the EC (`ec-request-draft.md`).
 
 Rejected / reference-only sources (full reasoning in `SAMPLES.md`):

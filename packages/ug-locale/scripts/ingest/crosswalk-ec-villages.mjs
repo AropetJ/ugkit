@@ -28,7 +28,10 @@
  *                 and h-after-consonant dropped: Kitoonya/Kitonya,
  *                 Mucwini/Muchwini), or skeletons one edit apart for names of
  *                 6+ letters (Ndaragi/Ngaragi). Fuzzy matches are spelling
- *                 judgements: listed in the report for human review.
+ *                 judgements, so each needs a human verdict in
+ *                 ec-fuzzy-review.csv: accepted ones match, rejected ones
+ *                 don't, and any without a verdict ("unreviewed") stop
+ *                 build-ubos-frame.mjs until reviewed.
  * Anything else is reported as none/ambiguous, never guessed.
  *
  * Usage:
@@ -43,7 +46,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { crosswalkEcParishes, parseCsv, ubosTree } from "./ec-villages.mjs";
+import { crosswalkEcParishes, loadFuzzyReview, parseCsv, ubosTree } from "./ec-villages.mjs";
 
 const [ecPath, outDir] = process.argv.slice(2);
 if (!ecPath || !outDir) {
@@ -54,7 +57,8 @@ const pkgRoot = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 
 const ubos = parseCsv(readFileSync(join(pkgRoot, "data", "uganda.csv"), "utf8"));
 const uDistricts = ubosTree(ubos);
-const results = crosswalkEcParishes(parseCsv(readFileSync(ecPath, "utf8")), uDistricts);
+const review = loadFuzzyReview(readFileSync(join(dirname(fileURLToPath(import.meta.url)), "ec-fuzzy-review.csv"), "utf8"));
+const results = crosswalkEcParishes(parseCsv(readFileSync(ecPath, "utf8")), uDistricts, review);
 const districtMatch = new Map(results.map((r) => [r.dName, r.district]));
 
 // Two EC parishes landing on one UBOS parish would merge village lists —
