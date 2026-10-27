@@ -56,9 +56,10 @@ valuable issues we can receive. Open an issue with:
 - if possible, an **official source**: UBOS list, gazette notice, or EC list.
 
 The dataset mirrors the UBOS administrative-units frame (district → county →
-sub-county → parish). Two things that look like errors but aren't: Kampala's
-five divisions appear at both county and sub-county level (KCCA conflates the
-two tiers), and villages are empty because UBOS does not publish them. See
+sub-county → parish). Two things that look like errors but aren't: city
+divisions (26 of them, in Kampala and the 10 cities) appear at both county and
+sub-county level because UBOS records them at both tiers, and villages are
+empty because UBOS does not publish them. See
 `data/PROVENANCE.md` before reporting an "extra" or "missing" unit.
 
 ## Dataset sourcing

@@ -40,6 +40,10 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      # Re-run the live ingest from the committed UBOS source: uganda.csv must
+      # be exactly what build-ubos-frame.mjs produces (no hand edits).
+      - run: node packages/ug-locale/scripts/ingest/build-ubos-frame.mjs
+      - run: git diff --exit-code packages/ug-locale/data/uganda.csv
       - run: npm run build:data --workspace=@ugkit/locale
       - run: git diff --exit-code packages/ug-locale/src/generated
 

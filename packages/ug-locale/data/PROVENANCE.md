@@ -11,9 +11,11 @@
   Level (UG)"* spreadsheet, provided by direct request to `ubos@ubos.org`
   (draft: `../scripts/ingest/ubos-request-draft.md`).
   - Original filename: `Administrative Units-Parish Level_UG-7 July 2026.xlsx`
-  - Local copy: `../scripts/ingest/sources/ubos-parishes-2026-07.xlsx`
-    (the `sources/` directory is gitignored — the file is held by the
-    maintainer, not committed)
+  - Repo copy: `../scripts/ingest/sources/ubos-parishes-2026-07.xlsx`
+    (sha256 `2756a4461f2327c2b0786c1a271cd92db5ebc074edc11e7662903a1d63b7aa3a`)
+    and its CSV extraction `ubos-parishes-2026-07.csv`
+    (sha256 `c12eedc6f58d65b8694d0e61919cf169da459de82aada26524bdc85108b5a432`).
+    Both are committed so `build-ubos-frame.mjs` re-runs from a fresh clone.
 - **Retrieved:** 2026-07-08 (email from UBOS confirming dissemination up to
   parish level only).
 - **Extraction:** the xlsx is converted once to `sources/ubos-parishes-2026-07.csv`

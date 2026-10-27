@@ -17,8 +17,8 @@
  *     [open_csv.writerow(['' if c is None else str(c).strip() for c in r]) \
  *      for r in ws.iter_rows(values_only=True)]"
  * This mirrors the pdf→txt intermediate that build-ec-frame.mjs consumes:
- * a plain-CSV intermediate keeps this script zero-dependency. (sources/ is
- * gitignored, so re-running needs the maintainer's local copy.)
+ * committing the plain CSV keeps this script zero-dependency and CI-portable
+ * (the UBOS files are the one exception to the sources/ gitignore).
  *
  * Emits:
  *   ../../data/uganda.csv  — canonical 10-col variable-depth CSV (see build-data.mjs)
