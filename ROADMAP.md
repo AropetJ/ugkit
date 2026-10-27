@@ -57,6 +57,9 @@ sequencing is the real discipline. Shugyō, not sprawl.
 | `@ugkit/plates` | validator | Vehicle registration plate parsing/validation. |
 | `@ugkit/holidays` | registry | Public holidays + banking-day arithmetic. |
 | `@ugkit/ussd` | protocol | USSD menu-flow utilities for feature-phone interfaces. |
+| `@ugkit/mrz` | protocol | Parse the machine-readable zone on the back of the national ID card (and passports): NIN, card number, date of birth, expiry, with ICAO 9303 check-digit verification. Scan-the-card KYC for Kirafiki with no typed NIN. Pure logic over an international standard — no dataset to source or maintain. Pairs with `@ugkit/nin`. |
+| `@ugkit/names` | localization | Ugandan-aware name normalization and matching: doubled consonants (Ssemakula / Semakula), r/l alternation, surname-first vs given-first order, clan names. KYC constantly compares the NIRA name against the MNO-registered or form-entered name, and generic fuzzy matching gets these wrong. Mostly logic plus small rule tables. |
+| `@ugkit/banks` | registry | BoU-licensed commercial banks and other supervised financial institutions, with SWIFT/BIC and bank/branch codes for EFT/RTGS. Bank payouts for Kirafiki; every payroll system's "pay to bank" dropdown. Changes only on BoU licensing events. Confirm source licensing before committing. |
 
 ### Payroll, tax & compliance — probably the highest-demand cluster
 
@@ -88,6 +91,7 @@ sequencing is the real discipline. Shugyō, not sprawl.
 | `@ugkit/health-facilities` | registry | Master Facility List with facility levels (HC II–IV, hospitals), keyed to `@ugkit/locale` districts. Nobody better positioned to maintain this. |
 | `@ugkit/medicines` | registry | Essential Medicines List / NDA-registered products for pharmacy modules, prescriptions, stock systems. Reference data ONLY, clearly versioned, no clinical claims. |
 | `@ugkit/insurers` | registry | Health insurers and schemes operating in Uganda, for claims modules. |
+| `@ugkit/hmis` | registry | Ministry of Health HMIS reporting forms (e.g. HMIS 105) and their data elements, mapped for DHIS2 submission. Every clinic system has to produce these reports; ClinicMaster already holds the mapping knowledge. Confirm source licensing before committing. |
 
 ### Language & localization — the most differentiated cluster
 
@@ -95,6 +99,7 @@ sequencing is the real discipline. Shugyō, not sprawl.
 |---|---|---|
 | `@ugkit/lang` | localization | Number-to-words and amount-in-words in Luganda, Runyankole-Rukiga, Acholi, Ateso, Lusoga… Start with Luganda amounts for receipts. With `@ugkit/currency`, prints a legally-styled invoice amount in English *and* Luganda. Nothing like this exists on npm; feeds USSD/IVR for non-English speakers directly. |
 | `@ugkit/greetings` | localization | Time-of-day greetings and common service phrases per language, for chatbots and USSD menus. Sounds trivial; it's the difference between a bot that feels foreign and one that feels local. |
+| `@ugkit/sms` | localization | SMS segment counting and cost estimation, plus GSM-7-safe substitution for local-language characters (ŋ → ng'). A single ŋ in a Luganda message forces UCS-2 encoding, cutting segments from 160 to 70 characters and roughly doubling cost — every bulk-SMS product here pays this without noticing. Pairs with `@ugkit/lang`. |
 
 ### Civic & government reference
 
@@ -102,6 +107,7 @@ sequencing is the real discipline. Shugyō, not sprawl.
 |---|---|---|
 | `@ugkit/gov` | registry | Ministries, departments, and agencies (the MDA list) + local governments, with acronyms. Procurement tools, CRM dropdowns, journalism. |
 | `@ugkit/parliament` | registry | MPs by constituency (foreign-keyed to `@ugkit/locale`), refreshed each term. The 2026 election just happened — perfect timing for a `2026` dataset version. |
+| `@ugkit/communities` | registry | The 65 indigenous communities in the Constitution's Third Schedule, optionally with UBOS census code lists (religion, marital status, education level). The "tribe" field is common on Ugandan forms; the source is authoritative and almost never changes — the simplest registry ugkit could ship. |
 
 ### Agriculture & commerce
 
