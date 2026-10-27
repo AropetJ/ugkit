@@ -12,7 +12,7 @@ work list for 0.2+ dataset releases.
 
 | # | Gap | Level | Have the data? | Effort |
 |---|---|---|---|---|
-| 1 | Villages (0 of ~71,214) | village | No — best lead is an EC PDF, licence unknown | Large |
+| 1 | Villages (0 of ~71,214) | village | **Staged** — 99.5% crosswalked; needs EC permission | Medium |
 | 2 | ~~Refugee-settlement units not flagged~~ **Done** — `kind: "settlement"` | sub-county, parish | Yes | — |
 | 3 | Nine town councils created 1 Jul 2025 missing / mistyped | sub-county | Partly | Small |
 | 4 | ~~Region dropped at ingest~~ **Done** — `Unit.region`, `districtsInRegion` | district | Yes | — |
@@ -26,6 +26,22 @@ work list for 0.2+ dataset releases.
 | 12 | `byName` ambiguity at parish level | parish | N/A — API/UX | Small (docs) |
 
 ## 1. Villages — the only missing level
+
+> **Status 2026-10-27 — parsed and crosswalked, awaiting EC permission.**
+> The EC July 2022 gazetteer is verified: EC codes down to village
+> (`district-constituency-subcounty-parish-village`, e.g. `06-028-01-01-01`).
+> `scripts/ingest/parse-ec-admin-units.mjs` extracts **71,230 villages /
+> 10,717 parishes / 353 constituencies / 146 districts**, matching every one
+> of the PDF's 2,198 sub-county subtotals, 146 district totals and the grand
+> total. `crosswalk-ec-villages.mjs` places **70,878 villages (99.5%)** under
+> UBOS parishes — 95.9% exact, 1.7% rough, 1.9% fuzzy (listed for review) —
+> with no UBOS parish receiving two EC parishes. Unplaced: 55 EC parishes /
+> 352 villages (structural changes since 2022, e.g. "Makerere University",
+> 2022 town councils absent in 2026). Caveat for shipping: 77 non-settlement
+> UBOS parishes get no villages — most likely parishes split since 2022 whose
+> villages the EC still lists under the parent. Source defects: Manafwa /
+> Bunamone Ward has two villages coded `01`. Next: send
+> `scripts/ingest/ec-request-draft.md`; ship only with permission.
 
 - **Shipped:** 0. UBOS confirmed in writing it disseminates only to parish
   (`PROVENANCE.md`). Reference totals: EC 71,214 (voter statistics Nov 2025;
@@ -191,8 +207,7 @@ alone will often miss; the README should steer users to
 1. ~~**Small, no new source:** §4 region, §5 kind, §2 settlement flag~~ —
    done in 0.1.0 (docs/design-unit-attributes.md).
 2. **§3 town councils** — confirm with MoLG/UBOS; add as documented additions.
-3. **§1 villages** — parse the EC July 2022 PDF into a staging CSV,
-   cross-check against the derived datasets, write to the EC about
-   redistribution and a 2026 edition. Ship only with permission.
+3. **§1 villages** — parsed and crosswalked (99.5%); send the EC request
+   (`scripts/ingest/ec-request-draft.md`). Ship only with permission.
 4. §7 sub-regions with §4; §8 population as its own subpath.
 5. §9 and §10 belong in other packages (constituencies, `-geo`).

@@ -68,6 +68,12 @@ const ERRATA = {
   // Bududa County-2 "LUTSESHE" appears in 76 rows; a single row spells it
   // "RLUTSESHE" (stray leading R). Correcting to the majority spelling.
   "C:218.2": { wrong: "RLUTSESHE COUNTY", right: "LUTSESHE COUNTY" },
+  // Two town-council names truncated mid-word in the source ("…COUNCI"), and
+  // one run together ("TOWNCOUNCIL"). Left as-is, their suffix misses the
+  // town-council kind rule; found by the EC village crosswalk.
+  "S:406.2.06": { wrong: "KABATUNDA-KIRABAHO TOWN COUNCI", right: "KABATUNDA-KIRABAHO TOWN COUNCIL" },
+  "S:411.4.03": { wrong: "KAKUKURU-RWENANURA TOWN COUNCI", right: "KAKUKURU-RWENANURA TOWN COUNCIL" },
+  "S:109.2.07": { wrong: "MAYIRIKITI TOWNCOUNCIL", right: "MAYIRIKITI TOWN COUNCIL" },
 };
 function fixName(level, code, raw) {
   const rule = ERRATA[`${level}:${code}`];

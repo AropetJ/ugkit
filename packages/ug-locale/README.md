@@ -105,7 +105,7 @@ All functions return `Unit` objects:
   |---|---|
   | district | `district` 135 · `city` 11 |
   | county | `county` 256 · `municipality` 31 · `division` 25 |
-  | sub-county | `sub-county` 1,506 · `town-council` 577 · `division` 107 · `settlement` 19 |
+  | sub-county | `sub-county` 1,503 · `town-council` 580 · `division` 107 · `settlement` 19 |
   | parish | `parish` 7,762 · `ward` 3,098 |
   | village | `village` · `cell` |
 

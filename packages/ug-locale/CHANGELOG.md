@@ -60,6 +60,12 @@ Code follows semver. The dataset has its own version
   - `validate.mjs` enforces per-level kind allow-lists and one region per
     district, and adds an **EC-frame check**: excluding settlements,
     sub-counties must be 2,191 ±10 and parishes 10,717 ±50.
+- Village staging tooling (not shipped): `parse-ec-admin-units.mjs` parses
+  the EC *Verified Administrative Units, July 2022* PDF (71,230 villages,
+  every printed subtotal and total self-checked); `crosswalk-ec-villages.mjs`
+  matches EC parishes to UBOS parishes by name (exact → rough → fuzzy, kind-
+  and uniqueness-guarded), placing 99.5% of villages. Villages ship only
+  with the EC's redistribution permission (`ec-request-draft.md`).
 - Full-scale benchmark `scripts/bench-scale.mjs`. Results at real size
   (71k synthetic villages): build 1.3 s; blobs ≈ 1.9 MB total
   (villages 1.7 MB, districts+counties ≈ 10 KB); villages blob
@@ -76,8 +82,11 @@ Code follows semver. The dataset has its own version
 - Villages ship as an empty, safely-queryable level: UBOS disseminates
   administrative units only to parish level, and no other authoritative coded
   village register exists.
-- Ingest corrections: one UBOS typo fixed via `ERRATA` (county `218.2`
-  "RLUTSESHE" → "Lutseshe"); name casing now capitalizes segments after `/`,
+- Ingest corrections: UBOS typos fixed via `ERRATA` — county `218.2`
+  "RLUTSESHE" → "Lutseshe", and three town councils whose suffix was
+  truncated or run together ("Kabatunda-Kirabaho Town Counci",
+  "Kakukuru-Rwenanura Town Counci", "Mayirikiti Towncouncil"), which had
+  been mis-kinded as plain sub-counties (found by the EC village crosswalk); name casing now capitalizes segments after `/`,
   `(` and `.` (33 names, e.g. "Bussi/Kisaba", "Nakaziba (Ggavu)", "P.W.D").
 - Region carried from the UBOS `Region` column; kinds derived per the rules
   above; 19 refugee settlements curated by code (`SETTLEMENTS`). Excluding

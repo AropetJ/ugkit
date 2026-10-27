@@ -65,7 +65,7 @@ test("full dataset: kind tallies and the EC-frame reconciliation", { skip: !FULL
     Object.fromEntries([...new Set(units.map((u) => u.kind))].sort().map((k) => [k, units.filter((u) => u.kind === k).length]));
   assert.deepEqual(tally(ds), { city: 11, district: 135 });
   assert.deepEqual(tally(cs), { county: 256, division: 25, municipality: 31 });
-  assert.deepEqual(tally(ss), { division: 107, settlement: 19, "sub-county": 1506, "town-council": 577 });
+  assert.deepEqual(tally(ss), { division: 107, settlement: 19, "sub-county": 1503, "town-council": 580 });
   assert.deepEqual(tally(ps), { parish: 7762, ward: 3098 });
   for (const r of REGIONS) assert.ok(districtsInRegion(r).length > 0);
 

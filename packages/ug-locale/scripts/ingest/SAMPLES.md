@@ -143,6 +143,34 @@ UBOS replied to the parish-frame request. What arrived:
   correct — Kampala Capital City Authority conflates the two administrative
   levels — and it flows through the pipeline naturally.
 
+## EC "Verified Administrative Units, July 2022" — parsed 2026-10-27
+
+The village-level lead from the gap audit. Findings:
+
+- **Source:** https://www.ec.or.ug/sites/default/files/statistics/ADMINISTRATIVE%20UNITS%20IN%20UGANDA_JULY%202022.pdf
+  — 3,019 pages, Microsoft Access report generated 19 Jul 2022, 10.8 MB,
+  sha256 `fa70833b…683d`. Kept locally in `sources/ec-admin-units-2022/`
+  (gitignored; redistribution terms unknown).
+- **Structure:** page headers DISTRICT / CONSTITUENCY; three columns
+  sub-county / parish / village, each cell `NN NAME`. EC codes at every
+  level; village codes have gaps (retired villages). Totals printed per
+  sub-county block (2,198), per district (146), and nationally (71,230).
+- **Parse quirks handled** (`parse-ec-admin-units.mjs`): column offsets drift
+  per page (bounds taken from each header); long names wrap onto uncoded
+  lines; a long parish name can abut its village with a single space;
+  internal space runs ("PANYANGASI     A"); names truncated at 30 chars on
+  total lines; sub-county codes restart per constituency (so a new
+  constituency's "01" is not a page-top repeat); quotes in names.
+- **Result:** 71,230 villages, 10,717 parishes, 353 constituencies, 146
+  districts — every printed total matches. Defects in the source: two
+  villages coded `67-126-31-146-01` (Manafwa / Bunamone Ward: BUWALUSATI,
+  BUTTA) with a stray "0" line; "… WARD COUNCIL" parish names; "TOWN COUCIL".
+- **Crosswalk to UBOS 2026** (`crosswalk-ec-villages.mjs`): 99.5% of
+  villages placed, 0 collisions. Side effect: exposed three UBOS town
+  councils with broken suffixes, now fixed in `build-ubos-frame.mjs → ERRATA`.
+- **Licence:** not stated in the PDF or on the site. Request drafted in
+  `ec-request-draft.md`.
+
 ## Recommendation (superseded — see EC PDF conclusion above)
 
 1. Re-hit the endpoint when up; confirm whether parish/village appear.

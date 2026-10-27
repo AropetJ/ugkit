@@ -28,6 +28,12 @@
   - County code `218.2` (Bududa): 1 row of 77 spelled the county
     "RLUTSESHE COUNTY"; the majority (and historical) spelling is
     "LUTSESHE COUNTY". Corrected during ingest.
+  - Sub-counties `406.2.06`, `411.4.03` (Kasese, Ntungamo): names truncated
+    mid-suffix ("…TOWN COUNCI") → "…TOWN COUNCIL".
+  - Sub-county `109.2.07` (Nakasongola): "MAYIRIKITI TOWNCOUNCIL" →
+    "MAYIRIKITI TOWN COUNCIL".
+  - The last three were mis-kinded as plain sub-counties until fixed; found
+    while crosswalking EC villages (see `GAPS.md` §1).
 - **Attributes:**
   - *Region* — UBOS's own `Region` column (Central 27, Eastern 40, Northern
     41, Western 38 districts), carried through unchanged; the ingest fails

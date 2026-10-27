@@ -33,6 +33,21 @@ review the CSV diff, bump `ugkit.datasetVersion`.
 UBOS disseminates **only to parish level**. Villages are not sourced and the
 level ships empty.
 
+**Village staging (not shipped): EC July 2022 gazetteer.** Download the PDF
+(URL and sha256 in `parse-ec-admin-units.mjs`) into a new directory under
+`sources/`, then:
+
+```bash
+pdftotext -layout admin-units-july-2022.pdf admin-units-july-2022.txt
+node parse-ec-admin-units.mjs <txt> <dir>/ec-villages-2022.csv
+node crosswalk-ec-villages.mjs <dir>/ec-villages-2022.csv <dir>
+```
+
+The parser fails unless every printed total matches; the crosswalk writes
+`ec-parish-crosswalk.csv` and `crosswalk-report.txt` (fuzzy matches and every
+unmatched unit, for review). Nothing reaches `data/uganda.csv` until the EC
+grants redistribution (`ec-request-draft.md`).
+
 Rejected / reference-only sources (full reasoning in `SAMPLES.md`):
 
 - **Electoral Commission PDFs** — coded, but electoral (constituencies, not
