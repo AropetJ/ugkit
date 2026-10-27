@@ -1,16 +1,16 @@
-district_code,district,county_code,county,subcounty_code,subcounty,parish_code,parish,village_code,village
-,Kampala,,Kampala Central Division,,Kampala Central,,Kagugube,,Kagugube Zone
-,Kampala,,Kampala Central Division,,Kampala Central,,Kamwokya II,,Kamwokya Central
-,Kampala,,Kawempe Division,,Kawempe I,,Mulago III,,Katale Zone
-,Kampala,,Nakawa Division,,Nakawa,,Ntinda,,Ntinda Village
-,Wakiso,,Busiro County,,Nansana Division,,Nansana East,,Nansana East I
-,Wakiso,,Busiro County,,Nansana Division,,Nansana East,,Nansana East II
-,Wakiso,,Busiro County,,Nansana Division,,Nansana West,,Nansana West I
-,Wakiso,,Busiro County,,Kira Division,,Kimwanyi,,Kimwanyi A
-,Wakiso,,Kyadondo County,,Kasangati Town Council,,Kasangati,,Kasangati Central
-,Gulu,,Gulu Municipality,,Laroo Division,,Laroo,,Iriaga
-,Gulu,,Aswa County,,Awach,,Pukony,,Pukony Central
-,Mbarara,,Mbarara Municipality,,Kamukuzi Division,,Kamukuzi,,Boma
-,Mbarara,,Kashari County,,Rubindi,,Rubindi,,Rubindi Trading Centre
-,Jinja,,Jinja Municipality,,Jinja Central Division,,Mpumudde,,Mpumudde East
-,Jinja,,Butembe County,,Budondo,,Budondo,,Kibibi
+region,district_code,district,district_kind,county_code,county,county_kind,subcounty_code,subcounty,subcounty_kind,parish_code,parish,parish_kind,village_code,village,village_kind
+Central,,Kampala,city,,Kampala Central Division,division,,Kampala Central,sub-county,,Kagugube,parish,,Kagugube Zone,village
+Central,,Kampala,city,,Kampala Central Division,division,,Kampala Central,sub-county,,Kamwokya II,parish,,Kamwokya Central,village
+Central,,Kampala,city,,Kawempe Division,division,,Kawempe I,sub-county,,Mulago III,parish,,Katale Zone,village
+Central,,Kampala,city,,Nakawa Division,division,,Nakawa,sub-county,,Ntinda,parish,,Ntinda Village,village
+Central,,Wakiso,district,,Busiro County,county,,Nansana Division,division,,Nansana East,parish,,Nansana East I,village
+Central,,Wakiso,district,,Busiro County,county,,Nansana Division,division,,Nansana East,parish,,Nansana East II,village
+Central,,Wakiso,district,,Busiro County,county,,Nansana Division,division,,Nansana West,parish,,Nansana West I,village
+Central,,Wakiso,district,,Busiro County,county,,Kira Division,division,,Kimwanyi,parish,,Kimwanyi A,village
+Central,,Wakiso,district,,Kyadondo County,county,,Kasangati Town Council,town-council,,Kasangati,parish,,Kasangati Central,village
+Northern,,Gulu,district,,Gulu Municipality,municipality,,Laroo Division,division,,Laroo,parish,,Iriaga,village
+Northern,,Gulu,district,,Aswa County,county,,Awach,sub-county,,Pukony,parish,,Pukony Central,village
+Western,,Mbarara,district,,Mbarara Municipality,municipality,,Kamukuzi Division,division,,Kamukuzi,parish,,Boma,village
+Western,,Mbarara,district,,Kashari County,county,,Rubindi,sub-county,,Rubindi,parish,,Rubindi Trading Centre,village
+Eastern,,Jinja,district,,Jinja Municipality,municipality,,Jinja Central Division,division,,Mpumudde,parish,,Mpumudde East,village
+Eastern,,Jinja,district,,Butembe County,county,,Budondo,sub-county,,Budondo,parish,,Kibibi,village

@@ -28,6 +28,19 @@
   - County code `218.2` (Bududa): 1 row of 77 spelled the county
     "RLUTSESHE COUNTY"; the majority (and historical) spelling is
     "LUTSESHE COUNTY". Corrected during ingest.
+- **Attributes:**
+  - *Region* — UBOS's own `Region` column (Central 27, Eastern 40, Northern
+    41, Western 38 districts), carried through unchanged; the ingest fails
+    if a district appears in two regions.
+  - *Kind* — derived from the canonical name's suffix by
+    `scripts/ingest/kinds.mjs` (e.g. "… Town Council" → `town-council`,
+    "… Ward" → `ward`, "Kampala"/"… City" → `city`), with a
+    `KIND_OVERRIDES` table in `build-ubos-frame.mjs` (empty in 2026.1).
+  - *Settlement* — 19 sub-county codes curated in `build-ubos-frame.mjs →
+    SETTLEMENTS`, identified by name and checked district-by-district
+    against the EC July 2022 summary (see `GAPS.md` §2). "Rhino Camp"
+    (`336.1.05`) and "Rhino Camp Town Council" (`336.1.07`) are ordinary
+    units, not the settlement (`336.1.06`).
 - **Naming policy (`normalize.mjs → canonicalName`):** UBOS names are upper
   case; they are title-cased, with each segment after `-`, `/`, `(` and `.`
   capitalized ("BUSSI/KISABA" → "Bussi/Kisaba", "P.W.D" stays "P.W.D").
@@ -40,14 +53,19 @@
   subcounties    2209  expected 2191 ±100 ✓
   parishes      10860  expected 10717 ±300 ✓
   villages          0  (not yet sourced — skipped)
+
+  EC frame (excluding 19 refugee settlements):
+  subcounties    2190  expected 2191 ±10  ✓
+  parishes      10712  expected 10717 ±50  ✓
+
   All validations passed.
   ```
 - **Generated blob sizes** (after `npm run build`, gzip is `gzip -c | wc -c`):
   ```
-  districts.ts       3.6 KB  raw    1.3 KB  gz
-  counties.ts       12   KB  raw    3.4 KB  gz
-  subcounties.ts    76   KB  raw   19   KB  gz
-  parishes.ts      395   KB  raw   84   KB  gz
+  districts.ts       4.4 KB  raw    1.5 KB  gz
+  counties.ts       13   KB  raw    3.6 KB  gz
+  subcounties.ts    80   KB  raw   19   KB  gz
+  parishes.ts      416   KB  raw   85   KB  gz
   villages.ts       65   KB  raw  <1     KB  gz  (empty placeholder)
   ```
 

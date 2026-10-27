@@ -23,7 +23,7 @@ export function parishByName(name: string): Unit | undefined {
   return store.byName(name);
 }
 
-/** Parish by official EC/UBOS code (the persistable identifier). */
+/** Parish by official UBOS code (the persistable identifier). */
 export function parishByCode(code: string): Unit | undefined {
   return store.byCode(code);
 }

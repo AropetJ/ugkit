@@ -100,7 +100,7 @@ export class LevelStore {
   }
 
   /**
-   * Lookup by official EC/UBOS code — the stable identifier to persist.
+   * Lookup by official UBOS code — the stable identifier to persist.
    * O(1) after first call. Returns undefined for unknown/uncoded units.
    */
   byCode(code: string): Unit | undefined {
@@ -149,10 +149,12 @@ export class LevelStore {
   }
 
   private unit(id: number, name: string, parent: number): Unit {
-    const u: Unit = { id, name, level: this.level };
+    const { kinds, regions } = this.data;
+    const u: Unit = { id, name, level: this.level, kind: kinds.values[kinds.index[id]!]! };
     const code = this.data.codes[id];
     if (code) u.code = code;
     if (parent >= 0) u.parentId = parent;
+    if (regions) u.region = regions.values[regions.index[id]!]!;
     return u;
   }
 }

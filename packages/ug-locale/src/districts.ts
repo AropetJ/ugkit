@@ -1,4 +1,4 @@
-import { Level, type Unit } from "./types.js";
+import { Level, type Region, type Unit } from "./types.js";
 import { LevelStore } from "./store.js";
 import raw from "./generated/districts.js";
 
@@ -22,9 +22,17 @@ export function districtByName(name: string): Unit | undefined {
   return store.byName(name);
 }
 
-/** District by official EC/UBOS code (the persistable identifier). */
+/** District by official UBOS code (the persistable identifier). */
 export function districtByCode(code: string): Unit | undefined {
   return store.byCode(code);
+}
+
+/**
+ * Districts (and cities) in one of Uganda's four statistical regions, sorted
+ * by name. Every district belongs to exactly one region.
+ */
+export function districtsInRegion(region: Region): Unit[] {
+  return store.all().filter((d) => d.region === region);
 }
 
 /** Prefix search over district names (typeahead). Default `limit` 20. */

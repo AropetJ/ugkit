@@ -21,10 +21,10 @@ Dataset `2026.1` ships the official **Uganda Bureau of Statistics** frame
 
 | Level | Units | Blob (raw / gzip) |
 |---|---|---|
-| Districts + cities | 146 | 3.6 KB / 1.3 KB |
-| Counties | 312 | 12 KB / 3.4 KB |
-| Sub-counties / town councils / divisions | 2,209 | 76 KB / 19 KB |
-| Parishes / wards | 10,860 | 395 KB / 84 KB |
+| Districts + cities | 146 | 4.4 KB / 1.5 KB |
+| Counties | 312 | 13 KB / 3.6 KB |
+| Sub-counties / town councils / divisions / settlements | 2,209 | 80 KB / 19 KB |
+| Parishes / wards | 10,860 | 416 KB / 85 KB |
 | Villages / cells | **0** | empty placeholder |
 
 **Villages are empty by design, not by omission.** UBOS confirmed in writing
@@ -33,9 +33,9 @@ other authoritative, coded national village register exists. The `villages`
 level stays in the API and is safe to query — it returns `[]`/`undefined` and
 `villageCount === 0` — so if UBOS ever publishes villages they arrive as a
 dataset bump with no code change. Details in
-[`data/PROVENANCE.md`](data/PROVENANCE.md); known gaps (refugee-settlement
-units, 2025 town councils, region and unit-type attributes, villages) are
-tracked in [`data/GAPS.md`](data/GAPS.md).
+[`data/PROVENANCE.md`](data/PROVENANCE.md); known gaps (2025 town councils,
+sub-regions, population, villages) are tracked in
+[`data/GAPS.md`](data/GAPS.md).
 
 ## Usage
 
@@ -89,11 +89,42 @@ village):
 | `xCount` | Units in the loaded dataset — `0` means the level isn't sourced yet |
 | `datasetVersion` | Dataset version stamped into the blob |
 
+Districts also have `districtsInRegion(region)` — the districts (and cities)
+of `"Central"`, `"Eastern"`, `"Northern"` or `"Western"`.
+
 The barrel (`@ugkit/locale`) re-exports the district + county surface and all
 types. `subcounties`, `parishes`, and `villages` are subpath-only so bundlers
 never drag leaf data into a district dropdown.
 
-All functions return `Unit` objects: `{ id, name, code?, parentId?, level }`.
+All functions return `Unit` objects:
+`{ id, name, code?, parentId?, level, kind, region? }`.
+
+- `kind` is the unit's administrative type, always present:
+
+  | Level | Kinds (count in 2026.1) |
+  |---|---|
+  | district | `district` 135 · `city` 11 |
+  | county | `county` 256 · `municipality` 31 · `division` 25 |
+  | sub-county | `sub-county` 1,506 · `town-council` 577 · `division` 107 · `settlement` 19 |
+  | parish | `parish` 7,762 · `ward` 3,098 |
+  | village | `village` · `cell` |
+
+- `region` is set on districts only (`"Central"` 27 · `"Eastern"` 40 ·
+  `"Northern"` 41 · `"Western"` 38). For a lower unit, walk up:
+  `districtById(county.parentId!)!.region`.
+
+**Refugee settlements.** UBOS files 19 refugee settlements (Nakivale, Bidi
+Bidi, Kyangwali, …) as sub-counties; they are administered by the Office of
+the Prime Minister, not a local government, and have `kind: "settlement"`.
+The Electoral Commission and the 2024 census don't count them, so to match
+those figures, drop them — and the 148 parishes under them:
+
+```ts
+const frame = subCounties(countyId).filter((s) => s.kind !== "settlement");
+```
+
+Without settlements the dataset has 2,190 sub-counties and 10,712 parishes
+(EC: 2,191 and 10,717 — Kampala has 5 divisions here to the EC's 6).
 
 **Persist `code`, never `id`.** `id` is the unit's index within its level and
 is only valid for the dataset version it came from — ids shift when districts
@@ -118,9 +149,13 @@ ids/parents return `undefined`/`[]` — never a throw.
 data/uganda.csv  →  scripts/build-data.mjs  →  src/generated/*.ts  →  tsc  →  dist/
 ```
 
-- CSV format (10 columns): a `code,name` pair per level —
-  `district_code,district,county_code,county,…`. Codes are official UBOS
-  identifiers; empty when the source has none.
+- CSV format (16 columns): `region`, then a `code,name,kind` triple per
+  level — `region,district_code,district,district_kind,county_code,…`. Codes
+  are official UBOS identifiers, empty when the source has none. Region and
+  kind are written by the ingest (`scripts/ingest/kinds.mjs` rules plus a
+  curated settlement list); `build-data.mjs` compiles them as given and
+  dictionary-encodes them into the blobs (one small int per unit). Design:
+  [`docs/design-unit-attributes.md`](docs/design-unit-attributes.md).
 - Rows may be **variable depth**: a row can stop at any level (the current
   dataset stops at parish). Absent levels emit empty blobs; their
   functions return `[]` and their `xCount` is `0`. No interior gaps allowed.

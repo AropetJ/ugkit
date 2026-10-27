@@ -28,7 +28,7 @@ export function villageByName(name: string): Unit | undefined {
   return store.byName(name);
 }
 
-/** Village by official EC/UBOS code (the persistable identifier). */
+/** Village by official UBOS code (the persistable identifier). */
 export function villageByCode(code: string): Unit | undefined {
   return store.byCode(code);
 }

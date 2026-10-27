@@ -59,7 +59,10 @@ for (let d = 0; d < TARGET.d; d++) {
       for (let pp = 0; pp < pPer[si]; pp++, pi++) {
         const pName = name();
         for (let vv = 0; vv < vPer[pi]; vv++) {
-          rows.push(`,${dNames[d]},,${cName},,${sName},,${pName},,${name()} ${vv % 3 === 0 ? "Zone" : "Village"}`);
+          rows.push(
+            `Central,,${dNames[d]},district,,${cName},county,,${sName},sub-county,` +
+              `,${pName},parish,,${name()} ${vv % 3 === 0 ? "Zone" : "Village"},village`,
+          );
         }
       }
     }
@@ -69,8 +72,9 @@ for (let d = 0; d < TARGET.d; d++) {
 const csv = join(tmp, "uganda.csv");
 writeFileSync(
   csv,
-  "district_code,district,county_code,county,subcounty_code,subcounty," +
-    "parish_code,parish,village_code,village\n" +
+  "region,district_code,district,district_kind,county_code,county,county_kind," +
+    "subcounty_code,subcounty,subcounty_kind,parish_code,parish,parish_kind," +
+    "village_code,village,village_kind\n" +
     rows.join("\n"),
 );
 console.log(`  ${rows.length} rows → ${(statSync(csv).size / 1e6).toFixed(1)} MB CSV\n`);

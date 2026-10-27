@@ -22,7 +22,7 @@ export function countyByName(name: string): Unit | undefined {
   return store.byName(name);
 }
 
-/** County by official EC/UBOS code (the persistable identifier). */
+/** County by official UBOS code (the persistable identifier). */
 export function countyByCode(code: string): Unit | undefined {
   return store.byCode(code);
 }

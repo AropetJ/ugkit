@@ -13,10 +13,10 @@ work list for 0.2+ dataset releases.
 | # | Gap | Level | Have the data? | Effort |
 |---|---|---|---|---|
 | 1 | Villages (0 of ~71,214) | village | No — best lead is an EC PDF, licence unknown | Large |
-| 2 | Refugee-settlement units not flagged | sub-county, parish | **Yes** (derivable) | Small |
+| 2 | ~~Refugee-settlement units not flagged~~ **Done** — `kind: "settlement"` | sub-county, parish | Yes | — |
 | 3 | Nine town councils created 1 Jul 2025 missing / mistyped | sub-county | Partly | Small |
-| 4 | Region dropped at ingest | district | **Yes** — in the committed UBOS file | Small |
-| 5 | Unit type (city / municipality / division / TC / ward…) | all | **Yes** (derivable from names) | Small |
+| 4 | ~~Region dropped at ingest~~ **Done** — `Unit.region`, `districtsInRegion` | district | Yes | — |
+| 5 | ~~Unit type~~ **Done** — `Unit.kind` | all | Yes | — |
 | 6 | City divisions duplicated at county + sub-county | county, sub-county | **Yes** | Small (model decision) |
 | 7 | 17 sub-regions | district | No — UBOS census profiles | Small |
 | 8 | 2024 census population | district → parish | No — UBOS xlsx (to sub-county), PDFs (parish) | Medium |
@@ -50,7 +50,11 @@ work list for 0.2+ dataset releases.
   villages" (2009, 128-district system), OSM (sparse below district), New
   Vision portal and EC "split by village" PDF (see `scripts/ingest/SAMPLES.md`).
 
-## 2. Refugee-settlement units (verified)
+## 2. Refugee-settlement units (verified) — DONE
+
+> Closed in 0.1.0: 19 settlement sub-counties have `kind: "settlement"`
+> (`build-ubos-frame.mjs → SETTLEMENTS`); excluding them gives 2,190 /
+> 10,712 vs EC 2,191 / 10,717, now enforced by `validate.mjs`.
 
 UBOS carries refugee settlements as their own sub-counties; the EC/census
 2,191 / 10,717 frame does not. This is why we ship **2,209** sub-counties and
@@ -90,7 +94,9 @@ out wards is UNVERIFIED. **Fix:** confirm with MoLG/UBOS, then either an
 `ERRATA`/additions table in `build-ubos-frame.mjs` (with provenance) or wait
 for the next UBOS frame. Document as a known gap meanwhile.
 
-## 4. Region — already in our source, dropped at ingest (verified)
+## 4. Region — already in our source, dropped at ingest (verified) — DONE
+
+> Closed in 0.1.0: `Unit.region` on districts, `districtsInRegion()`.
 
 The committed UBOS file has `Region,RCode` on every row: Central (1) 27
 districts, Eastern (2) 40, Northern (3) 41, Western (4) 38. No district spans
@@ -98,7 +104,10 @@ two regions. **Fix:** carry it through the ingest as a district attribute — a
 CSV-format change (new column) and a `Unit` field, so it wants a minor
 version and a deliberate design pass, not a quick patch.
 
-## 5. Unit type (verified, derivable)
+## 5. Unit type (verified, derivable) — DONE
+
+> Closed in 0.1.0: `Unit.kind` on every unit; rules in
+> `scripts/ingest/kinds.mjs`, exceptions via `KIND_OVERRIDES`.
 
 Not stored; recoverable from name suffixes in the UBOS frame:
 
@@ -179,8 +188,8 @@ alone will often miss; the README should steer users to
 
 ## Recommended order
 
-1. **Small, no new source:** §4 region, §5 kind, §2 settlement flag — one
-   designed CSV/`Unit` extension, one minor release.
+1. ~~**Small, no new source:** §4 region, §5 kind, §2 settlement flag~~ —
+   done in 0.1.0 (docs/design-unit-attributes.md).
 2. **§3 town councils** — confirm with MoLG/UBOS; add as documented additions.
 3. **§1 villages** — parse the EC July 2022 PDF into a staging CSV,
    cross-check against the derived datasets, write to the EC about

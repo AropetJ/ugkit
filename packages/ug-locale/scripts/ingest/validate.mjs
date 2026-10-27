@@ -5,8 +5,13 @@
  * Run via `npm run validate:data`. Wired into prepublishOnly so it is
  * impossible to publish a package whose dataset fails these checks.
  *
- * CSV format (10 columns): `code,name` pair per level; codes optional;
- * rows may stop at any level (variable depth, by NAME presence).
+ * CSV format v2 (16 columns): `region`, then a `code,name,kind` triple per
+ * level; codes optional; rows may stop at any level (variable depth, by NAME
+ * presence). See docs/design-unit-attributes.md.
+ *
+ *   ATTRIBUTES (always fatal): every present unit has a kind from its level's
+ *   allow-list (kinds.mjs), constant across rows; the full dataset has a
+ *   valid region on every row, constant per district.
  *
  * Three classes of checks:
  *
@@ -35,6 +40,7 @@
 import { readFileSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { KINDS_BY_LEVEL, REGIONS } from "./kinds.mjs";
 
 const pkgRoot = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const fullCsv = join(pkgRoot, "data", "uganda.csv");
@@ -45,8 +51,9 @@ const csvPath = isFull ? fullCsv : sampleCsv;
 
 const LEVELS = ["districts", "counties", "subcounties", "parishes", "villages"];
 const HEADER =
-  "district_code,district,county_code,county,subcounty_code,subcounty," +
-  "parish_code,parish,village_code,village";
+  "region,district_code,district,district_kind,county_code,county,county_kind," +
+  "subcounty_code,subcounty,subcounty_kind,parish_code,parish,parish_kind," +
+  "village_code,village,village_kind";
 
 // canonicalName's output alphabet. Comma is structurally forbidden (CSV).
 const NAME_RE = /^[\p{L}\p{N} .'’\-\/()]+$/u;
@@ -74,16 +81,20 @@ const SEP = "\u0000";
 const perLevel = LEVELS.map(() => new Set());
 const codesPerLevel = LEVELS.map(() => new Map()); // code -> first pathKey
 const seenRows = new Set();
+const kindOfKey = LEVELS.map(() => new Map()); // pathKey -> kind
+const regionOfDistrict = new Map();            // district pathKey -> region
 
 lines.forEach((line, n) => {
   const cells = line.split(",").map((s) => s.trim());
-  if (cells.length < 2 || cells.length > 10) {
-    errors.push(`Row ${n + 2}: expected 2-10 cells, got ${cells.length}`);
+  if (cells.length < 4 || cells.length > 16) {
+    errors.push(`Row ${n + 2}: expected 4-16 cells, got ${cells.length}`);
     return;
   }
+  const region = cells[0];
   const units = [];
   for (let L = 0; L < 5; L++) {
-    units.push({ code: cells[2 * L] ?? "", name: cells[2 * L + 1] ?? "" });
+    const at = 1 + 3 * L;
+    units.push({ code: cells[at] ?? "", name: cells[at + 1] ?? "", kind: cells[at + 2] ?? "" });
   }
 
   // VARIABLE DEPTH: a row populates levels 0..depth-1 then stops (by name).
@@ -94,7 +105,7 @@ lines.forEach((line, n) => {
     return;
   }
   for (let i = depth; i < 5; i++) {
-    if (units[i].name || units[i].code)
+    if (units[i].name || units[i].code || units[i].kind)
       errors.push(`Row ${n + 2}: interior gap — ${LEVELS[i]} set but a shallower level is empty`);
   }
   for (let i = 0; i < depth; i++) {
@@ -104,7 +115,11 @@ lines.forEach((line, n) => {
     if (/\s{2,}/.test(name)) errors.push(`Row ${n + 2}: doubled whitespace in "${name}"`);
     if (!CODE_RE.test(code))
       errors.push(`Row ${n + 2}: bad ${LEVELS[i]} code "${code}"`);
+    if (!KINDS_BY_LEVEL[i].includes(units[i].kind))
+      errors.push(`Row ${n + 2}: bad ${LEVELS[i]} kind "${units[i].kind}"`);
   }
+  if (isFull && !REGIONS.includes(region))
+    errors.push(`Row ${n + 2}: bad region "${region}"`);
 
   if (seenRows.has(line)) errors.push(`Row ${n + 2}: exact duplicate row`);
   seenRows.add(line);
@@ -114,6 +129,16 @@ lines.forEach((line, n) => {
     key += SEP + units[L].name;
     const isNew = !perLevel[L].has(key);
     perLevel[L].add(key);
+    const priorKind = kindOfKey[L].get(key);
+    if (priorKind !== undefined && priorKind !== units[L].kind)
+      errors.push(`Row ${n + 2}: ${LEVELS[L]} "${units[L].name}" kind ${units[L].kind} ≠ earlier ${priorKind}`);
+    kindOfKey[L].set(key, units[L].kind);
+    if (L === 0) {
+      const priorRegion = regionOfDistrict.get(key);
+      if (priorRegion !== undefined && priorRegion !== region)
+        errors.push(`Row ${n + 2}: district "${units[0].name}" region ${region} ≠ earlier ${priorRegion}`);
+      regionOfDistrict.set(key, region);
+    }
     const code = units[L].code;
     if (code) {
       const prior = codesPerLevel[L].get(code);
@@ -145,6 +170,25 @@ for (let L = 0; L < 5; L++) {
   const ok = Math.abs(count - want) <= tol;
   console.log(`${line}  expected ${want} ±${tol}  ${ok ? "✓" : "✗"}`);
   if (!ok) errors.push(`${LEVELS[L]}: count ${count} outside ${want} ±${tol}`);
+}
+
+// EC/census frame check. UBOS files refugee settlements as sub-counties; the
+// EC and the 2024 census do not. Excluding them, the dataset must land close
+// to the EC figures — a much tighter check than the raw totals above.
+if (isFull) {
+  const settlements = [...kindOfKey[2]].filter(([, k]) => k === "settlement").map(([key]) => key);
+  const inSettlement = (key) => settlements.some((s) => key.startsWith(s + SEP));
+  const frame = [
+    ["subcounties", perLevel[2].size - settlements.length, 2191, 10],
+    ["parishes", [...perLevel[3]].filter((k) => !inSettlement(k)).length, 10717, 50],
+  ];
+  console.log(`\nEC frame (excluding ${settlements.length} refugee settlements):`);
+  for (const [label, count, want, tol] of frame) {
+    if (count === 0) continue;
+    const ok = Math.abs(count - want) <= tol;
+    console.log(`${label.padEnd(12)} ${String(count).padStart(6)}  expected ${want} ±${tol}  ${ok ? "✓" : "✗"}`);
+    if (!ok) errors.push(`${label} (EC frame): count ${count} outside ${want} ±${tol}`);
+  }
 }
 
 if (errors.length) {

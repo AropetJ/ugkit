@@ -46,6 +46,20 @@ Code follows semver. The dataset has its own version
     `declarationMap`, DOM lib removed.
   - Built with TypeScript 7 (native compiler); emitted `.js`/`.d.ts` are
     byte-identical to the TypeScript 5.5 output.
+- **Unit attributes** (design: `docs/design-unit-attributes.md`):
+  - `Unit.kind` on every unit — `district`/`city`, `county`/`municipality`/
+    `division`, `sub-county`/`town-council`/`division`/`settlement`,
+    `parish`/`ward`, `village`/`cell`. New `UnitKind` type.
+  - `Unit.region` on districts (`Central`/`Eastern`/`Northern`/`Western`),
+    new `Region` type, and `districtsInRegion(region)`.
+  - CSV format v2 (16 columns): `region` + a `code,name,kind` triple per
+    level. Kinds and region are written by the ingest
+    (`scripts/ingest/kinds.mjs`), compiled verbatim by `build-data.mjs`, and
+    dictionary-encoded in the blobs (`LevelData.kinds` / `.regions`) —
+    +1.4 KB gzip on parishes, no measurable runtime cost.
+  - `validate.mjs` enforces per-level kind allow-lists and one region per
+    district, and adds an **EC-frame check**: excluding settlements,
+    sub-counties must be 2,191 ±10 and parishes 10,717 ±50.
 - Full-scale benchmark `scripts/bench-scale.mjs`. Results at real size
   (71k synthetic villages): build 1.3 s; blobs ≈ 1.9 MB total
   (villages 1.7 MB, districts+counties ≈ 10 KB); villages blob
@@ -65,6 +79,10 @@ Code follows semver. The dataset has its own version
 - Ingest corrections: one UBOS typo fixed via `ERRATA` (county `218.2`
   "RLUTSESHE" → "Lutseshe"); name casing now capitalizes segments after `/`,
   `(` and `.` (33 names, e.g. "Bussi/Kisaba", "Nakaziba (Ggavu)", "P.W.D").
+- Region carried from the UBOS `Region` column; kinds derived per the rules
+  above; 19 refugee settlements curated by code (`SETTLEMENTS`). Excluding
+  them reconciles with the EC frame: 2,190 sub-counties (EC 2,191) and
+  10,712 parishes (EC 10,717).
 - Supersedes the unreleased EC-sourced draft of `2026.1` (districts + 329
   counties from the EC Demarcated Electoral Areas 2025 PDF), whose county
   count was an artefact of constituency deduplication.

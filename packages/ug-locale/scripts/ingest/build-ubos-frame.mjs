@@ -21,7 +21,9 @@
  * (the UBOS files are the one exception to the sources/ gitignore).
  *
  * Emits:
- *   ../../data/uganda.csv  — canonical 10-col variable-depth CSV (see build-data.mjs)
+ *   ../../data/uganda.csv  — canonical 16-col variable-depth CSV (see build-data.mjs):
+ *   region + a code,name,kind triple per level. Kinds come from kinds.mjs
+ *   suffix rules, then SETTLEMENTS, then KIND_OVERRIDES (in that order).
  *
  * Code strategy: UBOS codes are hierarchical — SCode/PCode restart per parent,
  * so they are NOT globally unique. We concatenate the ancestor chain (with '.'
@@ -45,6 +47,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { canonicalName } from "./normalize.mjs";
+import { kindFromName, REGIONS } from "./kinds.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const pkgRoot = join(here, "..", "..");
@@ -71,6 +74,43 @@ function fixName(level, code, raw) {
   return rule && raw === rule.wrong ? rule.right : raw;
 }
 
+// SETTLEMENTS — refugee settlements that UBOS files as sub-counties. They are
+// administered by the Office of the Prime Minister, not a local government,
+// so they get kind "settlement". Excluding them reconciles the dataset with
+// the EC/census frame (2,190 vs 2,191 sub-counties; Kampala has 5 divisions
+// to EC's 6). Curated by name and checked district-by-district against the
+// EC July 2022 summary (data/GAPS.md §2). NOT settlements despite the name:
+// 336.1.05 "Rhino Camp" and 336.1.07 "Rhino Camp Town Council" (Madi-Okollo).
+const SETTLEMENTS = new Set([
+  "301.1.07", "301.2.06",             // Adjumani — Refugee Settlement Camps ×2
+  "313.1.06", "313.2.07", "313.4.09", // Yumbe — Bidi Bidi ×3
+  "319.1.07",                         // Koboko — Lobule
+  "326.2.07",                         // Lamwo — Palabek
+  "336.1.06",                         // Madi-Okollo — Rhino Camp Refugee Settlement
+  "337.1.07",                         // Obongi — Palorinya
+  "340.1.01", "340.1.04",             // Terego — Imvepi, Rhino Camp Refugee Settlement
+  "413.2.10",                         // Kamwenge — Rwamwanja
+  "418.2.03", "418.2.04", "418.2.05", // Isingiro — Nakivale (Juru, Rubondo, Basecamp)
+  "418.3.16",                         // Isingiro — Oruchinga
+  "421.1.10",                         // Kiryandongo
+  "422.1.06",                         // Kyegegwa — Kyaka II
+  "432.1.05",                         // Kikuube — Kyangwali
+]);
+
+// KIND_OVERRIDES — corrections to the suffix-derived kind, keyed like ERRATA
+// ("<D|C|S|P>:<code>"), each with a reason. Empty today: every UBOS name's
+// suffix matches its kind. Candidates: the nine town councils deemed
+// operational 1 Jul 2025 (GAPS.md §3), once confirmed with MoLG/UBOS.
+const KIND_OVERRIDES = {};
+
+const LEVEL_TAG = ["D", "C", "S", "P"];
+function kindOf(level, code, name) {
+  const override = KIND_OVERRIDES[`${LEVEL_TAG[level]}:${code}`];
+  if (override) return override.kind;
+  if (level === 2 && SETTLEMENTS.has(code)) return "settlement";
+  return kindFromName(level, name);
+}
+
 const text = readFileSync(SRC, "utf8").replace(/\r\n/g, "\n").trim().split("\n");
 const header = text.shift();
 const EXPECTED_HEADER = "Region,RCode,County,CCode,District,DCode,Sub_County,SCode,Parish,PCode";
@@ -84,11 +124,12 @@ const rows = text.map((line, i) => {
   const cells = line.split(",");
   if (cells.length !== 10)
     throw new Error(`Row ${i + 2}: expected 10 cells, got ${cells.length}`);
-  const [, /* region */ , /* rCode */ cty, cCode, dist, dCode, sub, sCode, par, pCode] = cells;
+  const [region, /* rCode */ , cty, cCode, dist, dCode, sub, sCode, par, pCode] = cells;
   const ccCode = `${dCode}.${cCode}`;
   const scCode = `${dCode}.${cCode}.${sCode}`;
   const pcCode = `${dCode}.${cCode}.${sCode}.${pCode}`;
   return {
+    region: canonicalName(region),
     dCode, d: norm(fixName("D", dCode, dist)),
     cCode, c: norm(fixName("C", ccCode, cty)),
     sCode, s: norm(fixName("S", scCode, sub)),
@@ -118,6 +159,8 @@ const setCode = (level, code, pathKey, whatRow) => {
 
 const SEP = "\u0000";
 const out = [];
+const regionOf = new Map(); // dCode → region; must be constant per district
+const settlementsSeen = new Set();
 for (const r of rows) {
   const dCode = r.dCode;
   const ccCode = `${r.dCode}.${r.cCode}`;
@@ -135,9 +178,29 @@ for (const r of rows) {
   setCode(2, scCode, sPath, rowStr);
   setCode(3, pcCode, pPath, rowStr);
 
+  if (!REGIONS.includes(r.region))
+    throw new Error(`Unknown region "${r.region}" (row: ${rowStr})`);
+  const priorRegion = regionOf.get(dCode);
+  if (priorRegion !== undefined && priorRegion !== r.region)
+    throw new Error(`District ${dCode} in two regions: ${priorRegion} vs ${r.region}`);
+  regionOf.set(dCode, r.region);
+
+  const kinds = [
+    kindOf(0, dCode, r.d), kindOf(1, ccCode, r.c),
+    kindOf(2, scCode, r.s), kindOf(3, pcCode, r.p),
+  ];
+  if (kinds[2] === "settlement") settlementsSeen.add(scCode);
+
   out.push(
-    `${dCode},${r.d},${ccCode},${r.c},${scCode},${r.s},${pcCode},${r.p}`
+    `${r.region},${dCode},${r.d},${kinds[0]},${ccCode},${r.c},${kinds[1]},` +
+      `${scCode},${r.s},${kinds[2]},${pcCode},${r.p},${kinds[3]},,,`
   );
+}
+
+// Every curated settlement code must exist — a stale list is an error.
+for (const code of SETTLEMENTS) {
+  if (!settlementsSeen.has(code))
+    throw new Error(`SETTLEMENTS lists ${code}, which is not in the UBOS frame.`);
 }
 
 // Sanity guards — catch a mis-parse before it poisons the dataset.
@@ -157,8 +220,9 @@ if (distinct(3) < 10000 || distinct(3) > 11500)
   throw new Error(`Parish count ${distinct(3)} outside sane range.`);
 
 const csv =
-  "district_code,district,county_code,county,subcounty_code,subcounty," +
-  "parish_code,parish,village_code,village\n" +
+  "region,district_code,district,district_kind,county_code,county,county_kind," +
+  "subcounty_code,subcounty,subcounty_kind,parish_code,parish,parish_kind," +
+  "village_code,village,village_kind\n" +
   out.join("\n") + "\n";
 writeFileSync(join(pkgRoot, "data", "uganda.csv"), csv);
 console.log(`wrote data/uganda.csv (${out.length} parish rows)`);

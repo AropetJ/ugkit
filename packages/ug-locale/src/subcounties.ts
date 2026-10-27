@@ -23,7 +23,7 @@ export function subCountyByName(name: string): Unit | undefined {
   return store.byName(name);
 }
 
-/** Sub-county by official EC/UBOS code (the persistable identifier). */
+/** Sub-county by official UBOS code (the persistable identifier). */
 export function subCountyByCode(code: string): Unit | undefined {
   return store.byCode(code);
 }

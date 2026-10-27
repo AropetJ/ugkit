@@ -21,6 +21,43 @@ export const Level = {
 } as const;
 export type Level = (typeof Level)[keyof typeof Level];
 
+/** Uganda's four statistical regions (UBOS). Carried on districts. */
+export type Region = "Central" | "Eastern" | "Northern" | "Western";
+
+/**
+ * Administrative kind of a unit. Which kinds occur depends on the level:
+ *
+ * - district level: `district`, `city` (Kampala + the operational cities)
+ * - county level: `county`, `municipality`, `division` (city divisions)
+ * - sub-county level: `sub-county`, `town-council`, `division`,
+ *   `settlement` (refugee settlements — administered by the Office of the
+ *   Prime Minister; exclude them to match EC/census counts)
+ * - parish level: `parish`, `ward`
+ * - village level: `village`, `cell`
+ */
+export type UnitKind =
+  | "district"
+  | "city"
+  | "county"
+  | "municipality"
+  | "division"
+  | "sub-county"
+  | "town-council"
+  | "settlement"
+  | "parish"
+  | "ward"
+  | "village"
+  | "cell";
+
+/**
+ * A dictionary-encoded string column: `values[index[i]]` is unit i's value.
+ * One small int per unit on the wire instead of a repeated string.
+ */
+export interface DictColumn<T extends string> {
+  values: T[];
+  index: number[];
+}
+
 /**
  * The packed wire format for one level, as emitted by scripts/build-data.mjs.
  * Parallel arrays: entry i across all arrays describes one unit.
@@ -46,6 +83,10 @@ export interface LevelData {
    * self-sufficient for "children of X" queries.
    */
   spans: [first: number, count: number][];
+  /** Kind of each unit, parallel to `names`. */
+  kinds: DictColumn<UnitKind>;
+  /** Region of each unit — district level only, absent when unsourced. */
+  regions?: DictColumn<Region>;
 }
 
 /** Public, ergonomic shape returned by query functions. */
@@ -59,11 +100,16 @@ export interface Unit {
   id: number;
   name: string;
   /**
-   * Official code (EC/UBOS) when the source provides one, e.g. "006" for
-   * Hoima. Stable across dataset versions — this is the value to persist.
+   * Official UBOS code when the source provides one, e.g. "113" for Wakiso,
+   * "113.1.01" for one of its sub-counties. Stable across dataset versions —
+   * this is the value to persist.
    */
   code?: string;
   /** id of the parent unit in the level above (undefined for districts). */
   parentId?: number;
   level: Level;
+  /** Administrative kind — see {@link UnitKind} for the values per level. */
+  kind: UnitKind;
+  /** Statistical region — set on districts only. */
+  region?: Region;
 }
