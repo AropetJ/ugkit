@@ -33,7 +33,9 @@ other authoritative, coded national village register exists. The `villages`
 level stays in the API and is safe to query — it returns `[]`/`undefined` and
 `villageCount === 0` — so if UBOS ever publishes villages they arrive as a
 dataset bump with no code change. Details in
-[`data/PROVENANCE.md`](data/PROVENANCE.md).
+[`data/PROVENANCE.md`](data/PROVENANCE.md); known gaps (refugee-settlement
+units, 2025 town councils, region and unit-type attributes, villages) are
+tracked in [`data/GAPS.md`](data/GAPS.md).
 
 ## Usage
 
@@ -105,7 +107,9 @@ Name lookups are normalized (case, whitespace, punctuation, apostrophes,
 diacritics): `districtByName("  WAKISO ")` finds `Wakiso`, and a user typing
 `"Ngora"` matches `Ng'ora`. Ambiguous names — e.g. a county name that exists
 in two districts — return `undefined` rather than an arbitrary winner;
-disambiguate via the parent (`counties(districtId)`) or use codes. Unknown
+disambiguate via the parent (`counties(districtId)`) or use codes. This
+matters most for parishes: about 20% share a name with another parish, so
+look them up under their sub-county (`parishes(subCountyId)`) or by code. Unknown
 ids/parents return `undefined`/`[]` — never a throw.
 
 ## Data pipeline

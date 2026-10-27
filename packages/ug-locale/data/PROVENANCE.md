@@ -73,6 +73,11 @@ useful for future constituency-level work — e.g. a companion
 `@ugkit/constituencies` package). It is no longer the source of
 `data/uganda.csv`.
 
+### Known gaps
+
+See [`GAPS.md`](GAPS.md) for the full audit (2026-10-27): what this release
+lacks from district level down, with sources and a recommended order.
+
 ### Known upstream churn
 
 - Tororo district's pending split into three districts + one city is not yet
