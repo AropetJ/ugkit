@@ -92,6 +92,23 @@ const [c, setC] = useState<number>();
 // each change is an O(1) slice — no filtering 70k rows per keystroke
 ```
 
+## Examples
+
+Two runnable examples in [`examples/`](examples/), both using the built
+package exactly as an app would:
+
+- [`examples/tour.mjs`](examples/tour.mjs) — the everyday tasks in Node:
+  dropdown data, typeahead, forgiving name lookup, drilling district →
+  village, lazy-loading villages, persisting and resolving codes, building an
+  address line from `parentId`, ambiguous names, regions, and filtering out
+  refugee settlements. Run `npm run build`, then `node examples/tour.mjs`.
+- [`examples/address-form.html`](examples/address-form.html) — a five-level
+  cascading address form in the browser with a district typeahead and region
+  filter, villages fetched only when a parish is chosen, and a panel showing
+  the codes an app should store. No bundler: after `npm run build`, serve the
+  package root (`python3 -m http.server 8765`) and open
+  `http://localhost:8765/examples/address-form.html`.
+
 ## API
 
 Each level is its own subpath export with the same uniform surface; import
